@@ -61,4 +61,25 @@ class PageController extends Controller
             "title" => "Tentang Kami",
         ]);
     }
+
+    public function profile()
+    {
+        return view("frontend.profile", [
+            "title" => "Profil",
+        ]);
+    }
+
+    public function change_password()
+    {
+        return view("frontend.change-password", [
+            "title" => "Ganti Password",
+        ]);
+    }
+
+    public function transaction()
+    {
+        return view("frontend.transaction", [
+            "title" => "Transaksi",
+        ]);
+    }
 }

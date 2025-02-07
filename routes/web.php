@@ -13,3 +13,7 @@ Route::get("/categories", [PageController::class, "categories"])->name("categori
 Route::get("/category/{slug}", [PageController::class, "category"])->name("category");
 
 Route::get("/about", [PageController::class, "about"])->name("about");
+
+Route::get("/profile", [PageController::class, "profile"])->name("profile");
+Route::get("/profile/change-password", [PageController::class, "change_password"])->name("profile.change-password");
+Route::get("/transaction", [PageController::class, "transaction"])->name("transaction");

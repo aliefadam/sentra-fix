@@ -58,18 +58,18 @@
                                 </div>
                             </div>
                             <div class="space-y-2">
-                                <button
-                                    class="w-full text-sm bg-white border-2 border-black text-black py-2.5 px-4 rounded-md hover:bg-opacity-90">
+                                <a href="{{ route('profile') }}"
+                                    class="w-full text-sm block text-center bg-white border-2 border-black text-black py-2.5 px-4 rounded-md hover:bg-opacity-90">
                                     Edit Profil
-                                </button>
-                                <button
-                                    class="w-full text-sm bg-custom text-white py-2.5 px-4 rounded-md hover:bg-opacity-90">
+                                </a>
+                                <a href="{{ route('transaction') }}"
+                                    class="w-full text-sm block text-center bg-custom text-white py-2.5 px-4 rounded-md hover:bg-opacity-90">
                                     Daftar Transaksi
-                                </button>
-                                <button
-                                    class="w-full text-sm bg-red-700 text-white py-2.5 px-4 rounded-md hover:bg-opacity-90">
+                                </a>
+                                <a
+                                    class="w-full text-sm block text-center bg-red-700 text-white py-2.5 px-4 rounded-md hover:bg-opacity-90">
                                     Keluar
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
