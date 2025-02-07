@@ -94,25 +94,8 @@
                     <a href="#" class="text-custom hover:text-custom/80">Lihat Semua</a>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                    <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                        <img src="{{ asset('imgs/p-1.png') }}" class="w-full h-48 object-cover rounded-t-lg"
-                            alt="Smartphone" />
-                        <div class="p-4">
-                            <div class="flex items-center mb-2">
-                                <div class="text-yellow-400 flex">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="text-sm text-gray-500 ml-2">(128)</span>
-                            </div>
-                            <h3 class="font-medium mb-2">Smartphone Pro Max</h3>
-                            <p class="text-custom font-semibold">Rp 12.999.000</p>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <a href="{{ route('product', ['slug' => 'wireless-headphone-pro']) }}"
+                        class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
                         <img src="{{ asset('imgs/p-2.png') }}" class="w-full h-48 object-cover rounded-t-lg"
                             alt="Headphone" />
                         <div class="p-4">
@@ -129,8 +112,28 @@
                             <h3 class="font-medium mb-2">Wireless Headphone</h3>
                             <p class="text-custom font-semibold">Rp 2.499.000</p>
                         </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    </a>
+                    <a href="{{ route('product', ['slug' => 'wireless-headphone-pro']) }}"
+                        class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                        <img src="{{ asset('imgs/p-1.png') }}" class="w-full h-48 object-cover rounded-t-lg"
+                            alt="Smartphone" />
+                        <div class="p-4">
+                            <div class="flex items-center mb-2">
+                                <div class="text-yellow-400 flex">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="text-sm text-gray-500 ml-2">(128)</span>
+                            </div>
+                            <h3 class="font-medium mb-2">Smartphone Pro Max</h3>
+                            <p class="text-custom font-semibold">Rp 12.999.000</p>
+                        </div>
+                    </a>
+                    <a href="{{ route('product', ['slug' => 'wireless-headphone-pro']) }}"
+                        class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
                         <img src="{{ asset('imgs/p-3.png') }}" class="w-full h-48 object-cover rounded-t-lg"
                             alt="Smartwatch" />
                         <div class="p-4">
@@ -147,8 +150,9 @@
                             <h3 class="font-medium mb-2">Smart Watch Series 5</h3>
                             <p class="text-custom font-semibold">Rp 3.999.000</p>
                         </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    </a>
+                    <a href="{{ route('product', ['slug' => 'wireless-headphone-pro']) }}"
+                        class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
                         <img src="{{ asset('imgs/p-4.png') }}" class="w-full h-48 object-cover rounded-t-lg"
                             alt="Tablet" />
                         <div class="p-4">
@@ -165,7 +169,7 @@
                             <h3 class="font-medium mb-2">Tablet Pro 2023</h3>
                             <p class="text-custom font-semibold">Rp 8.999.000</p>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </section>
 
@@ -269,17 +273,17 @@
                 <h1 class="mb-10 text-center poppins-semibold text-2xl">Mengapa harus Sentra Fix?</h1>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8">
                     <div class="bg-white p-6 rounded-lg shadow-sm text-center">
-                        <i class="fas fa-shield-alt text-4xl text-custom mb-4 text-pink-600"></i>
+                        <i class="fas fa-shield-alt text-4xl mb-4 text-pink-600"></i>
                         <h3 class="font-semibold mb-2">Terjamin Kualitasnya</h3>
                         <p class="text-sm text-gray-600">Semua barang telah melalui proses pengecekan ketat</p>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-sm text-center">
-                        <i class="fas fa-tags text-4xl text-custom mb-4 text-pink-600"></i>
+                        <i class="fas fa-tags text-4xl mb-4 text-pink-600"></i>
                         <h3 class="font-semibold mb-2">Harga Terbaik</h3>
                         <p class="text-sm text-gray-600">Dapatkan barang berkualitas dengan harga terjangkau</p>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-sm text-center">
-                        <i class="fas fa-truck text-4xl text-custom mb-4 text-pink-600"></i>
+                        <i class="fas fa-truck text-4xl mb-4 text-pink-600"></i>
                         <h3 class="font-semibold mb-2">Pengiriman Aman</h3>
                         <p class="text-sm text-gray-600">Barang dikemas dengan aman dan dikirim tepat waktu</p>
                     </div>
@@ -287,4 +291,16 @@
             </section>
         </div>
     </main>
+@endsection
+
+@section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js"></script>
+    <script>
+        new Glide('.glide', {
+            type: 'carousel',
+            startAt: 0,
+            perView: 1,
+            autoplay: 5000
+        }).mount();
+    </script>
 @endsection
