@@ -16,9 +16,10 @@
     {{-- Font Awesome --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
-    {{-- Glide --}}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.theme.min.css" rel="stylesheet" />
+    {{-- Flowbite & Tailwind --}}
+    {{-- <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script> --}}
 
     {{-- Flowbite --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
@@ -36,17 +37,10 @@
     <link rel="stylesheet" href="{{ asset('css/poppins.css') }}">
 </head>
 
-<body class="font-[Poppins] bg-gray-50">
-    @include('partials.navbar')
-
-    <div class="min-h-[60vh] mt-16">
-        @yield('content')
-    </div>
-
-    @include('partials.footer')
-
+<body class="min-h-screen bg-gray-50">
+    @include('partials.notification')
+    @yield('content')
     @yield('script')
-
 </body>
 
 </html>

@@ -82,4 +82,18 @@ class PageController extends Controller
             "title" => "Transaksi",
         ]);
     }
+
+    public function cart()
+    {
+        return view("frontend.cart", [
+            "title" => "Keranjang",
+        ]);
+    }
+
+    public function dashboard()
+    {
+        return view("backend.dashboard", [
+            "title" => "Dashboard",
+        ]);
+    }
 }

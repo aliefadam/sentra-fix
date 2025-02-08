@@ -91,7 +91,9 @@
             <section class="mb-12">
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-2xl font-semibold">Produk Unggulan</h2>
-                    <a href="#" class="text-custom hover:text-custom/80">Lihat Semua</a>
+                    <a href="{{ route('products') }}"
+                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Lihat
+                        Semua Produk</a>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                     <a href="{{ route('product', ['slug' => 'wireless-headphone-pro']) }}"
@@ -187,11 +189,9 @@
             <section class="mb-12">
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-2xl font-semibold">Koleksi Produk</h2>
-                    <div class="hidden sm:flex space-x-4">
-                        <button class="text-custom border-b-2 border-custom px-4 py-2">Terlaris</button>
-                        <button class="text-gray-500 hover:text-custom px-4 py-2">Terbaru</button>
-                        <button class="text-gray-500 hover:text-custom px-4 py-2">Diskon</button>
-                    </div>
+                    <a href="{{ route('products') }}"
+                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Lihat
+                        Semua Produk</a>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                     <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
