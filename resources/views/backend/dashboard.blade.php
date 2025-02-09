@@ -172,13 +172,6 @@
 
 @section('script')
     <script>
-        document
-            .getElementById("toggleSidebarMobile")
-            .addEventListener("click", function() {
-                document
-                    .getElementById("sidebar")
-                    .classList.toggle("-translate-x-full");
-            });
         const yearlyChart = echarts.init(document.getElementById("yearlyChart"));
         const yearlyOption = {
             animation: false,

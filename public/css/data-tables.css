@@ -1,0 +1,50 @@
+.dt-orderable-asc {
+    padding: 15px !important;
+    text-align: left !important;
+    border: none !important;
+}
+.dt-orderable-desc {
+    border: none !important;
+}
+
+#data-table td {
+    background-color: white;
+    padding: 15px !important;
+    text-align: left !important;
+}
+
+div.dt-container.dt-empty-footer tbody > tr:last-child > * {
+    border: none !important;
+}
+
+select.dt-input {
+    margin-right: 5px;
+    padding-left: 10px !important;
+    width: 60px !important;
+}
+
+.dt-length label {
+    text-transform: capitalize;
+    font-size: 14px !important;
+}
+
+.dt-layout-row:first-child,
+.dt-layout-row:nth-child(3) {
+    padding: 5px 20px !important;
+}
+
+.dt-search {
+    display: flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+}
+
+.dt-search label {
+    text-transform: capitalize;
+    font-size: 14px !important;
+}
+
+.dt-info {
+    text-transform: capitalize;
+    font-size: 14px !important;
+}

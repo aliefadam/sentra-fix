@@ -16,6 +16,13 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('admin.category.index') }}"
+                    class="flex items-center p-3 {{ active_sidebar('admin/category') }} rounded-lg group">
+                    <i class="fas fa-list w-5 transition duration-75"></i>
+                    <span class="ml-3">Kategori</span>
+                </a>
+            </li>
+            <li>
                 <a href="#"
                     class="flex items-center p-3 {{ active_sidebar('admin/transaction') }} rounded-lg group">
                     <i class="fas fa-shopping-cart w-5 transition duration-75"></i>
