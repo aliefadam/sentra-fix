@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SubCategoryController;
+use App\Models\SubCategory;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware("guest")->group(function () {
@@ -40,5 +42,6 @@ Route::middleware("auth")->group(function () {
             Route::put("/{id}", [CategoryController::class, "update"])->name("admin.category.update");
             Route::delete("/{id}", [CategoryController::class, "destroy"])->name("admin.category.destroy");
         });
+        Route::delete("/sub_category/{id}", [SubCategoryController::class, "destroy"])->name("admin.sub_category.destroy");
     });
 });
