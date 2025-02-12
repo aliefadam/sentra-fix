@@ -2,20 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CategorySeeder extends Seeder
+class ProductSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Category::create([
-            "name" => "Celana",
-            "icon" => "fa-regular fa-user",
-        ]);
+        //
     }
 }

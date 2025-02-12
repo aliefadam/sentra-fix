@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SubCategory;
+use App\Models\VariantDetail;
 use Illuminate\Http\Request;
 
-class SubCategoryController extends Controller
+class VariantDetailController extends Controller
 {
     public function destroy($id)
     {
-        SubCategory::find($id)->delete();
+        VariantDetail::find($id)->delete();
         session()->flash("notification", [
             "icon" => "success",
             "title" => "Berhasil",
-            "text" => "Sub Kategori berhasil dihapus",
+            "text" => "Detail Varian berhasil dihapus",
         ]);
         return response()->json([
             "message" => "success",

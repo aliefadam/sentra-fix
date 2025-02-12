@@ -98,7 +98,7 @@ class CategoryController extends Controller
             return redirect()->route("admin.category.index")->with("notification", [
                 "icon" => "success",
                 "title" => "Berhasil",
-                "text" => "Kategori berhasil ditambahkan",
+                "text" => "Kategori berhasil disimpan",
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -121,7 +121,7 @@ class CategoryController extends Controller
         session()->flash("notification", [
             "icon" => "success",
             "title" => "Berhasil",
-            "text" => "Kategori berhasil ditambahkan",
+            "text" => "Kategori berhasil dihapus",
         ]);
         return response()->json([
             "message" => "success",

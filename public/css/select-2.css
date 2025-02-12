@@ -1,0 +1,22 @@
+.select2-selection {
+    border: 1px solid oklch(0.872 0.01 258.338) !important;
+    background-color: oklch(0.985 0.002 247.839) !important;
+    border-radius: 0.5rem !important;
+    padding: 20px 3px;
+}
+
+.select2-selection:active,
+.select2-selection:focus {
+    border: 1px solid oklch(0.872 0.01 258.338) !important;
+}
+
+.select2-selection__rendered {
+    transform: translateY(-14.5px);
+    font-size: 14px;
+}
+
+.select2-selection__arrow {
+    top: 50% !important;
+    right: 0px !important;
+    transform: translate(-50%, -50%);
+}
