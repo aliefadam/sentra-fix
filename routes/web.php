@@ -9,18 +9,18 @@ use App\Http\Controllers\VariantController;
 use App\Http\Controllers\VariantDetailController;
 use Illuminate\Support\Facades\Route;
 
+Route::get("/", [PageController::class, "home"])->name("home");
+Route::get("/products", [PageController::class, "products"])->name("products");
+Route::get("/product/{slug}", [PageController::class, "product"])->name("product");
+Route::get("/categories", [PageController::class, "categories"])->name("categories");
+Route::get("/category/{slug}", [PageController::class, "category"])->name("category");
+Route::get("/about", [PageController::class, "about"])->name("about");
+
 Route::middleware("guest")->group(function () {
     Route::get("/login", [AuthController::class, "login"])->name("login");
     Route::post("/login", [AuthController::class, "login_post"])->name("login.post");
     Route::get("/register", [AuthController::class, "register"])->name("register");
     Route::post("/register", [AuthController::class, "register_post"])->name("register.post");
-
-    Route::get("/", [PageController::class, "home"])->name("home");
-    Route::get("/products", [PageController::class, "products"])->name("products");
-    Route::get("/product/{slug}", [PageController::class, "product"])->name("product");
-    Route::get("/categories", [PageController::class, "categories"])->name("categories");
-    Route::get("/category/{slug}", [PageController::class, "category"])->name("category");
-    Route::get("/about", [PageController::class, "about"])->name("about");
 });
 
 Route::middleware("auth")->group(function () {
@@ -64,6 +64,7 @@ Route::middleware("auth")->group(function () {
             Route::get("/{id}", [ProductController::class, "edit"])->name("admin.product.edit");
             Route::put("/{id}", [ProductController::class, "update"])->name("admin.product.update");
             Route::delete("/{id}", [ProductController::class, "destroy"])->name("admin.product.destroy");
+            Route::post("/price-form/{id}", [ProductController::class, "price_form"])->name("admin.product.price-form");
         });
     });
 });

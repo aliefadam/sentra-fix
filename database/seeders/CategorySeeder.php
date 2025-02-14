@@ -14,8 +14,13 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::create([
-            "name" => "Celana",
-            "icon" => "fa-regular fa-user",
+            "name" => "Fashion",
+            "icon" => "fas fa-tshirt",
+        ]);
+
+        Category::create([
+            "name" => "Elektronik",
+            "icon" => "fas fa-mobile-alt",
         ]);
     }
 }

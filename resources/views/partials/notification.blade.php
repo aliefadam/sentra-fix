@@ -10,6 +10,7 @@
             icon: '{{ $icon }}',
             title: '{{ $title }}',
             text: '{{ $text }}',
+            // showConfirmButton: true,
             showConfirmButton: false,
             timer: 1500
         })

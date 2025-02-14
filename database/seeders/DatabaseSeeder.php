@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             SubCategorySeeder::class,
             VariantSeeder::class,
             VariantDetailSeeder::class,
+            ProductSeeder::class
         ]);
     }
 }

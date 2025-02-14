@@ -11,7 +11,7 @@
         ])
     </div>
 
-    <form action="{{ route('admin.variant.store') }}" method="POST">
+    <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mt-5 w-full">
             <div class=" bg-white shadow-md rounded-md p-5 mb-5">
@@ -25,23 +25,23 @@
                             required />
                     </div>
                     <div class="mb-5">
-                        <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             Kategori
                         </label>
-                        <select id="countries"
+                        <select id="category" name="category"
                             class="select-2-dropdown bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
                             <option selected>-- Pilih Kategori --</option>
                             @foreach ($sub_categories as $sub_category)
-                                <option value="US">{{ $sub_category->name }}</option>
+                                <option value="{{ $sub_category->id }}">{{ $sub_category->name }}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="mb-5">
-                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label for="ckeditor" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                         Deskripsi Produk
                     </label>
-                    <textarea id="ckeditor" rows="4"
+                    <textarea id="ckeditor" rows="4" name="description"
                         class="resize-none block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
                         placeholder="Tulis deskripsi produk..."></textarea>
 
@@ -196,89 +196,73 @@
                 label: $(`label[for=${el.id}]`).text().trim()
             }));
 
-            // [...$(`.checkbox-variant-detail-2:checked`)].forEach(el => {
-            //     dataVariants.push({
-            //         id: el.value,
-            //         label: $(`label[for=${el.id}]`).text().trim()
-            //     })
-            // })
-
             if (dataVariants1.length == 0 && dataVariants2.length == 0) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Gagal',
                     text: 'Silahkan pilih minimal 1 varian',
                 });
+            } else if (dataVariants1.length > 0 && dataVariants2.length == 0) {
+                let html = "";
+                dataVariants1.forEach((variant1, i) => {
+                    html += htmlFormPrice(variant1);
+                });
+                $("#container-detail-price-form").html(html);
             } else {
                 let html = "";
-                dataVariants.forEach((variant, i) => {
-                    html += `
-                    <div class="grid grid-cols-6 gap-5">
-                        <div class="mb-5">
-                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Varian 1
-                            </label>
-                            <input type="text" id="text" name="price-variant-1[]"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
-                                required />
-                        </div>
-                        <div class="mb-5">
-                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Variant 2
-                            </label>
-                            <input type="text" id="text" name="price-variant-2[]"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
-                                required />
-                        </div>
-                        <div class="mb-5">
-                            <label for="text"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">SKU</label>
-                            <input type="text" id="text" name="price-sku[]"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
-                                required />
-                        </div>
-                        <div class="mb-5">
-                            <label for="number"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga</label>
-                            <input type="number" id="number" name="price[]"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
-                                required />
-                        </div>
-                        <div class="mb-5">
-                            <label for="number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stok
-                                Awal</label>
-                            <input type="number" id="number" name="price-stock"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
-                                required />
-                        </div>
-                        <div class="mb-5">
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                for="file_input">Gambar</label>
-                            <input
-                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                id="file_input" type="file">
-                        </div>
-                    </div>
-                `;
-                })
+                dataVariants1.forEach((variant1, i) => {
+                    dataVariants2.forEach((variant2, j) => {
+                        html += htmlFormPrice(variant1, variant2);
+                    });
+                });
                 $("#container-detail-price-form").html(html);
             }
+        }
 
-
-
-
-            // const isCheckboxVariantDetail1NothingChecked = $(`.checkbox-variant-detail-1:checked`).length === 0;
-            // const isCheckboxVariantDetail2NothingChecked = $(`.checkbox-variant-detail-2:checked`).length === 0;
-            // let dataCount = 0;
-            // if (!isCheckboxVariantDetail1NothingChecked && !isCheckboxVariantDetail2NothingChecked) {
-            //     dataCount = 2;
-            // } else if (isCheckboxVariantDetail1NothingChecked && isCheckboxVariantDetail2NothingChecked) {
-            //     dataCount = 0;
-            // } else {
-            //     dataCount = 1;
-            // }
-
-
+        function htmlFormPrice(variant1, variant2) {
+            return `
+            <div class="grid grid-cols-5 gap-5">
+                <input type="hidden" name="variant_id_1[]" value="${variant1.id}">
+                <input type="hidden" name="variant_id_2[]" value="${variant2 ? variant2.id : ''}">
+                <div class="mb-5">
+                    <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Varian 1
+                    </label>
+                    <input type="text" id="text" name="price_variant_1[]" value="${variant1.label}" readonly
+                        class="bg-gray-200 curson-not-allowed border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                        required />
+                </div>
+                <div class="mb-5">
+                    <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Variant 2
+                    </label>
+                    <input type="text" id="text" name="price_variant_2[]" value="${variant2 ? variant2.label : '-'}" readonly
+                        class="bg-gray-200 curson-not-allowed border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                        required />
+                </div>
+                <div class="mb-5">
+                    <label for="number"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga</label>
+                    <input type="number" id="number" name="price[]"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                        required />
+                </div>
+                <div class="mb-5">
+                    <label for="number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stok
+                        Awal</label>
+                    <input type="number" id="number" name="price_stock[]"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                        required />
+                </div>
+                <div class="mb-5">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        for="file_input">Gambar</label>
+                    <input
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        id="file_input" type="file" name="price_img[]" required>
+                </div>
+            </div>
+            `;
         }
     </script>
 @endsection

@@ -15,11 +15,19 @@ class SubCategorySeeder extends Seeder
     {
         SubCategory::create([
             "category_id" => 1,
-            "name" => "Celana Panjang",
+            "name" => "Pakaian Pria",
         ]);
         SubCategory::create([
             "category_id" => 1,
-            "name" => "Celana Pendek",
+            "name" => "Pakaian Wanita",
+        ]);
+        SubCategory::create([
+            "category_id" => 2,
+            "name" => "Smartphone",
+        ]);
+        SubCategory::create([
+            "category_id" => 2,
+            "name" => "Audio & Speaker",
         ]);
     }
 }
