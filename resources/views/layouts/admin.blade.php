@@ -65,8 +65,10 @@
         @yield('content')
     </div>
 
-    {{-- Datatables --}}
+    {{-- Jquery --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    {{-- Datatables --}}
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
 
     {{-- Select2 --}}
@@ -118,6 +120,9 @@
                 console.error(error);
             });
     </script>
+
+    {{-- Flowbite --}}
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
     @yield('script')
 </body>

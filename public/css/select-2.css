@@ -1,3 +1,7 @@
+.select2.select2-container.select2-container--default {
+    width: 100% !important;
+}
+
 .select2-selection {
     border: 1px solid oklch(0.872 0.01 258.338) !important;
     background-color: oklch(0.985 0.002 247.839) !important;

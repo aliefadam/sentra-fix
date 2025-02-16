@@ -35,87 +35,53 @@
 
         <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
             <section class="mb-12">
-                <h2 class="text-2xl font-semibold mb-8">Kategori Populer</h2>
+                <h2 class="text-2xl font-semibold mb-8">Kategori Produk</h2>
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
-                    <a href="#" class="group">
-                        <div class="bg-white rounded-lg p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                            <div class="w-16 h-16 mx-auto mb-4 bg-custom/10 rounded-full flex items-center justify-center">
-                                <i class="fas fa-mobile-alt text-2xl text-custom"></i>
+                    @foreach ($categories as $category)
+                        <a href="#" class="group">
+                            <div class="bg-white rounded-lg p-6 text-center shadow-sm hover:shadow-md transition-shadow">
+                                <div
+                                    class="w-16 h-16 mx-auto mb-4 bg-custom/10 rounded-full flex items-center justify-center">
+                                    <i class="{{ $category->icon }} text-2xl text-custom"></i>
+                                </div>
+                                <h3 class="font-medium text-gray-900 group-hover:text-custom">{{ $category->name }}</h3>
                             </div>
-                            <h3 class="font-medium text-gray-900 group-hover:text-custom">Elektronik</h3>
-                        </div>
-                    </a>
-                    <a href="#" class="group">
-                        <div class="bg-white rounded-lg p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                            <div class="w-16 h-16 mx-auto mb-4 bg-custom/10 rounded-full flex items-center justify-center">
-                                <i class="fas fa-tshirt text-2xl text-custom"></i>
-                            </div>
-                            <h3 class="font-medium text-gray-900 group-hover:text-custom">Fashion</h3>
-                        </div>
-                    </a>
-                    <a href="#" class="group">
-                        <div class="bg-white rounded-lg p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                            <div class="w-16 h-16 mx-auto mb-4 bg-custom/10 rounded-full flex items-center justify-center">
-                                <i class="fas fa-home text-2xl text-custom"></i>
-                            </div>
-                            <h3 class="font-medium text-gray-900 group-hover:text-custom">Rumah Tangga</h3>
-                        </div>
-                    </a>
-                    <a href="#" class="group">
-                        <div class="bg-white rounded-lg p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                            <div class="w-16 h-16 mx-auto mb-4 bg-custom/10 rounded-full flex items-center justify-center">
-                                <i class="fas fa-heartbeat text-2xl text-custom"></i>
-                            </div>
-                            <h3 class="font-medium text-gray-900 group-hover:text-custom">Kesehatan</h3>
-                        </div>
-                    </a>
-                    <a href="#" class="group">
-                        <div class="bg-white rounded-lg p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                            <div class="w-16 h-16 mx-auto mb-4 bg-custom/10 rounded-full flex items-center justify-center">
-                                <i class="fas fa-gamepad text-2xl text-custom"></i>
-                            </div>
-                            <h3 class="font-medium text-gray-900 group-hover:text-custom">Gaming</h3>
-                        </div>
-                    </a>
-                    <a href="#" class="group">
-                        <div class="bg-white rounded-lg p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                            <div class="w-16 h-16 mx-auto mb-4 bg-custom/10 rounded-full flex items-center justify-center">
-                                <i class="fas fa-utensils text-2xl text-custom"></i>
-                            </div>
-                            <h3 class="font-medium text-gray-900 group-hover:text-custom">Makanan</h3>
-                        </div>
-                    </a>
+                        </a>
+                    @endforeach
                 </div>
             </section>
 
             <section class="mb-12">
                 <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-2xl font-semibold">Produk Unggulan</h2>
+                    <h2 class="text-2xl font-semibold">Produk Terbaru</h2>
                     <a href="{{ route('products') }}"
-                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Lihat
-                        Semua Produk</a>
+                        class="text-white bg-gradient-to-r from-pink-400 to-pink-700 hover:from-pink-500 hover:to-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">
+                        Lihat semua produk
+                    </a>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                    <a href="{{ route('product', ['slug' => 'wireless-headphone-pro']) }}"
-                        class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                        <img src="{{ asset('imgs/p-2.png') }}" class="w-full h-48 object-cover rounded-t-lg"
-                            alt="Headphone" />
-                        <div class="p-4">
-                            <div class="flex items-center mb-2">
-                                <div class="text-yellow-400 flex">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
+                    @foreach ($products as $product)
+                        <a href="{{ route('product', ['slug' => $product->slug]) }}"
+                            class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                            <img src="/uploads/products/{{ $product->productDetails[0]->image }}"
+                                class="w-full h-48 object-cover rounded-t-lg" alt="Headphone" />
+                            <div class="p-4">
+                                <div class="flex items-center mb-2">
+                                    <div class="text-yellow-400 flex">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    {{-- <span class="text-sm text-gray-500 ml-2">(95)</span> --}}
                                 </div>
-                                <span class="text-sm text-gray-500 ml-2">(95)</span>
+                                <h3 class="font-medium mb-2">{{ $product->name }}</h3>
+                                <p class="text-custom font-semibold">{{ getLowerPriceProduct($product->id) }}</p>
                             </div>
-                            <h3 class="font-medium mb-2">Wireless Headphone</h3>
-                            <p class="text-custom font-semibold">Rp 2.499.000</p>
-                        </div>
-                    </a>
-                    <a href="{{ route('product', ['slug' => 'wireless-headphone-pro']) }}"
+                        </a>
+                    @endforeach
+                    {{-- <a href="{{ route('product', ['slug' => 'wireless-headphone-pro']) }}"
                         class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
                         <img src="{{ asset('imgs/p-1.png') }}" class="w-full h-48 object-cover rounded-t-lg"
                             alt="Smartphone" />
@@ -171,7 +137,7 @@
                             <h3 class="font-medium mb-2">Tablet Pro 2023</h3>
                             <p class="text-custom font-semibold">Rp 8.999.000</p>
                         </div>
-                    </a>
+                    </a> --}}
                 </div>
             </section>
 
@@ -190,29 +156,33 @@
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-2xl font-semibold">Koleksi Produk</h2>
                     <a href="{{ route('products') }}"
-                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Lihat
-                        Semua Produk</a>
+                        class="text-white bg-gradient-to-r from-pink-400 to-pink-700 hover:from-pink-500 hover:to-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">
+                        Lihat semua produk
+                    </a>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                    <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                        <img src="{{ asset('imgs/p-5.png') }}" class="w-full h-48 object-cover rounded-t-lg"
-                            alt="Sneakers" />
-                        <div class="p-4">
-                            <div class="flex items-center mb-2">
-                                <div class="text-yellow-400 flex">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
+                    @foreach ($products as $product)
+                        <a href="{{ route('product', ['slug' => $product->slug]) }}"
+                            class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                            <img src="/uploads/products/{{ $product->productDetails[0]->image }}"
+                                class="w-full h-48 object-cover rounded-t-lg" alt="Headphone" />
+                            <div class="p-4">
+                                <div class="flex items-center mb-2">
+                                    <div class="text-yellow-400 flex">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    {{-- <span class="text-sm text-gray-500 ml-2">(95)</span> --}}
                                 </div>
-                                <span class="text-sm text-gray-500 ml-2">(234)</span>
+                                <h3 class="font-medium mb-2">{{ $product->name }}</h3>
+                                <p class="text-custom font-semibold">{{ getLowerPriceProduct($product->id) }}</p>
                             </div>
-                            <h3 class="font-medium mb-2">Sport Sneakers</h3>
-                            <p class="text-custom font-semibold">Rp 1.299.000</p>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                        </a>
+                    @endforeach
+                    {{-- <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
                         <img src="{{ asset('imgs/p-6.png') }}" class="w-full h-48 object-cover rounded-t-lg"
                             alt="Backpack" />
                         <div class="p-4">
@@ -265,7 +235,7 @@
                             <h3 class="font-medium mb-2">Wireless Earbuds</h3>
                             <p class="text-custom font-semibold">Rp 1.499.000</p>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </section>
 

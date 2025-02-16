@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Province;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,7 +20,7 @@ class DatabaseSeeder extends Seeder
             SubCategorySeeder::class,
             VariantSeeder::class,
             VariantDetailSeeder::class,
-            ProductSeeder::class
+            ProductSeeder::class,
         ]);
     }
 }

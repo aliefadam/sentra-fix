@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RajaOngkirController;
 use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\VariantController;
 use App\Http\Controllers\VariantDetailController;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +19,14 @@ Route::get("/categories", [PageController::class, "categories"])->name("categori
 Route::get("/category/{slug}", [PageController::class, "category"])->name("category");
 Route::get("/about", [PageController::class, "about"])->name("about");
 
+Route::prefix("simulate-payment")->group(function () {
+    Route::get("/", [PageController::class, "simulate_payment"])->name("simulate_payment.index");
+    Route::post("/", [PageController::class, "simulate_payment_store"])->name("simulate_payment.store");
+});
+
+// JQUERY FETCH
+Route::get("/get-stock/{productID}/{variant1ID}/{variant2ID}", [ProductController::class, "get_stock"])->name("product.get-stock");
+
 Route::middleware("guest")->group(function () {
     Route::get("/login", [AuthController::class, "login"])->name("login");
     Route::post("/login", [AuthController::class, "login_post"])->name("login.post");
@@ -26,12 +37,35 @@ Route::middleware("guest")->group(function () {
 Route::middleware("auth")->group(function () {
     Route::get("/logout", [AuthController::class, "logout"])->name("logout");
 
-    Route::get("/product/{slug}/checkout", [PageController::class, "product_checkout"])->name("product.checkout");
+    Route::post("/product/{slug}/checkout", [PageController::class, "product_checkout"])->name("product.checkout");
     Route::get("/payment-waiting/{invoice}", [PageController::class, "payment_waiting"])->name("payment.waiting");
     Route::get("/profile", [PageController::class, "profile"])->name("profile");
     Route::get("/profile/change-password", [PageController::class, "change_password"])->name("profile.change-password");
-    Route::get("/transaction", [PageController::class, "transaction"])->name("transaction");
     Route::get("/cart", [PageController::class, "cart"])->name("cart");
+
+    Route::prefix("address")->group(function () {
+        Route::get("/", [AddressController::class, "index"])->name("address.index");
+        Route::get("/create", [AddressController::class, "create"])->name("address.create");
+        Route::post("/", [AddressController::class, "store"])->name("address.store");
+        Route::get("/{id}", [AddressController::class, "edit"])->name("address.edit");
+        Route::put("/{id}", [AddressController::class, "update"])->name("address.update");
+        Route::put("/change/{id}", [AddressController::class, "change_address"])->name("address.change-address");
+        Route::delete("/{id}", [AddressController::class, "destroy"])->name("address.destroy");
+    });
+
+    Route::prefix("rajaongkir")->group(function () {
+        Route::get("province", [RajaOngkirController::class, "province"]);
+        Route::get("city/{province_id}", [RajaOngkirController::class, "city"]);
+        Route::get("subdistrict/{city_id}", [RajaOngkirController::class, "subdistrict"]);
+        Route::post("get-shipping-cost", [RajaOngkirController::class, "getShippingCost"]);
+    });
+
+    Route::prefix("transaction")->group(function () {
+        Route::get("/", [PageController::class, "transaction"])->name("transaction");
+        Route::get("/{id}", [TransactionController::class, "show"])->name("transaction.show");
+        Route::post("/", [TransactionController::class, "store"])->name("transaction.store");
+        Route::put("/{id}/done", [TransactionController::class, "done"])->name("admin.transaction.done");
+    });
 
     Route::prefix("admin")->group(function () {
         Route::get("/dashboard", [PageController::class, "dashboard"])->name("admin.dashboard");
@@ -65,6 +99,14 @@ Route::middleware("auth")->group(function () {
             Route::put("/{id}", [ProductController::class, "update"])->name("admin.product.update");
             Route::delete("/{id}", [ProductController::class, "destroy"])->name("admin.product.destroy");
             Route::post("/price-form/{id}", [ProductController::class, "price_form"])->name("admin.product.price-form");
+        });
+
+        Route::prefix("transaction")->group(function () {
+            Route::get("/", [TransactionController::class, "index"])->name("admin.transaction.index");
+            Route::delete("/{id}", [TransactionController::class, "destroy"])->name("admin.transaction.destroy");
+
+            Route::put("/{id}/confirm", [TransactionController::class, "confirm"])->name("admin.transaction.confirm");
+            Route::put("/{id}/delivery", [TransactionController::class, "delivery"])->name("admin.transaction.delivery");
         });
     });
 });

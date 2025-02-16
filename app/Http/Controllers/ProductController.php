@@ -214,4 +214,18 @@ class ProductController extends Controller
             ])->render(),
         ])->setStatusCode(200);
     }
+
+    public function get_stock($productID, $variant1, $variant2)
+    {
+        $product = ProductDetail::where("product_id", $productID)
+            ->where("variant1_id", $variant1)
+            ->where("variant2_id", $variant2 == "null" ? null : $variant2)
+            ->first();
+
+        return response()->json([
+            "price" => format_rupiah($product->price, true),
+            "stock" => $product->stock,
+            "image" => $product->image
+        ])->setStatusCode(200);
+    }
 }

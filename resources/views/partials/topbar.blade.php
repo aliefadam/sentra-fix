@@ -1,4 +1,4 @@
-<nav class="fixed top-0 z-50 w-full shadow-md bg-white border-b border-gray-200">
+<nav class="fixed top-0 z-20 w-full shadow-md bg-white border-b border-gray-200">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start">
@@ -34,15 +34,18 @@
                             <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50"
                                 id="user-menu">
                                 <div class="px-4 py-3">
-                                    <p class="text-sm font-medium">John Doe</p>
+                                    <p class="text-sm font-medium">{{ auth()->user()->name }}</p>
                                     <p class="text-sm text-gray-600 truncate">
-                                        john@example.com
+                                        {{ auth()->user()->email }}
                                     </p>
                                 </div>
                                 <hr class="border-gray-200" />
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Ganti
-                                    Password</a><a href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Keluar</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    Ganti Password
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    Keluar
+                                </a>
                             </div>
                         </div>
                     </div>

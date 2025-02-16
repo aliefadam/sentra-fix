@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sentra Fix - {{ $title }}</title>
+    <title>Sentra Fix - Simulasi Pembayaran</title>
 
     {{-- Font Poppins --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,30 +53,44 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
-<body class="font-[Poppins] bg-gray-50">
+<body class="font-[Poppins]">
     @include('partials.notification')
-    @include('partials.navbar')
 
-    <div class="min-h-[60vh] mt-16">
-        @yield('content')
+    <div class="absolute top-10 left-0 right-0 flex justify-center">
+        <img class="drop-shadow-lg size-16 object-cover" src="{{ asset('imgs/logo-sentra-fix-removebg-preview.png') }}"
+            alt="">
     </div>
 
-    @include('partials.footer')
+    <div class="bg-gray-50 w-full h-screen flex justify-center items-center">
+        <main class="w-full flex items-center flex-col">
+            <div class="text-center text-pink-700">
+                <h1 class="poppins-black text-4xl">SENTRA FIX</h1>
+                <p class="poppins-semibold text-lg">SIMULASI PEMBAYARAN</p>
+            </div>
+            <div class="bg-white border-2 border-pink-700 mt-10 p-10 rounded-md shadow-md w-1/3">
+                <form action="{{ route('simulate_payment.store') }}" class="w-full" method="POST">
+                    @csrf
+                    <div class="mb-5">
+                        <label for="invoice"
+                            class="block mb-3 text-sm text-center font-medium text-gray-900 dark:text-white">
+                            Masukkan Nomor Invoice
+                        </label>
+                        <input type="text" id="invoice" name="invoice"
+                            class="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                            required />
+                    </div>
+                    <button type="submit"
+                        class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 w-full text-center dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">
+                        Bayar
+                    </button>
+                </form>
+            </div>
+        </main>
+    </div>
 
-    {{-- Flowbite --}}
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-
-    {{-- Jquery --}}
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-    {{-- Select2 --}}
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.select-2-dropdown').select2();
-        });
-    </script>
-    @yield('script')
+    <div class="absolute bottom-10 left-0 right-0 flex justify-center">
+        <p class="text-pink-700 poppins-medium">© 2025 SentraFix. Hak Cipta Dilindungi.</p>
+    </div>
 </body>
 
 </html>
