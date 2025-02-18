@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\ShippingStatus;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
@@ -14,9 +15,10 @@ class TransactionController extends Controller
 {
     public function index()
     {
+        $transactions = Auth::user()->store->transactions;
         return view("backend.transaction.index", [
             "title" => "Transaksi",
-            "transactions" => Transaction::all(),
+            "transactions" => $transactions,
         ]);
     }
 
@@ -31,9 +33,11 @@ class TransactionController extends Controller
         $shipping_service = explode("_", $request->shipping)[0];
         $shipping_cost = explode("_", $request->shipping)[2];
         $invoice = "INV-SENTRAFIX-" . Str::upper(Str::random(10)) .  Auth::user()->id . "-" . date("ymdhis");
+        $store_id = 0;
 
         $sub_total = 0;
         foreach ($product as $p) {
+            $store_id = Product::find($p->id)->user->store->id;
             $sub_total += $p->total;
         }
 
@@ -46,6 +50,7 @@ class TransactionController extends Controller
             $newTransaction = Transaction::create([
                 "invoice" => $invoice,
                 "user_id" => Auth::user()->id,
+                "store_id" => $store_id,
                 "sub_total_product" => $sub_total,
                 "shipping_address" => getDetailAddress(),
                 "shipping_cost" => $shipping_cost,

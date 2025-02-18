@@ -58,7 +58,8 @@
                                 class="!rounded h-4 w-4 text-custom accent-pink-600 focus:ring-pink-600 text-pink-600 border-gray-300" />
                             <label for="remember" class="ml-2 block text-sm text-gray-700">Ingat saya</label>
                         </div>
-                        <a href="#" class="text-sm font-medium text-custom hover:text-custom/80">Lupa kata
+                        <a href="{{ route('forgot-password') }}"
+                            class="text-sm font-medium text-custom hover:text-custom/80">Lupa kata
                             sandi?</a>
                     </div>
                     <button type="submit"
@@ -71,11 +72,11 @@
                             <span class="px-2 bg-gray-50 text-gray-500">atau lanjutkan dengan</span>
                         </div>
                     </div>
-                    <button type="submit"
+                    <a href="{{ route('login.google') }}"
                         class="cursor-pointer text-black bg-white border border-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 w-full flex justify-center items-center ">
                         <img src="https://www.google.com/favicon.ico" alt="Google" class="w-5 h-5 mr-2" />
                         Masuk dengan Google
-                    </button>
+                    </a>
                     <p class="text-center text-sm text-gray-600 mt-8">
                         Belum punya akun?
                         <a href="{{ route('register') }}" class="font-medium text-pink-600 hover:text-pink-700">Daftar

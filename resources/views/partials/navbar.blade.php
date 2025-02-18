@@ -1,4 +1,4 @@
-<header class="fixed top-0 left-0 right-0 z-10 bg-white shadow-md">
+<header class="fixed top-0 left-0 right-0 z-20 bg-white shadow-md">
     <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav class="flex items-center justify-between h-16">
             <div class="flex-shrink-0 flex items-center gap-1.5">
@@ -16,7 +16,6 @@
                 {{-- <a href="#" class="font-medium">Transaksi</a> --}}
                 <a href="{{ route('about') }}" class="font-medium {{ active_navbar('about') }}">Tentang Kami</a>
             </div>
-
             @auth
                 <div class="flex items-center space-x-6 relative">
                     <button class="text-gray-700 hover:text-custom"

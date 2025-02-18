@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductDetail;
 use App\Models\ShippingStatus;
+use App\Models\SubCategory;
 use App\Models\Transaction;
+use App\Models\Variant;
 use App\Models\VariantDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,10 +26,20 @@ class PageController extends Controller
         ]);
     }
 
-    public function products()
+    public function products(Request $request)
     {
+        $products = [];
+        if ($request->has("colors") || $request->has("price_range")) {
+            $products = filterProduct($request);
+        } else {
+            $products = Product::all();
+        }
         return view('frontend.products', [
             "title" => "Daftar Produk",
+            "products" => $products,
+            "selectedColors" => $request->colors,
+            "selectedPrice" => $request->price_range,
+            "colors" => Variant::find(1)->variantDetails,
         ]);
     }
 
@@ -73,6 +86,7 @@ class PageController extends Controller
     public function product_checkout($slug, Request $request)
     {
         $product = Product::where('slug', $slug)->first();
+        $store_city_id = json_decode($product->user->addresses()->first()->city)->id;
         if (isset($request->variant2_id)) {
             $variant_label = getTitleVariant1($product->id) . " " . VariantDetail::find($request->variant1_id)->name . " - " . getTitleVariant2($product->id) . " " . VariantDetail::find($request->variant2_id)->name;
         } else {
@@ -84,6 +98,7 @@ class PageController extends Controller
             "products" => [
                 (object)[
                     "id" => $product->id,
+                    "user_id" => $product->user_id,
                     "name" => $product->name,
                     "qty" => $request->qty,
                     "variant1-id" => $request->variant1_id,
@@ -94,6 +109,7 @@ class PageController extends Controller
                     "image" => getProduct($product->id, $request->variant1_id, $request->variant2_id)->image
                 ]
             ],
+            "store_city_id" => $store_city_id,
             "addresses" => Address::where("user_id", Auth::user()->id)->get(),
             "active_address" => Address::where("user_id", Auth::user()->id)->where("is_active", true)->first(),
         ]);
@@ -112,13 +128,23 @@ class PageController extends Controller
     {
         return view("frontend.categories", [
             "title" => "Kategori",
+            "categories" => Category::all(),
         ]);
     }
 
     public function category($slug)
     {
+        $category = Category::where("slug", $slug)->first();
+        if (!$category) {
+            $category = SubCategory::where("slug", $slug)->first();
+        }
+
+        $products = $category->products;
+
         return view("frontend.category", [
             "title" => "Kategori",
+            "category" => $category,
+            "products" => $products,
         ]);
     }
 
@@ -185,6 +211,14 @@ class PageController extends Controller
                 "text" => "Transaksi tidak ditemukan",
             ]);
         }
+    }
+
+    public function register_seller()
+    {
+        return view("frontend.register-seller", [
+            "title" => "Pendaftaran Seller",
+            "categories" => Category::all(),
+        ]);
     }
 
     public function dashboard()

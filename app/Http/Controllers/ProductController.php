@@ -8,21 +8,37 @@ use App\Models\SubCategory;
 use App\Models\Variant;
 use App\Models\VariantDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+    private $file;
+    private $role;
+
+    public function __construct()
+    {
+        $this->file = Auth::user() && Auth::user()->role == "admin" ? "product" : "seller-product";
+        $this->role = Auth::user()->role;
+    }
+
     public function index()
     {
-        return view("backend.product.index", [
+        $user = Auth::user();
+        if ($user->role == "admin") {
+            $products = Product::all();
+        } else {
+            $products = Product::where("user_id", $user->id)->get();
+        }
+        return view("backend.{$this->file}.index", [
             "title" => "Produk",
-            "products" => Product::all(),
+            "products" => $products,
         ]);
     }
 
     public function create()
     {
-        return view("backend.product.create", [
+        return view("backend.{$this->file}.create", [
             "title" => "Tambah Produk",
             "sub_categories" => SubCategory::all(),
             "variants" => Variant::all(),
@@ -32,11 +48,14 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
+        $user_id = Auth::user()->id;
         try {
             $newProduct = Product::create([
+                "user_id" => $user_id,
                 "name" => $request->name,
                 "slug" => str()->slug($request->name),
-                "category_id" => $request->category,
+                "category_id" => SubCategory::find($request->category)->category->id,
+                "sub_category_id" => $request->category,
                 "description" => $request->description,
             ]);
 
@@ -60,7 +79,7 @@ class ProductController extends Controller
             }
 
             DB::commit();
-            return redirect()->route("admin.product.index")->with("notification", [
+            return redirect()->route("{$this->role}.product.index")->with("notification", [
                 "icon" => "success",
                 "title" => "Berhasil",
                 "text" => "Produk berhasil ditambahkan",
@@ -90,7 +109,7 @@ class ProductController extends Controller
             $variant2Selected = [];
         }
 
-        return view("backend.product.edit", [
+        return view("backend.{$this->file}.edit", [
             "title" => "Edit Produk {$product->name}",
             "product" => $product,
             "sub_categories" => SubCategory::all(),
@@ -108,7 +127,8 @@ class ProductController extends Controller
             $product->update([
                 "name" => $request->name,
                 "slug" => str()->slug($request->name),
-                "category_id" => $request->category,
+                "category_id" => SubCategory::find($request->category)->category->id,
+                "sub_category_id" => $request->category,
                 "description" => $request->description,
             ]);
 
@@ -172,7 +192,7 @@ class ProductController extends Controller
             }
 
             DB::commit();
-            return redirect()->route("admin.product.index")->with("notification", [
+            return redirect()->route("{$this->role}.product.index")->with("notification", [
                 "icon" => "success",
                 "title" => "Berhasil",
                 "text" => "Produk berhasil disimpan",

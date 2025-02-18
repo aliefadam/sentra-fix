@@ -5,28 +5,32 @@
         <h1 class="text-3xl font-bold text-gray-900 mb-8">Kategori Produk</h1>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-            <div class="bg-white rounded-lg shadow p-4 lg:p-6 hover:shadow-lg transition-shadow">
-                <h2 class="text-xl font-semibold mb-4 text-pink-600">
-                    <i class="fas fa-mobile-alt mr-2"></i>
-                    Elektronik
-                </h2>
-                <ul class="space-y-3">
-                    <li>
-                        <a href="{{ route('category', ['slug' => 'smartphone']) }}"
-                            class="text-black hover:scale-105 block duration-200">Smartphone</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-black hover:scale-105 block duration-200">Laptop &amp; Komputer</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-black hover:scale-105 block duration-200">Audio &amp; Speaker</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-black hover:scale-105 block duration-200">Aksesoris Elektronik</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="bg-white rounded-lg shadow p-4 lg:p-6 hover:shadow-lg transition-shadow">
+            @foreach ($categories as $category)
+                <div class="bg-white rounded-lg shadow p-4 lg:p-6 hover:shadow-lg transition-shadow">
+                    <h2 class="text-xl font-semibold mb-4 text-pink-600">
+                        <i class="{{ $category->icon }} mr-2"></i>
+                        {{ $category->name }}
+                    </h2>
+                    <ul class="space-y-3">
+                        @foreach ($category->subCategories as $sub)
+                            <li>
+                                <a href="{{ route('category', ['slug' => $sub->slug]) }}"
+                                    class="text-black hover:scale-105 block duration-200">{{ $sub->name }}</a>
+                            </li>
+                        @endforeach
+                        {{-- <li>
+                            <a href="#" class="text-black hover:scale-105 block duration-200">Laptop &amp; Komputer</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-black hover:scale-105 block duration-200">Audio &amp; Speaker</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-black hover:scale-105 block duration-200">Aksesoris Elektronik</a>
+                        </li> --}}
+                    </ul>
+                </div>
+            @endforeach
+            {{-- <div class="bg-white rounded-lg shadow p-4 lg:p-6 hover:shadow-lg transition-shadow">
                 <h2 class="text-xl font-semibold text-pink-600 mb-4">
                     <i class="fas fa-tshirt mr-2"></i>
                     Fashion
@@ -125,7 +129,7 @@
                         <a href="#" class="text-black hover:scale-105 block duration-200">Makanan Kemasan</a>
                     </li>
                 </ul>
-            </div>
+            </div> --}}
         </div>
     </main>
 @endsection

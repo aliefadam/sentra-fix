@@ -35,6 +35,9 @@
                             </div>
                             {{-- <span class="ml-2 text-sm text-gray-500">(95 ulasan)</span> --}}
                         </div>
+                        {{-- <a href="" class="text-pink-600 hover:text-pink-700 block poppins-medium mt-4 mb-2">
+                            <i class="fa-regular fa-store"></i> {{ $product->user->store->name }}
+                        </a> --}}
                     </div>
                     <div>
                         <p class="text-2xl sm:text-3xl font-bold text-custom" id="product-price">
@@ -95,6 +98,24 @@
                         <button type="button"
                             class="text-pink-700 bg-white border border-pink-700 hover:bg-pink-100 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-3 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Masukkan
                             Keranjang</button>
+                    </div>
+                    <div class="border-t pt-4 flex justify-between">
+                        <div class="flex items-center gap-4">
+                            <img class="size-12 object-cover rounded-full shadow-md"
+                                src="/uploads/stores/{{ $product->user->store->image }}" alt="">
+                            <div class="flex flex-col">
+                                <span class="text-gray-900 poppins-medium">
+                                    <i class="fa-regular fa-store"></i> {{ $product->user->store->name }}
+                                </span>
+                                <span class="text-sm text-gray-800">
+                                    {{ json_decode($product->user->addresses()->first()->city)->name }}
+                                </span>
+                            </div>
+                        </div>
+                        <a href="{{ route('store.show', $product->user->store->slug) }}"
+                            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-xs px-5 py-2.5 h-fit text-center dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                            Kunjungi Toko
+                        </a>
                     </div>
                     <div class="prose prose-sm max-w-none">
                         <h3 class="text-lg font-medium">Deskripsi Produk</h3>

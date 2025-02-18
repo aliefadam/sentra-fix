@@ -21,7 +21,7 @@
                     <div class="flex items-center">
                         <div class="mr-3 text-right">
                             <p class="text-sm font-medium">{{ auth()->user()->name }}</p>
-                            <p class="text-xs text-gray-500">Admin</p>
+                            <p class="text-xs text-gray-500 capitalize">{{ auth()->user()->role }}</p>
                         </div>
                         <div class="relative">
                             <button type="button"

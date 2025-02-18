@@ -15,10 +15,12 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         Product::create([
+            "user_id" => 3,
             "name" => "Wireless Headphone",
             "slug" => "wireless-headphone",
-            "category_id" => 4,
-            "description" => "<p>Testing Audio</p>",
+            "category_id" => 2,
+            "sub_category_id" => 6,
+            "description" => '<p>Wireless Headphone Pro menghadirkan pengalaman mendengarkan musik yang luar biasa dengan teknologi noise cancelling terbaru. Dilengkapi dengan:</p><ul><li>Driver 40mm dengan kualitas suara premium</li><li>Active Noise Cancelling untuk meredam suara luar</li><li>Baterai tahan hingga 30 jam</li><li>Konektivitas Bluetooth 5.0</li><li>Desain ergonomis dengan bahan premium</li></ul><p>&nbsp;</p><p>&nbsp;</p>',
         ]);
 
         ProductDetail::create([

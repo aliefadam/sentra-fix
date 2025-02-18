@@ -37,7 +37,13 @@
                                 {{ $loop->iteration }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $product->name }}
+                                <div>
+                                    {{ $product->name }}
+                                </div>
+                                <hr class="my-2">
+                                <div class="poppins-semibold">
+                                    <i class="fa-regular fa-store mr-1"></i> {{ $product->user->store->name }}
+                                </div>
                             </td>
                             <td class="px-6 py-4">
                                 <table class="w-full text-sm text-left rtl:text-right text-gray-500">

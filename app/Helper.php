@@ -1,12 +1,24 @@
 <?php
 
 use App\Models\Address;
+use App\Models\Menu;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\Variant;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
+
+if (!function_exists("getMenuSidebar")) {
+    function getMenuSidebar()
+    {
+        if (Auth::check()) {
+            return Menu::where("role", Auth::user()->role)->get();
+        }
+        return;
+    }
+}
 
 if (!function_exists("active_navbar")) {
     function active_navbar($url)
@@ -216,5 +228,127 @@ if (!function_exists("getStatusBadges")) {
         }
 
         return "$color text-xs font-medium me-2 px-2.5 py-2 rounded-md shadow-sm";
+    }
+}
+
+if (!function_exists("getStatusStore")) {
+    function getStatusStore($status)
+    {
+        if ($status == "waiting") {
+            return "Menunggu Konfirmasi";
+        } else if ($status == "active") {
+            return "Aktif";
+        } else if ($status == "inactive") {
+            return "Tidak Aktif";
+        }
+    }
+}
+
+if (!function_exists("getStatusStoreBadges")) {
+    function getStatusStoreBadges($status)
+    {
+        $color = "";
+        if ($status == "waiting") {
+            $color = "bg-yellow-100 text-yellow-800";
+        } else if ($status == "active") {
+            $color = "bg-green-100 text-green-800";
+        } else if ($status == "inactive") {
+            $color = "bg-red-100 text-red-800";
+        }
+
+        return "$color text-xs font-medium me-2 px-2.5 py-2 rounded-md shadow-sm";
+    }
+}
+
+if (!function_exists("getRole")) {
+    function getRole()
+    {
+        if (Auth::check()) {
+            return Auth::user()->role;
+        }
+
+        return;
+    }
+}
+
+if (!function_exists("filterProduct")) {
+    function filterProduct($request)
+    {
+        $filteredData = [];
+        $productIds = [];
+
+        // Filtering berdasarkan warna
+        if ($request->has("colors")) {
+            $products = [];
+
+            foreach ($request->colors as $color) {
+                $variant1 = Variant::find(1)->variantDetails()->where("name", $color)->first()->products_variant_1 ?? [];
+                $variant2 = Variant::find(2)->variantDetails()->where("name", $color)->first()->products_variant_2 ?? [];
+
+                array_push($products, $variant1, $variant2);
+            }
+
+            $products = array_filter($products);
+            foreach ($products as $group) {
+                foreach ($group as $item) {
+                    if (!in_array($item['product_id'], $productIds)) {
+                        $filteredData[$item['product_id']] = $item->product;
+                        $productIds[] = $item['product_id'];
+                    }
+                }
+            }
+        }
+
+        // Filtering berdasarkan harga
+        if ($request->has("price_range")) {
+            $price_range = 0;
+            $price_type = "";
+            $start_price = 0;
+            $end_price = 0;
+
+            if (str_contains(
+                $request->price_range,
+                "above"
+            )) {
+                $price_range = explode("_", $request->price_range)[1];
+                $price_type = "above";
+            } else if (str_contains($request->price_range, "below")) {
+                $price_range = explode("_", $request->price_range)[1];
+                $price_type = "below";
+            } else {
+                $start_price = explode("_", $request->price_range)[0];
+                $end_price = explode("_", $request->price_range)[1];
+            }
+
+            $priceFilteredProducts = [];
+
+            if ($price_range != 0) {
+                if ($price_type == "above") {
+                    $priceFilteredProducts = ProductDetail::where("price", ">", $price_range)->get();
+                } else {
+                    $priceFilteredProducts = ProductDetail::where("price", "<", $price_range)->get();
+                }
+            } else {
+                $priceFilteredProducts = ProductDetail::whereBetween("price", [$start_price, $end_price])->get();
+            }
+
+            $priceFilteredData = [];
+            foreach ($priceFilteredProducts as $item) {
+                $productId = $item['product_id'];
+                if (!isset($priceFilteredData[$productId]) || $item['price'] < $priceFilteredData[$productId]['price']) {
+                    $priceFilteredData[$productId] = $item->product;
+                }
+            }
+
+            // Jika sebelumnya dilakukan filtering berdasarkan warna, maka kita ambil irisan dari kedua hasil filter
+            if ($request->has("colors")) {
+                $filteredData = array_intersect_key($filteredData, $priceFilteredData);
+            } else {
+                $filteredData = $priceFilteredData;
+            }
+        }
+
+        $products = array_values($filteredData);
+        return $products;
     }
 }

@@ -500,8 +500,8 @@
                 url: "/rajaongkir/get-shipping-cost",
                 data: {
                     _token: "{{ csrf_token() }}",
-                    origin: "{{ env('ORIGIN_NAME') }}",
-                    originType: "{{ env('ORIGIN_TYPE') }}",
+                    origin: "{{ $store_city_id }}",
+                    originType: "city",
                     destination: subdistrictID,
                     destinationType: "subdistrict",
                     weight: "2000",

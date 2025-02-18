@@ -11,6 +11,14 @@
                                 alt="Promo Banner" />
                             <div class="absolute inset-0 bg-gradient-to-r from-custom/80 to-transparent flex items-center">
                                 <div class="ml-4 sm:ml-8 md:ml-16 text-white">
+                                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4">Promo Spesial!</h2>
+                                    <p class="text-base sm:text-lg md:text-xl mb-4 sm:mb-6">Dapatkan tambahan diskon 10%
+                                        untuk pembelian pertama</p>
+                                    <a href="{{ route('products') }}"
+                                        class="bg-white text-custom px-8 py-3 rounded-button font-semibold hover:bg-gray-100 focus:ring-4 focus:ring-white/50">Belanja
+                                        Sekarang</a>
+                                </div>
+                                {{-- <div class="ml-4 sm:ml-8 md:ml-16 text-white">
                                     <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4">Diskon
                                         Besar-Besaran</h2>
                                     <p class="text-base sm:text-lg md:text-xl mb-4 sm:mb-6">Hemat hingga 70% untuk semua
@@ -18,7 +26,7 @@
                                     <button
                                         class="bg-white text-custom px-8 py-3 rounded-button font-semibold hover:bg-gray-100 focus:ring-4 focus:ring-white/50">Belanja
                                         Sekarang</button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </li>
@@ -38,7 +46,7 @@
                 <h2 class="text-2xl font-semibold mb-8">Kategori Produk</h2>
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
                     @foreach ($categories as $category)
-                        <a href="#" class="group">
+                        <a href="{{ route('category', ['slug' => $category->slug]) }}" class="group">
                             <div class="bg-white rounded-lg p-6 text-center shadow-sm hover:shadow-md transition-shadow">
                                 <div
                                     class="w-16 h-16 mx-auto mb-4 bg-custom/10 rounded-full flex items-center justify-center">
@@ -76,8 +84,12 @@
                                     </div>
                                     {{-- <span class="text-sm text-gray-500 ml-2">(95)</span> --}}
                                 </div>
-                                <h3 class="font-medium mb-2">{{ $product->name }}</h3>
-                                <p class="text-custom font-semibold">{{ getLowerPriceProduct($product->id) }}</p>
+                                <h3 class="text-pink-600 poppins-medium text-sm mt-1 mb-2">
+                                    <i class="fa-regular fa-store"></i> {{ $product->user->store->name }}
+                                </h3>
+                                <h3 class="font-medium text-lg">{{ $product->name }}</h3>
+                                <p class="text-custom font-semibold text-gray-700">{{ getLowerPriceProduct($product->id) }}
+                                </p>
                             </div>
                         </a>
                     @endforeach
@@ -141,7 +153,7 @@
                 </div>
             </section>
 
-            <section class="mb-12 bg-gradient-to-r from-custom to-pink-500 rounded-lg">
+            {{-- <section class="mb-12 bg-gradient-to-r from-custom to-pink-500 rounded-lg">
                 <div class="px-4 sm:px-8 py-8 sm:py-12 text-center text-white">
                     <h2 class="text-2xl sm:text-3xl font-bold mb-2 sm:mb-4">Promo Spesial!</h2>
                     <p class="text-base sm:text-xl mb-4 sm:mb-6">Dapatkan tambahan diskon 10% untuk pembelian pertama
@@ -150,6 +162,53 @@
                         class="bg-white text-custom px-8 py-3 rounded-button font-semibold hover:bg-gray-100 focus:ring-4 focus:ring-white/50">Klaim
                         Sekarang</button>
                 </div>
+            </section> --}}
+
+            <section
+                class="mb-12 relative w-full h-[500px] flex items-center justify-center overflow-hidden bg-gradient-to-r from-black to-pink-800 rounded-md">
+                <div class="absolute inset-0 bg-black/3"></div>
+                <div class="container mx-auto px-6 relative z-10">
+                    <div class="max-w-4xl mx-auto text-center">
+                        <h1 class="text-5xl font-bold text-white mb-6 leading-tight"> Mulai Perjalanan Bisnis
+                            Online Anda Bersama Kami
+                        </h1>
+                        <p class="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto"> Jangkau jutaan pembeli
+                            potensial, kelola bisnis dengan mudah, dan kembangkan usaha Anda ke level berikutnya dengan
+                            platform e-commerce terpercaya
+                        </p>
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
+                            <a href="{{ route('register-seller') }}"
+                                class="!rounded-button bg-white text-custom hover:bg-gray-100 px-8 py-4 font-semibold  transition-all flex items-center gap-2">
+                                <i class="fas fa-store"></i>
+                                Daftar Sekarang
+                            </a>
+                            {{-- <button
+                                class="!rounded-button border-2 border-white text-white hover:bg-white/10 px-8 py-4 font-semibold text-lg transition-all flex items-center gap-2">
+                                <i class="fas fa-play-circle"></i>
+                                Pelajari Lebih Lanjut
+                            </button> --}}
+                        </div>
+                        {{-- <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
+                            <div class="text-center text-white">
+                                <div class="text-3xl font-bold">50JT+</div>
+                                <div class="text-sm text-white/80">Pengguna Aktif</div>
+                            </div>
+                            <div class="text-center text-white">
+                                <div class="text-3xl font-bold">100K+</div>
+                                <div class="text-sm text-white/80">Penjual Sukses</div>
+                            </div>
+                            <div class="text-center text-white">
+                                <div class="text-3xl font-bold">24/7</div>
+                                <div class="text-sm text-white/80">Dukungan Tim</div>
+                            </div>
+                            <div class="text-center text-white">
+                                <div class="text-3xl font-bold">99%</div>
+                                <div class="text-sm text-white/80">Tingkat Kepuasan</div>
+                            </div>
+                        </div> --}}
+                    </div>
+                </div>
+                <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/20 to-transparent"></div>
             </section>
 
             <section class="mb-12">
@@ -177,8 +236,12 @@
                                     </div>
                                     {{-- <span class="text-sm text-gray-500 ml-2">(95)</span> --}}
                                 </div>
-                                <h3 class="font-medium mb-2">{{ $product->name }}</h3>
-                                <p class="text-custom font-semibold">{{ getLowerPriceProduct($product->id) }}</p>
+                                <h3 class="text-pink-600 poppins-medium text-sm mt-1 mb-2">
+                                    <i class="fa-regular fa-store"></i> {{ $product->user->store->name }}
+                                </h3>
+                                <h3 class="font-medium text-lg">{{ $product->name }}</h3>
+                                <p class="text-custom font-semibold text-gray-700">{{ getLowerPriceProduct($product->id) }}
+                                </p>
                             </div>
                         </a>
                     @endforeach

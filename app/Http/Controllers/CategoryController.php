@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -30,12 +31,14 @@ class CategoryController extends Controller
         try {
             $newCategory = Category::create([
                 "name" => $request->name,
+                "slug" => Str::slug($request->name),
                 "icon" => $request->icon,
             ]);
             foreach ($request->sub_category_name as $name) {
                 SubCategory::create([
                     "category_id" => $newCategory->id,
                     "name" => $name,
+                    "slug" => Str::slug($name),
                 ]);
             }
             DB::commit();
@@ -75,6 +78,7 @@ class CategoryController extends Controller
             $category = Category::find($id);
             $category->update([
                 "name" => $request->name,
+                "slug" => Str::slug($request->name),
                 "icon" => $request->icon,
             ]);
 
@@ -90,6 +94,7 @@ class CategoryController extends Controller
                     SubCategory::create([
                         "category_id" => $category->id,
                         "name" => $name,
+                        "slug" => Str::slug($name),
                     ]);
                 }
             }

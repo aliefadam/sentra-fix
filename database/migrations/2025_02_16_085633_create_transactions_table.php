@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("invoice");
             $table->foreignId("user_id");
+            $table->foreignId("store_id");
             $table->double("sub_total_product");
             $table->text("shipping_address");
             $table->double("shipping_cost");

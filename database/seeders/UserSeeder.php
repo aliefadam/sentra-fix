@@ -17,14 +17,24 @@ class UserSeeder extends Seeder
             'name' => 'Sentra Fix Administrator',
             "email" => "sentrafix@admin.com",
             "password" => bcrypt("123"),
+            "phone" => "90909090",
             "role" => "admin",
         ]);
 
         User::create([
             'name' => 'Alief',
+            "email" => "aliefadam6@gmail.com",
+            "password" => bcrypt("123"),
+            "phone" => "081234567890",
+            "role" => "user",
+        ]);
+
+        User::create([
+            'name' => 'Adam',
             "email" => "aliefadam21@gmail.com",
             "password" => bcrypt("123"),
-            "role" => "user",
+            "phone" => "081234567890",
+            "role" => "seller",
         ]);
     }
 }

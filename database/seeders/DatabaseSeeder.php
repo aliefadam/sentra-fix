@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
             VariantSeeder::class,
             VariantDetailSeeder::class,
             ProductSeeder::class,
+            MenuSeeder::class,
+            StoreSeeder::class,
+            AddressSeeder::class,
         ]);
     }
 }
