@@ -177,13 +177,6 @@ class PageController extends Controller
         ]);
     }
 
-    public function cart()
-    {
-        return view("frontend.cart", [
-            "title" => "Keranjang",
-        ]);
-    }
-
     public function simulate_payment()
     {
         return view("simulate-payment");

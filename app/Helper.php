@@ -1,10 +1,12 @@
 <?php
 
 use App\Models\Address;
+use App\Models\Cart;
 use App\Models\Menu;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\Variant;
+use App\Models\VariantDetail;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -130,6 +132,18 @@ if (!function_exists("getTitleVariant2")) {
     {
         $product = Product::find($productID);
         return $product->productDetails->first()->variant2 ? $product->productDetails->first()->variant2->variant->name : '';
+    }
+}
+
+if (!function_exists("getVariantLabel")) {
+    function getVariantLabel($product, $variant1_id, $variant2_id)
+    {
+        if (isset($request->variant2_id)) {
+            $variant_label = getTitleVariant1($product->id) . " " . VariantDetail::find($variant1_id)->name . " - " . getTitleVariant2($product->id) . " " . VariantDetail::find($variant2_id)->name;
+        } else {
+            $variant_label = getTitleVariant1($product->id) . " " . VariantDetail::find($variant1_id)->name;
+        }
+        return $variant_label;
     }
 }
 
@@ -350,5 +364,25 @@ if (!function_exists("filterProduct")) {
 
         $products = array_values($filteredData);
         return $products;
+    }
+}
+
+
+if (!function_exists("getCarts")) {
+    function getCarts()
+    {
+        if (Auth::check()) {
+            return Cart::where("user_id", Auth::user()->id)->limit(3)->get();
+        }
+    }
+}
+
+
+if (!function_exists("getCartCount")) {
+    function getCartCount()
+    {
+        if (Auth::check()) {
+            return Cart::where("user_id", Auth::user()->id)->count();
+        }
     }
 }

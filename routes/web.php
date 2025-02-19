@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
@@ -64,7 +65,6 @@ Route::middleware("auth")->group(function () {
     Route::get("/payment-waiting/{invoice}", [PageController::class, "payment_waiting"])->name("payment.waiting");
     Route::get("/profile", [PageController::class, "profile"])->name("profile");
     Route::get("/profile/change-password", [PageController::class, "change_password"])->name("profile.change-password");
-    Route::get("/cart", [PageController::class, "cart"])->name("cart");
 
     Route::prefix("address")->group(function () {
         Route::get("/", [AddressController::class, "index"])->name("address.index");
@@ -81,6 +81,14 @@ Route::middleware("auth")->group(function () {
         Route::get("/{id}", [TransactionController::class, "show"])->name("transaction.show");
         Route::post("/", [TransactionController::class, "store"])->name("transaction.store");
         Route::put("/{id}/done", [TransactionController::class, "done"])->name("admin.transaction.done");
+    });
+
+    Route::prefix("cart")->group(function () {
+        Route::get("/", [CartController::class, "index"])->name("cart");
+        Route::post("/total", [CartController::class, "get_total"])->name("cart.total");
+        Route::post("/", [CartController::class, "store"])->name("cart.store");
+        Route::delete("/{id}", [CartController::class, "destroy"])->name("cart.destroy");
+        Route::delete("/delete/all", [CartController::class, "destroy_all"])->name("cart.destroy.all");
     });
 
     Route::prefix("admin")->group(function () {

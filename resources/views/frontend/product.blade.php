@@ -95,7 +95,7 @@
                         <button type="submit"
                             class="block text-center text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-3 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Beli
                             Sekarang</button>
-                        <button type="button"
+                        <button type="button" id="btn-add-to-cart" data-product-id="{{ $product->id }}"
                             class="text-pink-700 bg-white border border-pink-700 hover:bg-pink-100 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-3 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Masukkan
                             Keranjang</button>
                     </div>
@@ -137,6 +137,7 @@
         $(".btn-minus-quantity").click(function() {
             changeQuantity("minus");
         });
+        $("#btn-add-to-cart").click(addCart);
 
         function changeImage() {
             const image = $(this).data("image");
@@ -191,6 +192,77 @@
                     $(".btn-change-image").removeClass("border-2 border-pink-700");
                     $(`.btn-change-image[data-image="/uploads/products/${image}"]`).addClass(
                         "border-2 border-pink-700");
+                }
+            });
+
+        }
+
+        function addCart() {
+
+            const isLogin = @json(Auth::check());
+            if (!isLogin) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Perhatian",
+                    text: "Anda belum login, silahkan login terlebih dahulu",
+                    confirmButton: "Iya",
+                    cancelButton: "Batal",
+                    confirmButtonText: "Login",
+                    confirmButtonColor: "#6366F1",
+                    showCancelButton: true,
+                    cancelButtonColor: "#EF4444",
+                    cancelButtonText: "Batal",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.href = "/login";
+                    }
+                });
+                return;
+            }
+
+            const productID = $(this).data("product-id");
+            const variant1ID = $("input[name='variant1_id']:checked").val();
+            const variant2ID = $("input[name='variant2_id']:checked").val() ?? null;
+            const qty = +$("#product-quantity-input").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/cart",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    productID: productID,
+                    variant1ID: variant1ID,
+                    variant2ID: variant2ID,
+                    qty: qty,
+                },
+                beforeSend: function() {
+                    Swal.fire({
+                        title: "Loading...",
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                },
+                success: function(response) {
+                    const {
+                        status,
+                        message,
+                        cart_count,
+                        html_list_cart,
+                    } = response;
+                    $("#cart-count").text(cart_count);
+                    $("#container-cart").html(html_list_cart);
+
+                    Swal.close();
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: message.icon,
+                        title: message.title,
+                        text: message.text,
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
                 }
             });
 

@@ -36,93 +36,90 @@
                                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom focus:border-transparent" />
                         </div>
                     </div>
-                    <button class="text-gray-700 hover:text-custom"
-                        onclick="document.getElementById(&#39;user-popup&#39;).classList.remove(&#39;hidden&#39;)">
+                    <button id="dropdown-user" data-dropdown-toggle="dropdown-user-popup"
+                        class="text-gray-700 hover:text-custom" onclick="">
                         <i class="fas fa-user text-xl"></i>
                     </button>
-                    <div id="user-popup" class="hidden absolute top-16 right-0 mt-2 w-80">
-                        <div class="bg-white p-6 rounded-lg shadow-xl w-full">
-                            <div class="flex justify-between items-center mb-4">
-                                <h3 class="text-lg font-semibold">Profil Pengguna</h3>
-                                <button
-                                    onclick="document.getElementById(&#34;user-popup&#34;).classList.add(&#34;hidden&#34;)"
-                                    class="text-gray-500 hover:text-gray-700">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="space-y-4">
-                                <div class="flex items-center space-x-4">
-                                    <img src="{{ asset('imgs/logo-user.png') }}" class="w-16 h-16 rounded-full" />
-                                    <div>
-                                        <p class="font-semibold">{{ auth()->user()->name }}</p>
-                                        <p class="text-gray-500">{{ auth()->user()->email }}</p>
-                                    </div>
-                                </div>
-                                <div class="space-y-2">
-                                    <a href="{{ route('profile') }}"
-                                        class="w-full text-sm block text-center bg-white border-2 border-black text-black py-2.5 px-4 rounded-md hover:bg-opacity-90">
-                                        Edit Profil
-                                    </a>
-                                    <a href="{{ route('transaction') }}"
-                                        class="w-full text-sm block text-center bg-custom text-white py-2.5 px-4 rounded-md hover:bg-opacity-90">
-                                        Daftar Transaksi
-                                    </a>
-                                    <a href="{{ route('logout') }}"
-                                        class="w-full text-sm block text-center bg-red-700 text-white py-2.5 px-4 rounded-md hover:bg-opacity-90">
-                                        Keluar
-                                    </a>
-                                </div>
+                    <div id="dropdown-user-popup"
+                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-md w-72 !-translate-x-[170px] !translate-y-[60px] dark:bg-gray-700 dark:divide-gray-600">
+                        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white flex gap-3 items-center">
+                            <img src="{{ asset('imgs/logo-user.png') }}" class="w-10 h-10 rounded-full" alt="">
+                            <div class="">
+                                <div>{{ auth()->user()->name }}</div>
+                                <div class="font-medium truncate">{{ auth()->user()->email }}</div>
                             </div>
                         </div>
-                    </div>
-                    <button class="text-gray-700 hover:text-custom relative"
-                        onclick="document.getElementById(&#39;cart-popup&#39;).classList.remove(&#39;hidden&#39;)">
-                        <i class="fas fa-shopping-cart text-xl"></i>
-                        <span
-                            class="absolute -top-2 -right-2 bg-pink-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">3</span>
-                    </button>
-                    <div id="cart-popup" class="hidden absolute top-16 right-0 mt-2 w-80">
-                        <div class="bg-white p-6 rounded-lg shadow-xl w-full">
-                            <div class="flex justify-between items-center mb-4">
-                                <h3 class="text-lg font-semibold">Keranjang Belanja</h3>
-                                <button
-                                    onclick="document.getElementById(&#34;cart-popup&#34;).classList.add(&#34;hidden&#34;)"
-                                    class="text-gray-500 hover:text-gray-700">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="space-y-4 mb-4">
-                                <div class="flex items-center space-x-4">
-                                    <img src="{{ asset('imgs/p-1.png') }}" class="w-16 h-16 object-cover shadow-md" />
-                                    <div class="flex-1">
-                                        <p class="font-semibold">Produk 1</p>
-                                        <p class="text-gray-500">Rp 199.000</p>
-                                    </div>
-                                    <p class="text-gray-700">x1</p>
-                                </div>
-                                <div class="flex items-center space-x-4">
-                                    <img src="{{ asset('imgs/p-2.png') }}" class="w-16 h-16 object-cover shadow-md" />
-                                    <div class="flex-1">
-                                        <p class="font-semibold">Produk 2</p>
-                                        <p class="text-gray-500">Rp 299.000</p>
-                                    </div>
-                                    <p class="text-gray-700">x1</p>
-                                </div>
-                                <div class="flex items-center space-x-4">
-                                    <img src="{{ asset('imgs/p-3.png') }}" class="w-16 h-16 object-cover shadow-md" />
-                                    <div class="flex-1">
-                                        <p class="font-semibold">Produk 3</p>
-                                        <p class="text-gray-500">Rp 399.000</p>
-                                    </div>
-                                    <p class="text-gray-700">x1</p>
-                                </div>
-                            </div>
-                            <a href="{{ route('cart') }}"
-                                class="text-center block w-full bg-custom text-white py-2 px-4 rounded-md hover:bg-opacity-90">
-                                Lihat Semua
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-user">
+                            <li>
+                                <a href="#"
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit
+                                    Profil</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('transaction') }}"
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Daftar
+                                    Transaksi</a>
+                            </li>
+                        </ul>
+                        <div class="py-2">
+                            <a href="{{ route('logout') }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                Keluar
                             </a>
                         </div>
                     </div>
+                    {{-- END User Popup --}}
+
+                    <button id="dropdownNotificationButton" data-dropdown-toggle="dropdownNotification"
+                        class="text-gray-700 hover:text-custom relative" onclick="">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span
+                            class="absolute -top-2 -right-2 bg-pink-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
+                            id="cart-count">{{ getCartCount() }}</span>
+                    </button>
+
+                    {{-- Cart Popup --}}
+                    <!-- Dropdown menu -->
+                    <div id="dropdownNotification"
+                        class="!-translate-x-[270px] !translate-y-[60px] z-20 hidden w-[500px] max-w-sm bg-white divide-y divide-gray-100 rounded-lg shadow-md dark:bg-gray-800 dark:divide-gray-700"
+                        aria-labelledby="dropdownNotificationButton">
+                        <div
+                            class="block px-4 py-2 font-medium text-center text-gray-700 rounded-t-lg bg-white dark:bg-gray-800 dark:text-white">
+                            Keranjang Belanja
+                        </div>
+                        <div class="divide-y divide-gray-100 dark:divide-gray-700" id="container-cart">
+                            @foreach (getCarts() as $cart)
+                                <a href="{{ route('product', ['slug' => $cart->product->slug]) }}"
+                                    class="flex justify-between items-center p-4 hover:bg-gray-50">
+                                    <div class="flex items-center gap-3">
+                                        <img src="/uploads/products/{{ getProduct($cart->product_id, $cart->variant1_id, $cart->variant2_id)->image }}"
+                                            class="w-12 h-12 rounded-md shadow-md object-cover" alt="">
+                                        <div class="flex flex-col">
+                                            <span>{{ Str::limit($cart->product->name, 20, '...') }}</span>
+                                            <span class="text-sm text-gray-700">
+                                                {{ getVariantLabel($cart->product, $cart->variant1_id, $cart->variant2_id) }}
+                                                x
+                                                {{ $cart->qty }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span
+                                            class="poppins-semibold text-gray-700">{{ format_rupiah(getProductPrice($cart->product_id, $cart->variant1_id, $cart->variant2_id) * $cart->qty, true) }}</span>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+                        <a href="{{ route('cart') }}"
+                            class="block py-3 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
+                            <div class="inline-flex items-center ">
+                                <i class="fa-regular fa-cart-shopping mr-2"></i>
+                                Lihat semua keranjang
+                            </div>
+                        </a>
+                    </div>
+                    {{-- End Cart Popup --}}
+
                     <button class="md:hidden text-gray-700 hover:text-custom" id="mobile-menu-button">
                         <i class="fas fa-bars text-xl"></i>
                     </button>

@@ -108,7 +108,7 @@ class AuthController extends Controller
             $user->update([
                 'google_id' => $googleUser->id,
                 'name' => $googleUser->name,
-                'roles_id' => 3,
+                "role" => "user",
                 'password' => bcrypt("{$googleUser->id}-{$googleUser->email}-{$googleUser->name}"),
             ]);
         } else {
@@ -116,7 +116,7 @@ class AuthController extends Controller
                 'google_id' => $googleUser->id,
                 'email' => $googleUser->email,
                 'name' => $googleUser->name,
-                'roles_id' => 3,
+                "role" => "user",
                 'password' => bcrypt("{$googleUser->id}-{$googleUser->email}-{$googleUser->name}"),
             ]);
         }
