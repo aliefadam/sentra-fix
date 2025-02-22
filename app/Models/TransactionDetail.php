@@ -16,4 +16,10 @@ class TransactionDetail extends Model
     {
         return $this->belongsTo(Transaction::class);
     }
+
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
 }

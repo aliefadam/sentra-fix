@@ -9,6 +9,7 @@ use App\Models\ProductDetail;
 use App\Models\ShippingStatus;
 use App\Models\SubCategory;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Models\Variant;
 use App\Models\VariantDetail;
 use Illuminate\Http\Request;
@@ -106,7 +107,8 @@ class PageController extends Controller
                     "variant_label" => $variant_label,
                     "price" => getProductPrice($product->id, $request->variant1_id, $request->variant2_id),
                     "total" => $request->qty * getProductPrice($product->id, $request->variant1_id, $request->variant2_id),
-                    "image" => getProduct($product->id, $request->variant1_id, $request->variant2_id)->image
+                    "image" => getProduct($product->id, $request->variant1_id, $request->variant2_id)->image,
+                    "weight" => getProduct($product->id, $request->variant1_id, $request->variant2_id)->weight,
                 ]
             ],
             "store_city_id" => $store_city_id,
@@ -159,6 +161,31 @@ class PageController extends Controller
     {
         return view("frontend.profile", [
             "title" => "Profil",
+            "user" => Auth::user(),
+        ]);
+    }
+
+    public function profile_update(Request $request)
+    {
+        $user = User::find(Auth::user()->id);
+        $updatedData = [
+            "name" => $request->name,
+            "phone" => $request->phone,
+            "date_of_birth" => $request->date_of_birth,
+            "gender" => $request->gender,
+        ];
+        if ($request->hasFile("image")) {
+            $file = $request->file("image");
+            $fileName = "USER_IMAGE_" . strtoupper($user->name) . "_" . date("Ymdhis") . "." . $file->extension();
+            $file->move(public_path("uploads/users"), $fileName);
+            $updatedData["image"] = $fileName;
+        }
+
+        $user->update($updatedData);
+        return redirect()->back()->with("notification", [
+            "icon" => "success",
+            "title" => "Berhasil",
+            "text" => "Profil berhasil diperbarui",
         ]);
     }
 
@@ -211,6 +238,28 @@ class PageController extends Controller
         return view("frontend.register-seller", [
             "title" => "Pendaftaran Seller",
             "categories" => Category::all(),
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->q;
+        $products = [];
+
+        if (!empty($query)) {
+            Product::where("name", "like", "%$query%")->orWhereHas("subCategory", function ($category) use ($query) {
+                $category->where("name", "like", "%$query%");
+            })->get()->each(function ($product) use (&$products) {
+                array_push($products, $product);
+            });
+        } else {
+            return redirect()->route("home");
+        }
+
+        return view("frontend.search", [
+            "title" => "Pencarian Produk",
+            "products" => $products,
+            "query" => $query,
         ]);
     }
 

@@ -1,72 +1,91 @@
 @extends('layouts.user')
 
 @section('content')
-    <main class="max-w-8xl mx-auto px-4 sm:px-4 lg:px-8 py-4 sm:py-8">
-        <div class="space-y-8">
-            <div class="flex justify-between items-start">
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-900">Edit Profil</h1>
-                    <p class="mt-1 text-sm text-gray-600">
-                        Perbarui informasi profil dan preferensi akun Anda.
-                    </p>
-                </div>
-                <a href="{{ route('profile.change-password') }}"
-                    class="!rounded-button bg-gradient-to-r from-custom to-pink-500 text-white px-4 py-2 text-sm font-medium hover:bg-custom/90">
-                    <i class="fas fa-key mr-2"></i>
-                    Ganti Password
-                </a>
-            </div>
-            <div class="bg-white shadow rounded-lg p-8">
-                <form class="space-y-8">
-                    <div class="space-y-6">
-                        <div class="flex items-center space-x-6">
-                            <div class="h-24 w-24 rounded-full overflow-hidden bg-gray-100">
-                                <img class="h-full w-full object-cover" src="{{ asset('imgs/logo-user.png') }}"
-                                    alt="Foto profil" />
-                            </div>
-                            <button type="button"
-                                class="!rounded-button bg-custom text-white px-4 py-2 text-sm font-medium hover:bg-custom/90">
-                                Ganti Foto
-                            </button>
-                        </div>
-                        <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
-                            <div>
-                                <label for="nama" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-                                <input type="text" name="nama" id="nama"
-                                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-custom focus:border-custom sm:text-sm"
-                                    value="John Doe" />
-                            </div>
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                                <input type="email" name="email" id="email"
-                                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-custom focus:border-custom sm:text-sm"
-                                    value="john.doe@example.com" />
-                            </div>
-                            <div>
-                                <label for="phone" class="block text-sm font-medium text-gray-700">Nomor Telepon</label>
-                                <input type="tel" name="phone" id="phone"
-                                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-custom focus:border-custom sm:text-sm"
-                                    value="081234567890" />
-                            </div>
-                            <div>
-                                <label for="birth" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
-                                <input type="date" name="birth" id="birth"
-                                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-custom focus:border-custom sm:text-sm"
-                                    value="1990-01-01" />
-                            </div>
-                            <div>
-                                <label for="gender" class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
-                                <select id="gender" name="gender"
-                                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-custom focus:border-custom sm:text-sm">
-                                    <option value="male">Laki-laki</option>
-                                    <option value="female">Perempuan</option>
-                                </select>
-                            </div>
-                        </div>
+    <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <main class="max-w-8xl mx-auto px-4 sm:px-4 lg:px-8 py-4 sm:py-8">
+            <div class="space-y-8">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Edit Profil</h1>
+                        <p class="mt-1 text-sm text-gray-600">
+                            Perbarui informasi profil dan preferensi akun Anda.
+                        </p>
                     </div>
-                </form>
-            </div>
-            <div class="bg-white shadow rounded-lg p-8">
+                    <a href="{{ route('profile.change-password') }}"
+                        class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                        <i class="fas fa-key mr-2"></i>
+                        Ganti Password
+                    </a>
+                </div>
+                <div class="bg-white shadow rounded-lg p-8">
+                    <form class="space-y-8">
+                        <div class="space-y-6">
+                            <div class="flex items-center space-x-6">
+                                <div class="">
+                                    <img id="image-preview" class="h-24 w-24 rounded-full shadow-md object-cover"
+                                        src="{{ $user->image ? asset('uploads/users/' . $user->image) : asset('imgs/no-image.png') }}"
+                                        alt="Foto profil" />
+                                </div>
+                                <button type="button" id="btn-change-image"
+                                    class="!rounded-button bg-custom text-white px-4 py-2 text-sm font-medium hover:bg-custom/90">
+                                    Ganti Foto
+                                </button>
+                                <input type="file" id="image" name="image" accept="image/*" class="hidden" />
+                            </div>
+                            <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
+                                <div class="">
+                                    <label for="name"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama
+                                        Lengkap</label>
+                                    <input type="text" id="name" name="name" value="{{ $user->name }}"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5"
+                                        required />
+                                </div>
+                                <div class="">
+                                    <label for="email"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        Email
+                                    </label>
+                                    <input type="text" id="email" name="email" value="{{ $user->email }}"
+                                        class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 cursor-not-allowed"
+                                        disabled required />
+                                </div>
+                                <div class="">
+                                    <label for="phone"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        No. Telephone
+                                    </label>
+                                    <input type="number" id="phone" name="phone" value="{{ $user->phone }}"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5"
+                                        required />
+                                </div>
+                                <div class="">
+                                    <label for="date_of_birth"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        Tanggal Lahir
+                                    </label>
+                                    <input type="date" id="date_of_birth" name="date_of_birth"
+                                        value="{{ $user->date_of_birth }}"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5" />
+                                </div>
+                                <div>
+                                    <label for="gender"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis
+                                        Kelamin</label>
+                                    <select id="gender" name="gender"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
+                                        <option selected>-- Pilih --</option>
+                                        <option @selected($user->gender == 'Laki-laki') value="Laki-laki">Laki-laki</option>
+                                        <option @selected($user->gender == 'Perempuan') value="Perempuan">Perempuan</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                {{-- <div class="bg-white shadow rounded-lg p-8">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-lg font-medium text-gray-900">Alamat Pengiriman</h2>
                     <button type="button"
@@ -133,95 +152,34 @@
                         </div>
                     </div>
                 </div>
+            </div> --}}
+                <div class="flex justify-end space-x-4">
+                    <a href=""
+                        class="!rounded-button px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50">
+                        Batal
+                    </a>
+                    <button type="submit"
+                        class="!rounded-button bg-custom text-white px-4 py-2 text-sm font-medium hover:bg-custom/90">
+                        Simpan Perubahan
+                    </button>
+                </div>
             </div>
-            <div class="flex justify-end space-x-4">
-                <button type="button"
-                    class="!rounded-button px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50">
-                    Batal
-                </button>
-                <button type="submit"
-                    class="!rounded-button bg-custom text-white px-4 py-2 text-sm font-medium hover:bg-custom/90">
-                    Simpan Perubahan
-                </button>
-            </div>
-        </div>
-    </main>
-
-    {{-- Add Address Modal --}}
-    <div id="add-address-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-        <div class="relative top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
-            <div class="mt-3">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">
-                    Tambah Alamat Baru
-                </h3>
-                <form class="space-y-4">
-                    <input type="text" placeholder="Label Alamat (contoh: Rumah, Kantor)"
-                        class="w-full p-2 border border-gray-300 rounded-lg" /><input type="text"
-                        placeholder="Nama Penerima" class="w-full p-2 border border-gray-300 rounded-lg" /><input
-                        type="tel" placeholder="Nomor Telepon"
-                        class="w-full p-2 border border-gray-300 rounded-lg" />
-                    <textarea placeholder="Alamat Lengkap" class="w-full p-2 border border-gray-300 rounded-lg h-24"></textarea><input type="text" placeholder="Kode Pos"
-                        class="w-full p-2 border border-gray-300 rounded-lg" />
-                    <div class="flex justify-end space-x-3 mt-4">
-                        <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300"
-                            onclick="hideAddAddressModal()">
-                            Batal</button><button type="submit"
-                            class="px-4 py-2 bg-custom text-white rounded-lg hover:bg-custom/90">
-                            Simpan
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    {{-- Edit Address Modal --}}
-    <div id="edit-address-modal"
-        class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-        <div class="relative top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
-            <div class="mt-3">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Edit Alamat</h3>
-                <form class="space-y-4">
-                    <input type="text" placeholder="Label Alamat" class="w-full p-2 border border-gray-300 rounded-lg"
-                        value="Rumah" /><input type="text" placeholder="Nama Penerima"
-                        class="w-full p-2 border border-gray-300 rounded-lg" value="Budi Santoso" /><input type="tel"
-                        placeholder="Nomor Telepon" class="w-full p-2 border border-gray-300 rounded-lg"
-                        value="081234567890" />
-                    <textarea placeholder="Alamat Lengkap" class="w-full p-2 border border-gray-300 rounded-lg h-24">
-    Jl. Sudirman No. 123, RT 001/RW 002</textarea><input type="text" placeholder="Kode Pos"
-                        class="w-full p-2 border border-gray-300 rounded-lg" value="10310" />
-                    <div class="flex justify-end space-x-3 mt-4">
-                        <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300"
-                            onclick="hideEditAddressModal()">
-                            Batal</button><button type="submit"
-                            class="px-4 py-2 bg-custom text-white rounded-lg hover:bg-custom/90">
-                            Simpan
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+        </main>
+    </form>
 @endsection
 
 @section('script')
     <script>
-        function showAddAddressModal() {
-            document.getElementById("add-address-modal").classList.remove("hidden");
+        $("#btn-change-image").click(showExplorer);
+        $("#image").change(changeImage);
+
+        function showExplorer() {
+            $("#image").click();
         }
 
-        function hideAddAddressModal() {
-            document.getElementById("add-address-modal").classList.add("hidden");
-        }
-
-        function showEditAddressModal() {
-            document
-                .getElementById("edit-address-modal")
-                .classList.remove("hidden");
-        }
-
-        function hideEditAddressModal() {
-            document.getElementById("edit-address-modal").classList.add("hidden");
+        function changeImage() {
+            const image = URL.createObjectURL(this.files[0]);
+            $("#image-preview").attr("src", image);
         }
     </script>
 @endsection

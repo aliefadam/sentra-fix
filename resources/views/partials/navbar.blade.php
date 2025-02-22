@@ -16,26 +16,34 @@
                 {{-- <a href="#" class="font-medium">Transaksi</a> --}}
                 <a href="{{ route('about') }}" class="font-medium {{ active_navbar('about') }}">Tentang Kami</a>
             </div>
+            <div class="mr-5">
+                <button class="text-gray-700 hover:text-custom"
+                    onclick="document.getElementById(&#39;search-popup&#39;).classList.remove(&#39;hidden&#39;)">
+                    <i class="fas fa-search text-xl"></i>
+                </button>
+                <div id="search-popup" class="hidden fixed top-20 left-0 right-0 px-4">
+                    <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md mx-auto">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold">Pencarian</h3>
+                            <button
+                                onclick="document.getElementById(&#34;search-popup&#34;).classList.add(&#34;hidden&#34;)"
+                                class="text-gray-500 hover:text-gray-700">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <form action="{{ route('search') }}">
+                            <div class="flex items-center gap-3">
+                                <input type="text" placeholder="Cari produk..." name="q"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom focus:border-transparent" />
+                                <button type="button"
+                                    class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5">Cari</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             @auth
                 <div class="flex items-center space-x-6 relative">
-                    <button class="text-gray-700 hover:text-custom"
-                        onclick="document.getElementById(&#39;search-popup&#39;).classList.remove(&#39;hidden&#39;)">
-                        <i class="fas fa-search text-xl"></i>
-                    </button>
-                    <div id="search-popup" class="hidden fixed top-20 left-0 right-0 px-4">
-                        <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md mx-auto">
-                            <div class="flex justify-between items-center mb-4">
-                                <h3 class="text-lg font-semibold">Pencarian</h3>
-                                <button
-                                    onclick="document.getElementById(&#34;search-popup&#34;).classList.add(&#34;hidden&#34;)"
-                                    class="text-gray-500 hover:text-gray-700">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <input type="search" placeholder="Cari produk..."
-                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom focus:border-transparent" />
-                        </div>
-                    </div>
                     <button id="dropdown-user" data-dropdown-toggle="dropdown-user-popup"
                         class="text-gray-700 hover:text-custom" onclick="">
                         <i class="fas fa-user text-xl"></i>
@@ -43,7 +51,8 @@
                     <div id="dropdown-user-popup"
                         class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-md w-72 !-translate-x-[170px] !translate-y-[60px] dark:bg-gray-700 dark:divide-gray-600">
                         <div class="px-4 py-3 text-sm text-gray-900 dark:text-white flex gap-3 items-center">
-                            <img src="{{ asset('imgs/logo-user.png') }}" class="w-10 h-10 rounded-full" alt="">
+                            <img src="{{ auth()->user()->image ? '/uploads/users/' . auth()->user()->image : '/imgs/no-image.png' }}"
+                                class="w-10 h-10 rounded-full" alt="">
                             <div class="">
                                 <div>{{ auth()->user()->name }}</div>
                                 <div class="font-medium truncate">{{ auth()->user()->email }}</div>
@@ -51,7 +60,7 @@
                         </div>
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-user">
                             <li>
-                                <a href="#"
+                                <a href="{{ route('profile') }}"
                                     class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit
                                     Profil</a>
                             </li>

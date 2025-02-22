@@ -81,7 +81,7 @@
                             </div>
                         </div>
 
-                        <button type="button"
+                        <button type="button" id="btn-shipment"
                             class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-3 mt-5 w-full">
                             Lanjut ke Pembayaran
                         </button>
@@ -104,6 +104,7 @@
         $(".checbox-cart").change(getTotal);
         $(".btn-delete-cart-item").click(deleteCart);
         $(".btn-delete-all-cart").click(deleteAllCart);
+        $("#btn-shipment").click(shipment);
 
         function changeQuantity(self, type) {
             const input = self.parent().find("input[name='cart-qty-input']");
@@ -231,6 +232,48 @@
                     });
                 }
             });
+        }
+
+        function shipment() {
+            const data = $(".checbox-cart:checked").map((i, item) => {
+                return {
+                    product_id: $(item).data("product-id"),
+                    variant1_id: $(item).data("variant-1-id"),
+                    variant2_id: $(item).data("variant-2-id") == "" ? null : $(item).data("variant-2-id"),
+                    qty: $(item).parent().parent().parent().find(`input[name=cart-qty-input]`).val(),
+                };
+            }).toArray();
+
+            if (data.length != 0) {
+                $.ajax({
+                    type: "POST",
+                    url: "/cart/shipment",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        data,
+                    },
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: "Loading...",
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                    },
+                    success: function(response) {
+                        const redirect_url = response.redirect_url;
+                        window.location.href = redirect_url;
+                    }
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Silahkan pilih setidaknya 1 barang",
+                    confirmButtonColor: '#3085d6',
+                });
+            }
         }
     </script>
 @endsection

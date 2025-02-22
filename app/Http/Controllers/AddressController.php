@@ -109,8 +109,20 @@ class AddressController extends Controller
             "title" => "Berhasil",
             "text" => "Berhasil mengganti alamat",
         ]);
+
+        // $user_id = Auth::user()->id;
+        // if (session()->has("cart_shipment_{$user_id}")) {
+        //     $data = session()->get("cart_shipment_{$user_id}");
+        //     foreach ($data as $key => $value) {
+        //         $data[$key]["selected_address"] = $id;
+        //     }
+        //     session()->put("cart_shipment_{$user_id}", $data);
+        // }
+
         return response()->json([
             "status" => "success",
         ]);
     }
+
+    public function change_address_in_shipment($id) {}
 }

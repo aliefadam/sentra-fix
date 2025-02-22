@@ -59,7 +59,7 @@ if (!function_exists("getProduct")) {
             ->where("variant2_id", $variant2)
             ->first();
 
-        return $productDetail ? $productDetail : "";
+        return $productDetail ? $productDetail : null;
     }
 }
 
@@ -112,7 +112,8 @@ if (!function_exists("getProductPrice")) {
     {
         $productDetail = ProductDetail::where("product_id", $productID)
             ->where("variant1_id", $variant1)
-            ->where("variant2_id", $variant2 ?? 0)
+            ->where("variant2_id", $variant2)
+            // ->where("variant2_id", $variant2 ?? 0)
             ->first();
 
         return $productDetail->price;

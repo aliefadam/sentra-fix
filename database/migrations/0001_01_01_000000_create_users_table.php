@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('role');
             $table->string("google_id")->nullable();
+            $table->string("gender")->nullable();
+            $table->date("date_of_birth")->nullable();
+            $table->string("image")->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

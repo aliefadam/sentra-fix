@@ -66,13 +66,13 @@
                                         Konfirmasi
                                     </a>
                                 @elseif($store->status == 'active')
-                                    <a href="javascript:void(0)" data-variant-id="{{ $store->id }}"
-                                        class="btn-delete-variant font-medium text-red-600 hover:underline">
+                                    <a href="javascript:void(0)" data-store-id="{{ $store->id }}"
+                                        class="btn-deactivate font-medium text-red-600 hover:underline">
                                         Nonaktifkan
                                     </a>
                                 @else
-                                    <a href="javascript:void(0)" data-variant-id="{{ $store->id }}"
-                                        class="btn-delete-variant font-medium text-green-600 hover:underline">
+                                    <a href="javascript:void(0)" data-store-id="{{ $store->id }}"
+                                        class="btn-activate font-medium text-green-600 hover:underline">
                                         Aktifkan
                                     </a>
                                 @endif
@@ -88,6 +88,8 @@
 @section('script')
     <script>
         $(".btn-confirm").click(confirm);
+        $(".btn-deactivate").click(deactive);
+        $(".btn-activate").click(activate);
 
         function confirm() {
             const storeID = $(this).data("store-id");
@@ -125,6 +127,81 @@
                 }
             });
 
+        }
+
+        function deactive() {
+            const storeID = $(this).data("store-id");
+            Swal.fire({
+                icon: "warning",
+                title: "Konfirmasi",
+                text: "Apakah anda yakin ingin menonaktifkan toko ini?",
+                showDenyButton: true,
+                confirmButtonColor: "#198754",
+                confirmButtonText: "Ya, Yakin!",
+                denyButtonText: `Batal`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "PUT",
+                        url: `/admin/seller/${storeID}/deactive`,
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                        },
+                        beforeSend: function() {
+                            Swal.fire({
+                                title: "Loading...",
+                                allowOutsideClick: false,
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                }
+                            });
+                        },
+                        success: function(response) {
+                            if (response.message === "success") {
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            });
+
+        }
+
+        function activate() {
+            const storeID = $(this).data("store-id");
+            Swal.fire({
+                icon: "warning",
+                title: "Konfirmasi",
+                text: "Apakah anda yakin ingin mengaktifkan toko ini?",
+                showDenyButton: true,
+                confirmButtonColor: "#198754",
+                confirmButtonText: "Ya, Yakin!",
+                denyButtonText: `Batal`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "PUT",
+                        url: `/admin/seller/${storeID}/activate`,
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                        },
+                        beforeSend: function() {
+                            Swal.fire({
+                                title: "Loading...",
+                                allowOutsideClick: false,
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                }
+                            });
+                        },
+                        success: function(response) {
+                            if (response.message === "success") {
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            });
         }
     </script>
 @endsection

@@ -67,6 +67,9 @@
                                                 Stok
                                             </td>
                                             <td class="px-4 py-4 poppins-semibold text-gray-900">
+                                                Berat (Gram)
+                                            </td>
+                                            <td class="px-4 py-4 poppins-semibold text-gray-900">
                                                 Gambar
                                             </td>
                                         </tr>
@@ -90,6 +93,9 @@
                                                 </td>
                                                 <td class="px-4 py-4">
                                                     {{ $detail->stock }}
+                                                </td>
+                                                <td class="px-4 py-4">
+                                                    {{ $detail->weight }}
                                                 </td>
                                                 <td class="px-4 py-4">
                                                     <img class="size-16 object-cover rounded-md shadow-md"

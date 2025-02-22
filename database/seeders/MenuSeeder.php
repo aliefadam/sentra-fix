@@ -89,6 +89,12 @@ class MenuSeeder extends Seeder
             "route" => "seller.dashboard",
             "icon" => "fas fa-home",
         ]);
+        MenuDetail::create([
+            "menu_id" => $newMenu->id,
+            "name" => "Toko saya",
+            "route" => "seller.store.edit",
+            "icon" => "fas fa-store",
+        ]);
 
         $newMenu = Menu::create([
             "role" => "seller",

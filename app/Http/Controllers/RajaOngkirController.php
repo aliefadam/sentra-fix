@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class RajaOngkirController extends Controller
@@ -15,6 +16,7 @@ class RajaOngkirController extends Controller
 
         return response()->json($response->json()["rajaongkir"]["results"]);
     }
+
 
     public function city($provinceID)
     {
@@ -42,13 +44,33 @@ class RajaOngkirController extends Controller
         $response = Http::post("https://pro.rajaongkir.com/api/cost", [
             "key" => env("RAJA_ONGKIR_API_KEY"),
             "origin" => $request->origin,
-            "originType" => "city",
+            "originType" => $request->originType,
             "destination" => $request->destination,
-            "destinationType" => "subdistrict",
-            "weight" => 2000,
+            "destinationType" => $request->destinationType,
+            "weight" => $request->weight,
             "courier" => $request->courier,
         ]);
 
         return response()->json($response->json()["rajaongkir"]["results"][0]["costs"]);
+    }
+
+    public function getShippingCostShipment(Request $request)
+    {
+        $data = [];
+        foreach ($request->data_shipment as $shipment) {
+            $response = Http::post("https://pro.rajaongkir.com/api/cost", [
+                "key" => env("RAJA_ONGKIR_API_KEY"),
+                "origin" => $shipment["store_city_id"],
+                "originType" => $request->originType,
+                "destination" => $request->destination,
+                "destinationType" => $request->destinationType,
+                "weight" => $shipment["weight"],
+                "courier" => $request->courier,
+            ]);
+
+            array_push($data, $response->json()["rajaongkir"]["results"][0]["costs"]);
+        }
+
+        return response()->json($data);
     }
 }

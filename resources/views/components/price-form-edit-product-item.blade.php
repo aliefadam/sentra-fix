@@ -2,7 +2,7 @@
     $newVariant = getProduct($product->id, $v1['id'], count($v2) > 0 ? $v2['id'] : null);
 @endphp
 
-<div class="grid grid-cols-5 gap-5">
+<div class="grid grid-cols-6 gap-5">
     <input type="hidden" name="variant_id_1{{ $newVariant == '' ? '_new' : '' }}[]" value="{{ $v1['id'] }}">
     <input type="hidden" name="variant_id_2{{ $newVariant == '' ? '_new' : '' }}[]" value="{{ $v2 ? $v2['id'] : '' }}">
     <div class="mb-5">
@@ -34,6 +34,14 @@
         <label for="number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stok</label>
         <input type="number" id="number" name="price_stock{{ $newVariant == '' ? '_new' : '' }}[]"
             value="{{ getProductStock($product->id, $v1['id'], count($v2) > 0 ? $v2['id'] : null) }}"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+            required />
+    </div>
+    <div class="mb-5">
+        <label for="weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Berat (Gram)
+        </label>
+        <input type="number" id="weight" name="price_weight{{ $newVariant == '' ? '_new' : '' }}[]"
+            value="{{ getProduct($product->id, $v1['id'], count($v2) > 0 ? $v2['id'] : null)->weight ?? 0 }}"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
             required />
     </div>

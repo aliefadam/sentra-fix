@@ -14,12 +14,17 @@ return new class extends Migration
         Schema::create('transaction_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId("transaction_id");
+            $table->foreignId("store_id");
             $table->string("product_name");
             $table->string("product_image");
             $table->string("product_price");
             $table->string("qty");
             $table->string("variant");
-            $table->string("total");
+            $table->double("shipping_cost");
+            $table->double("shipping_code")->nullable();
+            $table->string("shipping_service");
+            $table->double("sub_total");
+            $table->double("total");
             $table->text("notes")->nullable();
             $table->timestamps();
         });

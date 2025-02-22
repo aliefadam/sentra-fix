@@ -21,8 +21,7 @@
                     <span class="text-gray-700 poppins-medium">Jumlah Produk</span>
                 </div>
                 <div class="flex flex-col items-center">
-                    <span
-                        class="text-xl text-pink-700 poppins-semibold">{{ $store->transactions()->where('status', 'confirmed')->count() }}</span>
+                    <span class="text-xl text-pink-700 poppins-semibold">{{ $store->transactionsDetails()->count() }}</span>
                     <span class="text-gray-700 poppins-medium">Pesanan Diproses</span>
                 </div>
             </div>

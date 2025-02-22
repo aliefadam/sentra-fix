@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("sku");
             $table->double("price");
             $table->integer("stock");
+            $table->double("weight");
             $table->string("image");
             $table->timestamps();
         });

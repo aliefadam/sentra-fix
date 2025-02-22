@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Cart;
+use App\Models\Product;
+use App\Models\VariantDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -118,6 +121,55 @@ class CartController extends Controller
         return response()->json([
             "total_harga" => format_rupiah($totalHarga, true),
             "jumlah_barang" => $jumlahBarang,
+        ]);
+    }
+
+    public function shipment_post(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        $shipment = [];
+        foreach ($request->data as $data) {
+            array_push($shipment, $data);
+        }
+        session()->put("cart_shipment_{$user_id}", $shipment);
+        return response()->json([
+            "redirect_url" => route("cart.shipment"),
+        ]);
+    }
+
+    public function shipment()
+    {
+        $user_id = Auth::user()->id;
+        $data = [];
+        foreach (session()->get("cart_shipment_{$user_id}") as $shipment) {
+            $product = Product::find($shipment["product_id"]);
+            $store_city_id = json_decode($product->user->addresses()->first()->city)->id;
+            if (isset($shipment["variant2_id"])) {
+                $variant_label = getTitleVariant1($product->id) . " " . VariantDetail::find($shipment["variant1_id"])->name . " - " . getTitleVariant2($product->id) . " " . VariantDetail::find($shipment["variant2_id"])->name;
+            } else {
+                $variant_label = getTitleVariant1($product->id) . " " . VariantDetail::find($shipment["variant1_id"])->name;
+            }
+            array_push($data, (object)[
+                "id" => $product->id,
+                "user_id" => $product->user_id,
+                "name" => $product->name,
+                "qty" => $shipment["qty"],
+                "variant1-id" => $shipment["variant1_id"],
+                "variant2-id" => $shipment["variant2_id"] ?? null,
+                "variant_label" => $variant_label,
+                "price" => getProductPrice($product->id, $shipment["variant1_id"], $shipment["variant2_id"]),
+                "total" => $shipment["qty"] * getProductPrice($product->id, $shipment["variant1_id"], $shipment["variant2_id"]),
+                "image" => getProduct($product->id, $shipment["variant1_id"], $shipment["variant2_id"])->image,
+                "weight" => getProduct($product->id, $shipment["variant1_id"], $shipment["variant2_id"])->weight,
+                "store_city_id" => $store_city_id,
+            ]);
+        }
+
+        return view("frontend.shipment", [
+            "title" => "Checkout",
+            "products" => $data,
+            "addresses" => Address::where("user_id", Auth::user()->id)->get(),
+            "active_address" => Address::where("user_id", Auth::user()->id)->where("is_active", true)->first(),
         ]);
     }
 }

@@ -33,6 +33,7 @@ Route::prefix("rajaongkir")->group(function () {
     Route::get("city/{province_id}", [RajaOngkirController::class, "city"]);
     Route::get("subdistrict/{city_id}", [RajaOngkirController::class, "subdistrict"]);
     Route::post("get-shipping-cost", [RajaOngkirController::class, "getShippingCost"]);
+    Route::post("get-shipping-cost-shipment", [RajaOngkirController::class, "getShippingCostShipment"]);
 });
 
 Route::prefix("store")->group(function () {
@@ -40,6 +41,8 @@ Route::prefix("store")->group(function () {
     Route::post("store", [StoreController::class, "store"])->name("store.store");
     Route::get("success", [StoreController::class, "success"])->name("store.success");
 });
+
+Route::get("/search", [PageController::class, "search"])->name("search");
 
 // JQUERY FETCH
 Route::get("/get-stock/{productID}/{variant1ID}/{variant2ID}", [ProductController::class, "get_stock"])->name("product.get-stock");
@@ -63,8 +66,6 @@ Route::middleware("auth")->group(function () {
 
     Route::post("/product/{slug}/checkout", [PageController::class, "product_checkout"])->name("product.checkout");
     Route::get("/payment-waiting/{invoice}", [PageController::class, "payment_waiting"])->name("payment.waiting");
-    Route::get("/profile", [PageController::class, "profile"])->name("profile");
-    Route::get("/profile/change-password", [PageController::class, "change_password"])->name("profile.change-password");
 
     Route::prefix("address")->group(function () {
         Route::get("/", [AddressController::class, "index"])->name("address.index");
@@ -80,6 +81,7 @@ Route::middleware("auth")->group(function () {
         Route::get("/", [PageController::class, "transaction"])->name("transaction");
         Route::get("/{id}", [TransactionController::class, "show"])->name("transaction.show");
         Route::post("/", [TransactionController::class, "store"])->name("transaction.store");
+        Route::post("/shipment", [TransactionController::class, "transaction_from_shipment"])->name("transaction.shipment");
         Route::put("/{id}/done", [TransactionController::class, "done"])->name("admin.transaction.done");
     });
 
@@ -87,8 +89,17 @@ Route::middleware("auth")->group(function () {
         Route::get("/", [CartController::class, "index"])->name("cart");
         Route::post("/total", [CartController::class, "get_total"])->name("cart.total");
         Route::post("/", [CartController::class, "store"])->name("cart.store");
+        Route::post("/shipment", [CartController::class, "shipment_post"])->name("cart.shipment.post");
+        Route::get("/shipment", [CartController::class, "shipment"])->name("cart.shipment");
         Route::delete("/{id}", [CartController::class, "destroy"])->name("cart.destroy");
         Route::delete("/delete/all", [CartController::class, "destroy_all"])->name("cart.destroy.all");
+    });
+
+    Route::prefix("profile")->group(function () {
+        Route::get("/", [PageController::class, "profile"])->name("profile");
+        Route::get("/change-password", [PageController::class, "change_password"])->name("profile.change-password");
+        Route::post("/change-password", [AuthController::class, "change_password_post"])->name("profile.change-password.post");
+        Route::put("/", [PageController::class, "profile_update"])->name("profile.update");
     });
 
     Route::prefix("admin")->group(function () {
@@ -101,6 +112,8 @@ Route::middleware("auth")->group(function () {
         Route::prefix("seller")->group(function () {
             Route::get("/", [StoreController::class, "index"])->name("admin.seller.index");
             Route::put("/{id}/confirm", [StoreController::class, "confirm"])->name("admin.seller.confirm");
+            Route::put("/{id}/deactive", [StoreController::class, "deactive"])->name("admin.seller.deactive");
+            Route::put("/{id}/activate", [StoreController::class, "activate"])->name("admin.seller.deactive");
         });
 
         Route::prefix("category")->group(function () {
@@ -144,6 +157,15 @@ Route::middleware("auth")->group(function () {
 
     Route::prefix("seller")->group(function () {
         Route::get("dashboard", [PageController::class, "dashboard"])->name("seller.dashboard");
+
+        Route::prefix("store")->group(function () {
+            Route::get("/", [StoreController::class, "index"])->name("seller.store.index");
+            Route::get("/create", [StoreController::class, "create"])->name("seller.store.create");
+            Route::post("/", [StoreController::class, "store"])->name("seller.store.store");
+            Route::get("/my-store", [StoreController::class, "edit"])->name("seller.store.edit");
+            Route::put("/", [StoreController::class, "update"])->name("seller.store.update");
+            Route::delete("/{id}", [StoreController::class, "destroy"])->name("seller.store.destroy");
+        });
 
         Route::prefix("product")->group(function () {
             Route::get("/", [ProductController::class, "index"])->name("seller.product.index");

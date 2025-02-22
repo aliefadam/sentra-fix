@@ -74,6 +74,7 @@ class ProductController extends Controller
                     "variant2_id" => $request->variant_id_2[$index] == "" ? null : $request->variant_id_2[$index],
                     "price" => $request->price[$index],
                     "stock" => $request->price_stock[$index],
+                    "weight" => $request->price_weight[$index],
                     "image" => $image_name,
                 ]);
             }
@@ -162,6 +163,7 @@ class ProductController extends Controller
                                 "variant2_id" => $request->variant_id_2[$index] == "" ? null : $request->variant_id_2[$index],
                                 "price" => $request->price[$index],
                                 "stock" => $request->price_stock[$index],
+                                "weight" => $request->price_weight[$index],
                                 "image" => $imageName,
                             ]);
                         }
@@ -186,6 +188,7 @@ class ProductController extends Controller
                         "variant2_id" => $request->variant_id_2_new[$index] == "" ? null : $request->variant_id_2_new[$index],
                         "price" => $request->price_new[$index],
                         "stock" => $request->price_stock_new[$index],
+                        "weight" => $request->price_weight_new[$index],
                         "image" => $image_name,
                     ]);
                 }

@@ -151,7 +151,7 @@
                 <h1 class="text-xl poppins-medium mb-5">Pengisian Harga</h1>
                 <div class="" id="container-detail-price-form">
                     @foreach ($product->productDetails as $detail)
-                        <div class="grid grid-cols-5 gap-5">
+                        <div class="grid grid-cols-6 gap-5">
                             <div class="mb-5">
                                 <input type="hidden" name="variant_id_1[]" value="{{ $detail->variant1_id }}">
                                 <input type="hidden" name="variant_id_2[]" value="{{ $detail->variant2_id }}">
@@ -185,6 +185,15 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stok
                                 </label>
                                 <input type="number" id="number" name="price_stock[]" value="{{ $detail->stock }}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                                    required />
+                            </div>
+                            <div class="mb-5">
+                                <label for="weight"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Berat (Gram)
+                                </label>
+                                <input type="number" id="weight" name="price_weight[]"
+                                    value="{{ $detail->weight }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
                                     required />
                             </div>

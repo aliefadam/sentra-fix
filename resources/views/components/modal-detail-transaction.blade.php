@@ -44,35 +44,50 @@
     <h1 class="poppins-semibold">Detail Produk</h1>
     <div class="mt-4 flex flex-col gap-4">
         @foreach ($transaction->transactionDetails as $detail)
-            <div class="flex gap-3 border shadow-sm rounded-lg p-3">
-                <div class="flex-[2]">
-                    <div class="flex gap-2">
-                        <img src="/uploads/products/{{ $detail->product_image }}"
-                            class="w-[80px] h-[80px] object-cover rounded-md">
-                        <div class="flex flex-col">
-                            <span class="poppins-medium lg:text-base text-sm block leading-[17px]">
-                                {{ $detail->product_name }}
-                            </span>
-                            <span class="text-xs capitalize poppin-semibold text-gray-500 lg:mt-0 mt-2">
-                                {{ $detail->variant }}
-                            </span>
-                            <span class="lg:text-sm text-xs mt-2">
-                                {{ $detail->qty }} Barang
-                                X
-                                {{ format_rupiah($detail->product_price, true) }}
-                            </span>
+            <div class="border shadow-sm rounded-lg p-3">
+                <div class="flex gap-3">
+                    <div class="flex-[2]">
+                        <div class="flex gap-3">
+                            <img src="/uploads/products/{{ $detail->product_image }}"
+                                class="w-[80px] h-[80px] object-cover rounded-md shadow-md">
+                            <div class="flex flex-col">
+                                <span class="poppins-medium lg:text-base text-sm block leading-[17px]">
+                                    {{ $detail->product_name }}
+                                </span>
+                                <span class="text-xs capitalize poppin-semibold text-gray-500 lg:mt-0 mt-2">
+                                    {{ $detail->variant }}
+                                </span>
+                                <span class="lg:text-sm text-xs mt-2">
+                                    {{ $detail->qty }} Barang
+                                    X
+                                    {{ format_rupiah($detail->product_price, true) }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="mt-3 lg:text-sm text-xs">Catatan : </div>
+                        <div class="mt-1 lg:text-sm text-xs poppins-medium">
+                            {{ $detail->notes ?? '-' }}
                         </div>
                     </div>
-                    <div class="mt-3 lg:text-sm text-xs">Catatan : </div>
-                    <div class="mt-1 lg:text-sm text-xs poppins-medium">
-                        {{ $detail->notes }}
+                    <div class="flex-[1] flex flex-col gap-1 items-end">
+                        <span class="lg:text-sm text-xs text-right">Total</span>
+                        <span class="poppins-semibold leading-none lg:text-base text-sm">
+                            {{ format_rupiah($detail->total, true) }}
+                        </span>
                     </div>
                 </div>
-                <div class="flex-[1] flex flex-col gap-1 items-end">
-                    <span class="lg:text-sm text-xs text-right">Total Harga Barang</span>
-                    <span class="poppins-semibold leading-none lg:text-base text-sm">
-                        {{ format_rupiah($detail->total, true) }}
-                    </span>
+                <div class="mt-2">
+                    <div class="mt-3 lg:text-sm text-xs">Layanan Pengiriman : </div>
+                    <div class="mt-1 lg:text-sm text-xs poppins-medium">
+                        {{ $detail->shipping_service }} •
+                        {{ format_rupiah($detail->shipping_cost, true) }}
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <div class="mt-3 lg:text-sm text-xs">No. Resi : </div>
+                    <div class="mt-1 lg:text-sm text-xs poppins-medium">
+                        {{ $detail->shipping_code ?? '-' }}
+                    </div>
                 </div>
             </div>
         @endforeach
@@ -107,7 +122,7 @@
     </div>
 </div>
 <hr>
-<div class="space-y-4">
+{{-- <div class="space-y-4">
     <h1 class="poppins-semibold">Informasi Pengiriman</h1>
     <div class="flex justify-between">
         <span class="lg:text-sm text-xs flex-[3]">Layanan</span>
@@ -124,21 +139,21 @@
         </div>
     @endif
 </div>
-<hr>
+<hr> --}}
 <div class="space-y-4">
     <h1 class="poppins-semibold">Rincian Pembayaran</h1>
     <div class="flex justify-between">
         <span class="lg:text-sm text-xs flex-[3]">
-            Total Harga
+            Total Harga Barang
         </span>
         <span class="lg:text-sm text-xs flex-[2] text-gray-600 text-end">
-            {{ format_rupiah($transaction->sub_total_product, true) }}
+            {{ format_rupiah($transaction->transactionDetails()->sum('sub_total'), true) }}
         </span>
     </div>
     <div class="flex justify-between">
         <span class="lg:text-sm text-xs flex-[3]">Total Ongkos Kirim</span>
         <span class="lg:text-sm text-xs flex-[2] text-gray-600 text-end">
-            {{ format_rupiah($transaction->shipping_cost, true) }}
+            {{ format_rupiah($transaction->transactionDetails()->sum('shipping_cost'), true) }}
         </span>
     </div>
     <div class="flex justify-between poppins-semibold">

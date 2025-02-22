@@ -17,8 +17,8 @@ class Store extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function transactions()
+    public function transactionsDetails()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(TransactionDetail::class);
     }
 }
