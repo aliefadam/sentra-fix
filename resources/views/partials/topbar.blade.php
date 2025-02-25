@@ -11,7 +11,7 @@
                         <img class="h-8 w-auto drop-shadow-md"
                             src="{{ asset('imgs/logo-sentra-fix-removebg-preview.png') }}" alt="Logo" />
                     </a>
-                    <span class="text-xl poppins-semibold">sentra<span class="poppins-bold text-pink-600">fix </span>
+                    <span class="text-xl poppins-semibold">sentra<span class="poppins-bold text-red-600">fix </span>
                         - admin
                     </span>
                 </div>

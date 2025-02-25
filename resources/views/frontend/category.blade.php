@@ -28,7 +28,7 @@
                                     </div>
                                     {{-- <span class="ml-1 text-sm text-gray-500">(95)</span> --}}
                                 </div>
-                                <h3 class="text-pink-600 poppins-medium text-sm mt-3 mb-2">
+                                <h3 class="text-red-600 poppins-medium text-sm mt-3 mb-2">
                                     <i class="fa-regular fa-store"></i> {{ $product->user->store->name }}
                                 </h3>
                                 <h3 class="font-medium text-lg">{{ $product->name }}</h3>
@@ -37,7 +37,7 @@
                                 <button type="button" data-product-id="{{ $product->id }}"
                                     data-variant-1-id="{{ $product->productDetails()->first()->variant1_id }}"
                                     data-variant-2-id="{{ $product->productDetails()->first()->variant2_id }}"
-                                    class="btn-add-cart mt-4 w-full text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                                    class="btn-add-cart mt-4 w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
                                     <span>Tambahkan Keranjang</span>
                                 </button>
                             </div>

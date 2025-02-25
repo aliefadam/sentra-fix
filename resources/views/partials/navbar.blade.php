@@ -3,10 +3,12 @@
         <nav class="flex items-center justify-between h-16">
             <div class="flex-shrink-0 flex items-center gap-1.5">
                 <a href="/" class="flex items-center">
-                    <img class="h-8 w-auto drop-shadow-md" src="{{ asset('imgs/logo-sentra-fix-removebg-preview.png') }}"
-                        alt="Logo" />
+                    <img class="h-8 scale-[120%] w-auto drop-shadow-md"
+                        src="{{ asset('imgs/sentra-fix-logo - Copy.png') }}" alt="Logo" />
+                    {{-- <img class="h-8 w-auto drop-shadow-md" src="{{ asset('imgs/logo-sentra-fix-removebg-preview.png') }}"
+                        alt="Logo" /> --}}
                 </a>
-                <span class="text-xl poppins-semibold">sentra<span class="poppins-bold text-pink-600">fix</span></span>
+                {{-- <span class="text-xl poppins-semibold">sentra<span class="poppins-bold text-red-600">fix</span></span> --}}
             </div>
 
             <div class="hidden md:flex items-center justify-center flex-1 space-x-8">
@@ -36,7 +38,7 @@
                                 <input type="text" placeholder="Cari produk..." name="q"
                                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom focus:border-transparent" />
                                 <button type="button"
-                                    class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5">Cari</button>
+                                    class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">Cari</button>
                             </div>
                         </form>
                     </div>
@@ -83,7 +85,7 @@
                         class="text-gray-700 hover:text-custom relative" onclick="">
                         <i class="fas fa-shopping-cart text-xl"></i>
                         <span
-                            class="absolute -top-2 -right-2 bg-pink-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
+                            class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
                             id="cart-count">{{ getCartCount() }}</span>
                     </button>
 
@@ -135,7 +137,7 @@
                 </div>
             @else
                 <a href="{{ route('login') }}"
-                    class="text-white bg-pink-700 hover:bg-pink-800 focus:outline-none focus:ring-4 focus:ring-pink-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800">Masuk</a>
+                    class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Masuk</a>
             @endauth
         </nav>
         <div class="hidden md:hidden" id="mobile-menu">

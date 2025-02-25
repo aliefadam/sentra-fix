@@ -103,9 +103,13 @@
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-2xl font-semibold">Produk Terbaru</h2>
                     <a href="{{ route('products') }}"
-                        class="text-white bg-gradient-to-r from-pink-400 to-pink-700 hover:from-pink-500 hover:to-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">
+                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
                         Lihat semua produk
                     </a>
+                    {{-- <a href="{{ route('products') }}"
+                        class="text-white bg-gradient-to-r from-red-400 to-red-700 hover:from-red-500 hover:to-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
+                        Lihat semua produk
+                    </a> --}}
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                     @foreach ($products as $product)
@@ -124,7 +128,7 @@
                                     </div>
                                     {{-- <span class="text-sm text-gray-500 ml-2">(95)</span> --}}
                                 </div>
-                                <h3 class="text-pink-600 poppins-medium text-sm mt-1 mb-2">
+                                <h3 class="text-red-600 poppins-medium text-sm mt-1 mb-2">
                                     <i class="fa-regular fa-store"></i> {{ $product->user->store->name }}
                                 </h3>
                                 <h3 class="font-medium text-lg">{{ $product->name }}</h3>
@@ -194,7 +198,7 @@
                 </div>
             </section>
 
-            {{-- <section class="mb-12 bg-gradient-to-r from-custom to-pink-500 rounded-lg">
+            {{-- <section class="mb-12 bg-gradient-to-r from-custom to-red-500 rounded-lg">
                 <div class="px-4 sm:px-8 py-8 sm:py-12 text-center text-white">
                     <h2 class="text-2xl sm:text-3xl font-bold mb-2 sm:mb-4">Promo Spesial!</h2>
                     <p class="text-base sm:text-xl mb-4 sm:mb-6">Dapatkan tambahan diskon 10% untuk pembelian pertama
@@ -206,7 +210,7 @@
             </section> --}}
 
             <section
-                class="mb-12 relative w-full h-[500px] flex items-center justify-center overflow-hidden bg-gradient-to-r from-black to-pink-800 rounded-md">
+                class="mb-12 relative w-full h-[500px] flex items-center justify-center overflow-hidden bg-gradient-to-r from-black to-red-800 rounded-md">
                 <div class="absolute inset-0 bg-black/3"></div>
                 <div class="container mx-auto px-6 relative z-10">
                     <div class="max-w-4xl mx-auto text-center">
@@ -252,11 +256,11 @@
                 <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/20 to-transparent"></div>
             </section>
 
-            <section class="mb-12">
+            {{-- <section class="mb-12">
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-2xl font-semibold">Koleksi Produk</h2>
                     <a href="{{ route('products') }}"
-                        class="text-white bg-gradient-to-r from-pink-400 to-pink-700 hover:from-pink-500 hover:to-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">
+                        class="text-white bg-gradient-to-r from-red-400 to-red-700 hover:from-red-500 hover:to-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
                         Lihat semua produk
                     </a>
                 </div>
@@ -275,9 +279,8 @@
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
                                     </div>
-                                    {{-- <span class="text-sm text-gray-500 ml-2">(95)</span> --}}
                                 </div>
-                                <h3 class="text-pink-600 poppins-medium text-sm mt-1 mb-2">
+                                <h3 class="text-red-600 poppins-medium text-sm mt-1 mb-2">
                                     <i class="fa-regular fa-store"></i> {{ $product->user->store->name }}
                                 </h3>
                                 <h3 class="font-medium text-lg">{{ $product->name }}</h3>
@@ -287,78 +290,24 @@
                             </div>
                         </a>
                     @endforeach
-                    {{-- <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                        <img src="{{ asset('imgs/p-6.png') }}" class="w-full h-48 object-cover rounded-t-lg"
-                            alt="Backpack" />
-                        <div class="p-4">
-                            <div class="flex items-center mb-2">
-                                <div class="text-yellow-400 flex">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <span class="text-sm text-gray-500 ml-2">(167)</span>
-                            </div>
-                            <h3 class="font-medium mb-2">Travel Backpack</h3>
-                            <p class="text-custom font-semibold">Rp 899.000</p>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                        <img src="{{ asset('imgs/p-7.png') }}" class="w-full h-48 object-cover rounded-t-lg"
-                            alt="Speaker" />
-                        <div class="p-4">
-                            <div class="flex items-center mb-2">
-                                <div class="text-yellow-400 flex">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="text-sm text-gray-500 ml-2">(89)</span>
-                            </div>
-                            <h3 class="font-medium mb-2">Smart Speaker</h3>
-                            <p class="text-custom font-semibold">Rp 1.999.000</p>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                        <img src="{{ asset('imgs/p-8.png') }}" class="w-full h-48 object-cover rounded-t-lg"
-                            alt="Earbuds" />
-                        <div class="p-4">
-                            <div class="flex items-center mb-2">
-                                <div class="text-yellow-400 flex">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <span class="text-sm text-gray-500 ml-2">(143)</span>
-                            </div>
-                            <h3 class="font-medium mb-2">Wireless Earbuds</h3>
-                            <p class="text-custom font-semibold">Rp 1.499.000</p>
-                        </div>
-                    </div> --}}
                 </div>
-            </section>
+            </section> --}}
 
             <section class="mb-12">
                 <h1 class="mb-10 text-center poppins-semibold text-2xl">Mengapa harus Sentra Fix?</h1>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8">
                     <div class="bg-white p-6 rounded-lg shadow-sm text-center">
-                        <i class="fas fa-shield-alt text-4xl mb-4 text-pink-600"></i>
+                        <i class="fas fa-shield-alt text-4xl mb-4 text-red-600"></i>
                         <h3 class="font-semibold mb-2">Terjamin Kualitasnya</h3>
                         <p class="text-sm text-gray-600">Semua barang telah melalui proses pengecekan ketat</p>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-sm text-center">
-                        <i class="fas fa-tags text-4xl mb-4 text-pink-600"></i>
+                        <i class="fas fa-tags text-4xl mb-4 text-red-600"></i>
                         <h3 class="font-semibold mb-2">Harga Terbaik</h3>
                         <p class="text-sm text-gray-600">Dapatkan barang berkualitas dengan harga terjangkau</p>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-sm text-center">
-                        <i class="fas fa-truck text-4xl mb-4 text-pink-600"></i>
+                        <i class="fas fa-truck text-4xl mb-4 text-red-600"></i>
                         <h3 class="font-semibold mb-2">Pengiriman Aman</h3>
                         <p class="text-sm text-gray-600">Barang dikemas dengan aman dan dikirim tepat waktu</p>
                     </div>

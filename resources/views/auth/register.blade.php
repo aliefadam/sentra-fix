@@ -4,8 +4,8 @@
     <div class="flex h-screen">
         <div class="hidden lg:flex lg:w-1/2 relative">
             <img src="{{ asset('imgs/auth.png') }}" alt="E-commerce Banner" class="object-cover w-full h-full" />
-            <div class="absolute inset-0 bg-gradient-to-r from-black/80 to-pink-600/80 flex items-center justify-center">
-                {{-- <div class="absolute inset-0 bg-gradient-to-t from-pink-600/70 to-pink-600/50 flex items-center justify-center"> --}}
+            <div class="absolute inset-0 bg-gradient-to-r from-black/80 to-red-600/80 flex items-center justify-center">
+                {{-- <div class="absolute inset-0 bg-gradient-to-t from-red-600/70 to-red-600/50 flex items-center justify-center"> --}}
                 <div class="text-center text-white px-8">
                     <h1 class="text-4xl font-bold mb-4">Selamat Datang di SentraFix</h1>
                     <p class="text-lg">
@@ -33,7 +33,7 @@
                                 <i class="fas fa-user text-gray-500"></i>
                             </div>
                             <input type="text" id="name" name="name" value="{{ old('name') }}"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full ps-10 p-3  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full ps-10 p-3  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                                 placeholder="Masukkan nama anda">
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                                 <i class="fas fa-envelope text-gray-500"></i>
                             </div>
                             <input type="email" id="email" name="email" value="{{ old('email') }}"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full ps-10 p-3  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full ps-10 p-3  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                                 placeholder="Masukkan email anda">
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                                 <i class="fas fa-lock text-gray-500"></i>
                             </div>
                             <input type="password" id="password" name="password"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full ps-10 p-3  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full ps-10 p-3  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                                 placeholder="Masukkan password anda">
                             <button type="button" id="btn-show-password"
                                 class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
@@ -73,7 +73,7 @@
                                 <i class="fas fa-lock text-gray-500"></i>
                             </div>
                             <input type="password" id="password_confirmation" name="password_confirmation"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full ps-10 p-3  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full ps-10 p-3  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                                 placeholder="Masukkan password anda">
                             <button type="button" id="btn-show-password-confirmation"
                                 class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
@@ -83,13 +83,13 @@
                     </div>
 
                     <button type="submit"
-                        class="cursor-pointer text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 w-full dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">
+                        class="cursor-pointer text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 w-full dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
                         Mendaftar
                     </button>
 
                     <p class="text-center text-sm text-gray-600 mt-8">
                         Sudah punya akun?
-                        <a href="{{ route('login') }}" class="font-medium text-pink-600 hover:text-pink-700">
+                        <a href="{{ route('login') }}" class="font-medium text-red-600 hover:text-red-700">
                             Login
                         </a>
                     </p>

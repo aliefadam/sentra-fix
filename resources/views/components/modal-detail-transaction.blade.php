@@ -97,13 +97,13 @@
                 </div> --}}
                 <div class="mt-5 space-y-4">
                     <h1 class="text-sm">Informasi Status : </h1>
-                    <ol class="relative border-s-2 border-pink-200 dark:border-gray-700 ms-2">
+                    <ol class="relative border-s-2 border-red-200 dark:border-gray-700 ms-2">
                         @foreach ($detail->shippingStatuses as $status)
                             <li class="mb-7 ms-4">
                                 <div
-                                    class="absolute w-3 h-3 bg-pink-700 rounded-full mt-1.5 -start-[6.5px] border border-white">
+                                    class="absolute w-3 h-3 bg-red-700 rounded-full mt-1.5 -start-[6.5px] border border-white">
                                 </div>
-                                <time class="mb-1 text-xs poppins-medium text-pink-700 leading-none">
+                                <time class="mb-1 text-xs poppins-medium text-red-700 leading-none">
                                     {{ showingDays($status->created_at) }}
                                 </time>
                                 <h3 class="text-sm poppins-medium text-gray-900 dark:text-white">{{ $status->title }}
@@ -115,7 +115,7 @@
                 @if ($detail->shipping_status == 'delivery' || $detail->shipping_status == 'done')
                     <a target="_blank"
                         href="/track-packet?waybill={{ $detail->shipping_code }}&courier={{ 'jnt' }}"
-                        class="btn-track-packet text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-xs px-5 py-2.5 mb-2 block w-fit">
+                        class="btn-track-packet text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs px-5 py-2.5 mb-2 block w-fit">
                         Lacak paket ini
                     </a>
                 @endif
@@ -127,12 +127,12 @@
 {{-- @if ($transaction->created_at != $transaction->updated_at)
     <div class="space-y-4">
         <h1 class="poppins-semibold">Detail Status</h1>
-        <ol class="relative border-s-2 border-pink-200 dark:border-gray-700 ms-2">
+        <ol class="relative border-s-2 border-red-200 dark:border-gray-700 ms-2">
             @foreach ($transaction->shippingStatus as $status)
                 <li class="mb-7 ms-4">
-                    <div class="absolute w-3 h-3 bg-pink-700 rounded-full mt-1.5 -start-[6.5px] border border-white">
+                    <div class="absolute w-3 h-3 bg-red-700 rounded-full mt-1.5 -start-[6.5px] border border-white">
                     </div>
-                    <time class="mb-1 text-xs poppins-medium text-pink-700 leading-none">
+                    <time class="mb-1 text-xs poppins-medium text-red-700 leading-none">
                         {{ showingDays($status->created_at) }}
                     </time>
                     <h3 class="text-sm poppins-medium text-gray-900 dark:text-white">{{ $status->title }}</h3>
@@ -191,7 +191,7 @@
         <span class="text-[15px] flex-[2] text-gray-600 text-end">{{ format_rupiah($transaction->total, true) }}</span>
     </div>
     @if ($transaction->promo_code)
-        <div class="flex justify-between text-pink-700 poppins-medium border-t-2 border-dashed border-pink-700 pt-5">
+        <div class="flex justify-between text-red-700 poppins-medium border-t-2 border-dashed border-red-700 pt-5">
             <span class="lg:text-sm text-xs flex-[3]">
                 <i class="fa-regular fa-ticket"></i>
                 {{ $transaction->promo_code }}

@@ -7,7 +7,7 @@
         <div class="flex justify-between items-center">
             <h1 class="text-lg poppins-semibold">Pengaturan Carousel</h1>
             <button type="button" id="btn-add-carousel"
-                class="bg-white border border-pink-700 text-pink-700 hover:bg-pink-50 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                class="bg-white border border-red-700 text-red-700 hover:bg-red-50 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
                 <i class="fa-regular fa-plus"></i>
                 <span>Tambah Carousel</span>
             </button>
@@ -41,7 +41,7 @@
 
         <div class="mt-10 flex justify-center">
             <button type="submit"
-                class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 w-1/2 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">
+                class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 w-1/2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
                 Simpan Perubahan
             </button>
         </div>

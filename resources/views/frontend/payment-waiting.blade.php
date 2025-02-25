@@ -67,11 +67,11 @@
 
             <div class="grid grid-cols-2 gap-3">
                 <a href="{{ route('transaction') }}"
-                    class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-3 text-center w-full dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">
+                    class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-3 text-center w-full dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
                     Lihat Daftar Transaksi
                 </a>
                 <a href="{{ route('home') }}"
-                    class="bg-white border border-pink-700 text-pink-700 hover:bg-pink-50 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-3 text-center w-full dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">
+                    class="bg-white border border-red-700 text-red-700 hover:bg-red-50 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-3 text-center w-full dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
                     Kembali ke beranda
                 </a>
             </div>
@@ -245,7 +245,7 @@
                         </div>
                         @if ($transaction->promo_code)
                             <div
-                                class="flex justify-between text-pink-700 poppins-medium border-t-2 border-dashed border-pink-700 pt-5">
+                                class="flex justify-between text-red-700 poppins-medium border-t-2 border-dashed border-red-700 pt-5">
                                 <span class="lg:text-sm text-xs flex-[3]">
                                     <i class="fa-regular fa-ticket"></i>
                                     {{ $transaction->promo_code }}

@@ -13,7 +13,7 @@
                     <div class="grid grid-cols-4 gap-2 sm:gap-4">
                         @foreach ($product->productDetails as $index => $detail)
                             <button type="button" data-image="/uploads/products/{{ $detail->image }}"
-                                class="btn-change-image aspect-w-1 aspect-h-1 bg-gray-100 {{ $index == 0 ? 'border-2 border-pink-700' : '' }} rounded-lg overflow-hidden shadow-md">
+                                class="btn-change-image aspect-w-1 aspect-h-1 bg-gray-100 {{ $index == 0 ? 'border-2 border-red-700' : '' }} rounded-lg overflow-hidden shadow-md">
                                 <img src="/uploads/products/{{ $detail->image }}"
                                     class="w-full h-full object-center object-cover" />
                             </button>
@@ -35,7 +35,7 @@
                             </div>
                             {{-- <span class="ml-2 text-sm text-gray-500">(95 ulasan)</span> --}}
                         </div>
-                        {{-- <a href="" class="text-pink-600 hover:text-pink-700 block poppins-medium mt-4 mb-2">
+                        {{-- <a href="" class="text-red-600 hover:text-red-700 block poppins-medium mt-4 mb-2">
                             <i class="fa-regular fa-store"></i> {{ $product->user->store->name }}
                         </a> --}}
                     </div>
@@ -61,7 +61,7 @@
                                                 <input @checked($index == 0) id="{{ $v['id'] }}" type="radio"
                                                     data-image="/uploads/products/{{ $detail->image }}"
                                                     value="{{ $v['id'] }}" name="variant{{ $numberVariant }}_id"
-                                                    class="change-variant w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 focus:ring-pink-500 ">
+                                                    class="change-variant w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 ">
                                                 <label for="{{ $v['id'] }}"
                                                     class="w-full py-4 ms-2 text-sm font-medium text-gray-900">{{ $v['label'] }}</label>
                                             </div>
@@ -93,13 +93,13 @@
                     </div>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <button type="submit" id="btn-checkout"
-                            class="block text-center text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-3 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Beli
+                            class="block text-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-3 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">Beli
                             Sekarang</button>
                         {{-- <button type="submit"
-                            class="block text-center text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-3 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Beli
+                            class="block text-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-3 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">Beli
                             Sekarang</button> --}}
                         <button type="button" id="btn-add-to-cart" data-product-id="{{ $product->id }}"
-                            class="text-pink-700 bg-white border border-pink-700 hover:bg-pink-100 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-3 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Masukkan
+                            class="text-red-700 bg-white border border-red-700 hover:bg-red-100 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-3 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">Masukkan
                             Keranjang</button>
                     </div>
                     <div class="border-t pt-4 flex justify-between">
@@ -146,9 +146,9 @@
         function changeImage() {
             const image = $(this).data("image");
             $("#product-image-thumbnail").attr("src", image);
-            $(this).addClass("border-2 border-pink-700")
+            $(this).addClass("border-2 border-red-700")
                 .siblings()
-                .removeClass("border-2 border-pink-700");
+                .removeClass("border-2 border-red-700");
             // $(".change-variant[data-image='" + image + "']").prop("checked", true);
         }
 
@@ -156,8 +156,8 @@
             // const image = $(this).data("image");
 
             // $("#product-image-thumbnail").attr("src", image);
-            // $(".btn-change-image").removeClass("border-2 border-pink-700");
-            // $(".btn-change-image[data-image='" + image + "']").addClass("border-2 border-pink-700");
+            // $(".btn-change-image").removeClass("border-2 border-red-700");
+            // $(".btn-change-image[data-image='" + image + "']").addClass("border-2 border-red-700");
 
             getStock();
         }
@@ -193,16 +193,15 @@
                     $("#product-price").text(price);
                     $("#product-stock").text("Sisa stok " + stock);
                     $("#product-image-thumbnail").attr("src", `/uploads/products/${image}`);
-                    $(".btn-change-image").removeClass("border-2 border-pink-700");
+                    $(".btn-change-image").removeClass("border-2 border-red-700");
                     $(`.btn-change-image[data-image="/uploads/products/${image}"]`).addClass(
-                        "border-2 border-pink-700");
+                        "border-2 border-red-700");
                 }
             });
 
         }
 
         function addCart() {
-
             const isLogin = @json(Auth::check());
             if (!isLogin) {
                 Swal.fire({
@@ -274,6 +273,28 @@
 
         function checkout(e) {
             e.preventDefault();
+
+            const isLogin = @json(Auth::check());
+            if (!isLogin) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Perhatian",
+                    text: "Anda belum login, silahkan login terlebih dahulu",
+                    confirmButton: "Iya",
+                    cancelButton: "Batal",
+                    confirmButtonText: "Login",
+                    confirmButtonColor: "#6366F1",
+                    showCancelButton: true,
+                    cancelButtonColor: "#EF4444",
+                    cancelButtonText: "Batal",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.href = "/login";
+                    }
+                });
+                return;
+            }
+
             const data = $(this).serialize();
             const slug = "{{ $product->slug }}";
 

@@ -10,7 +10,7 @@
             'current' => $title,
         ])
         <a href="{{ route('admin.category.create') }}"
-            class="text-white bg-pink-600 border border-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5">
+            class="text-white bg-red-600 border border-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
             <i class="fas fa-plus mr-1.5"></i> Tambah Kategori
         </a>
     </div>
@@ -25,15 +25,15 @@
                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama
                         Kategori</label>
                     <input type="text" id="name" name="name" value="{{ $category->name }}"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                         required />
                 </div>
                 <div class="mb-5">
                     <label for="icon" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Icon (lihat
                         ikon pada <a href="https://fontawesome.com/search" target="_blank"
-                            class="text-pink-500 hover:text-pink-600">Font Awesome</a>)</label>
+                            class="text-red-500 hover:text-red-600">Font Awesome</a>)</label>
                     <input type="text" id="icon" name="icon" value="{{ $category->icon }}"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                         placeholder="fa-solid fa-user" required />
                 </div>
             </div>
@@ -51,7 +51,7 @@
                     </label>
                     <input type="text" id="name" name="sub_category_name_old[]"
                         value="{{ $category->subCategories[0]->name }}"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                         required />
                 </div>
                 @foreach ($category->subCategories as $index => $subCategory)
@@ -63,7 +63,7 @@
                                 </label>
                                 <input type="text" id="name" name="sub_category_name_old[]"
                                     value="{{ $subCategory->name }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
                                     required />
                             </div>
                             <div class="">
@@ -79,7 +79,7 @@
             </div>
             <div class="mt-5">
                 <button type="submit"
-                    class="w-full text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Simpan</button>
+                    class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">Simpan</button>
             </div>
         </div>
     </form>
@@ -99,7 +99,7 @@
                         Nama Sub Kategori
                     </label>
                     <input type="text" id="name" name="sub_category_name[]"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
                         required />
                 </div>
                 <div class="">

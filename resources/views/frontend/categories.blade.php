@@ -7,7 +7,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
             @foreach ($categories as $category)
                 <div class="bg-white rounded-lg shadow p-4 lg:p-6 hover:shadow-lg transition-shadow">
-                    <h2 class="text-xl font-semibold mb-4 text-pink-600">
+                    <h2 class="text-xl font-semibold mb-4 text-red-600">
                         <i class="{{ $category->icon }} mr-2"></i>
                         {{ $category->name }}
                     </h2>

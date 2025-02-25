@@ -11,7 +11,7 @@
         </label>
         <input type="text" id="text" name="price_variant_1{{ $newVariant == '' ? '_new' : '' }}[]"
             value="{{ $v1['label'] }}" readonly
-            class="bg-gray-200 curson-not-allowed border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+            class="bg-gray-200 curson-not-allowed border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
             required />
     </div>
     <div class="mb-5">
@@ -20,21 +20,21 @@
         </label>
         <input type="text" id="text" name="price_variant_2{{ $newVariant == '' ? '_new' : '' }}[]"
             value="{{ count($v2) > 0 ? $v2['label'] : '-' }}" readonly
-            class="bg-gray-200 curson-not-allowed border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+            class="bg-gray-200 curson-not-allowed border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
             required />
     </div>
     <div class="mb-5">
         <label for="number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga</label>
         <input type="number" id="number" name="price{{ $newVariant == '' ? '_new' : '' }}[]"
             value="{{ getProductPrice($product->id, $v1['id'], count($v2) > 0 ? $v2['id'] : null) }}"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
             required />
     </div>
     <div class="mb-5">
         <label for="number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stok</label>
         <input type="number" id="number" name="price_stock{{ $newVariant == '' ? '_new' : '' }}[]"
             value="{{ getProductStock($product->id, $v1['id'], count($v2) > 0 ? $v2['id'] : null) }}"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
             required />
     </div>
     <div class="mb-5">
@@ -42,7 +42,7 @@
         </label>
         <input type="number" id="weight" name="price_weight{{ $newVariant == '' ? '_new' : '' }}[]"
             value="{{ getProduct($product->id, $v1['id'], count($v2) > 0 ? $v2['id'] : null)->weight ?? 0 }}"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
             required />
     </div>
     <div class="mb-5">

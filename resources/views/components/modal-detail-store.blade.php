@@ -13,11 +13,11 @@
     </div>
     <div class=" flex items-center gap-5">
         <div class="flex flex-col items-center">
-            <span class="text-lg text-pink-700 poppins-semibold">{{ $store->user->products()->count() }}</span>
+            <span class="text-lg text-red-700 poppins-semibold">{{ $store->user->products()->count() }}</span>
             <span class="text-gray-700 poppins-medium text-sm">Jumlah Produk</span>
         </div>
         <div class="flex flex-col items-center">
-            <span class="text-lg text-pink-700 poppins-semibold">{{ $store->transactionsDetails()->count() }}</span>
+            <span class="text-lg text-red-700 poppins-semibold">{{ $store->transactionsDetails()->count() }}</span>
             <span class="text-gray-700 poppins-medium text-sm">Pesanan Diproses</span>
         </div>
     </div>

@@ -23,7 +23,7 @@
                         <div class="flex items-center ps-4 border border-gray-200 rounded-sm dark:border-gray-700">
                             <input required id="available-for-1" type="radio" value="Diskon Total Transaksi"
                                 name="available_for"
-                                class="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                             <label for="available-for-1"
                                 class="w-full py-3.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                 Diskon Total Transaksi
@@ -32,7 +32,7 @@
                         <div class="flex items-center ps-4 border border-gray-200 rounded-sm dark:border-gray-700">
                             <input required id="available-for-2" type="radio" value="Gratis Ongkos Kirim"
                                 name="available_for"
-                                class="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                             <label for="available-for-2"
                                 class="w-full py-3.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                 Gratis Ongkos Kirim
@@ -45,7 +45,7 @@
                         Kode Voucher
                     </label>
                     <input type="text" id="code" name="code"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                         required />
                     <span class="text-gray-700 text-xs">
                         <i class="fa-regular fa-info-circle"></i> Harap gunakan huruf kapital semua tanpa spasi
@@ -59,7 +59,7 @@
                         <div class="grid grid-cols-2 gap-5">
                             <div class="flex items-center ps-4 border border-gray-200 rounded-sm dark:border-gray-700">
                                 <input id="unit-1" type="radio" value="Persen" name="unit"
-                                    class="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="unit-1"
                                     class="w-full py-3.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                     Persen (%)
@@ -67,7 +67,7 @@
                             </div>
                             <div class="flex items-center ps-4 border border-gray-200 rounded-sm dark:border-gray-700">
                                 <input id="unit-2" type="radio" value="Rupiah" name="unit"
-                                    class="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="unit-2"
                                     class="w-full py-3.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                     Rupiah (Rp)
@@ -80,7 +80,7 @@
                             Nominal (Rp)
                         </label>
                         <input type="text" id="nominal" name="nominal"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500" />
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500" />
                         <span class="text-gray-700 text-xs">
                             <i class="fa-regular fa-info-circle"></i> Masukkan sesuai unit (Contoh • Persen: 10, Rupiah:
                             50000)
@@ -92,7 +92,7 @@
                         Minimal Pembelian (Rp)
                     </label>
                     <input type="text" id="minimal_transaction" name="minimal_transaction"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500" />
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500" />
                     <span class="text-gray-700 text-xs">
                         <i class="fa-regular fa-info-circle"></i> Masukkan 0 jika tidak diperlukan minimal pembelian
                     </span>
@@ -102,14 +102,14 @@
                         Maksimal Pemakaian
                     </label>
                     <input type="text" id="maximal_used" name="maximal_used"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500" />
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500" />
                     <span class="text-gray-700 text-xs">
                         <i class="fa-regular fa-info-circle"></i> Masukkan 0 jika voucher bisa digunakan berapa orangpun
                     </span>
                 </div>
                 <div class="flex justify-end">
                     <button type="submit"
-                        class="w-full text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Tambah</button>
+                        class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">Tambah</button>
                 </div>
             </div>
         </div>

@@ -20,7 +20,7 @@
                                     <input type="checkbox" data-product-id="{{ $cart->product_id }}"
                                         data-variant-1-id="{{ $cart->variant1_id }}"
                                         data-variant-2-id="{{ $cart->variant2_id }}"
-                                        class="checbox-cart w-5 h-5 rounded border-gray-600 text-pink-700 focus:ring-pink-700" />
+                                        class="checbox-cart w-5 h-5 rounded border-gray-600 text-red-700 focus:ring-red-700" />
                                     <div class="flex gap-4">
                                         <img src="/uploads/products/{{ getProduct($cart->product_id, $cart->variant1_id, $cart->variant2_id)->image }}"
                                             alt="Smartphone Pro Max" class="size-24 object-cover rounded shadow-md" />
@@ -82,7 +82,7 @@
                         </div>
 
                         <button type="button" id="btn-shipment"
-                            class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-3 mt-5 w-full">
+                            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-3 mt-5 w-full">
                             Lanjut ke Pembayaran
                         </button>
                     </div>

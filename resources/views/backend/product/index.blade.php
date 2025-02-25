@@ -6,7 +6,7 @@
             'current' => 'Daftar Produk',
         ])
         <a href="{{ route('admin.product.create') }}"
-            class="text-white bg-pink-600 border border-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5">
+            class="text-white bg-red-600 border border-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
             <i class="fas fa-plus mr-1.5"></i> Tambah Produk
         </a>
     </div>
@@ -14,7 +14,7 @@
     <div class="mt-5">
         <div class="relative overflow-x-auto rounded-md bg-white shadow-md">
             <table id="data-table" class="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-gray-400">
-                <thead class="text-xs text-pink-600 uppercase bg-white">
+                <thead class="text-xs text-red-600 uppercase bg-white">
                     <tr class="bg-white border-b border-t border-gray-200">
                         <th scope="col" class="px-6 py-4">
                             No

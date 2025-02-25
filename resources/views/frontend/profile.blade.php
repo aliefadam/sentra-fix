@@ -14,7 +14,7 @@
                         </p>
                     </div>
                     <a href="{{ route('profile.change-password') }}"
-                        class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
                         <i class="fas fa-key mr-2"></i>
                         Ganti Password
                     </a>
@@ -40,7 +40,7 @@
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama
                                         Lengkap</label>
                                     <input type="text" id="name" name="name" value="{{ $user->name }}"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
                                         required />
                                 </div>
                                 <div class="">
@@ -49,7 +49,7 @@
                                         Email
                                     </label>
                                     <input type="text" id="email" name="email" value="{{ $user->email }}"
-                                        class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 cursor-not-allowed"
+                                        class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 cursor-not-allowed"
                                         disabled required />
                                 </div>
                                 <div class="">
@@ -58,7 +58,7 @@
                                         No. Telephone
                                     </label>
                                     <input type="number" id="phone" name="phone" value="{{ $user->phone }}"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
                                         required />
                                 </div>
                                 <div class="">
@@ -68,14 +68,14 @@
                                     </label>
                                     <input type="date" id="date_of_birth" name="date_of_birth"
                                         value="{{ $user->date_of_birth }}"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5" />
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" />
                                 </div>
                                 <div>
                                     <label for="gender"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis
                                         Kelamin</label>
                                     <select id="gender" name="gender"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5">
                                         <option selected>-- Pilih --</option>
                                         <option @selected($user->gender == 'Laki-laki') value="Laki-laki">Laki-laki</option>
                                         <option @selected($user->gender == 'Perempuan') value="Perempuan">Perempuan</option>

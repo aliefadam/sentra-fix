@@ -17,11 +17,11 @@
             </div>
             <div class=" flex items-center gap-5">
                 <div class="flex flex-col items-center">
-                    <span class="text-xl text-pink-700 poppins-semibold">{{ $store->user->products()->count() }}</span>
+                    <span class="text-xl text-red-700 poppins-semibold">{{ $store->user->products()->count() }}</span>
                     <span class="text-gray-700 poppins-medium">Jumlah Produk</span>
                 </div>
                 <div class="flex flex-col items-center">
-                    <span class="text-xl text-pink-700 poppins-semibold">{{ $store->transactionsDetails()->count() }}</span>
+                    <span class="text-xl text-red-700 poppins-semibold">{{ $store->transactionsDetails()->count() }}</span>
                     <span class="text-gray-700 poppins-medium">Pesanan Diproses</span>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                                 </div>
                                 {{-- <span class="text-sm text-gray-500 ml-2">(95)</span> --}}
                             </div>
-                            <h3 class="text-pink-600 poppins-medium text-sm mt-1 mb-2">
+                            <h3 class="text-red-600 poppins-medium text-sm mt-1 mb-2">
                                 <i class="fa-regular fa-store"></i> {{ $product->user->store->name }}
                             </h3>
                             <h3 class="font-medium text-lg">{{ $product->name }}</h3>

@@ -34,7 +34,7 @@
                                         Catatan
                                     </label>
                                     <textarea id="notes" name="notes[]" rows="4"
-                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-pink-500 focus:border-pink-500 resize-none"
+                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-red-500 focus:border-red-500 resize-none"
                                         placeholder="Tuliskan catatan untuk pesanan anda"></textarea>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
                                     <div
                                         class="flex items-center gap-1 ps-4 py-1 border border-gray-200 rounded-sm dark:border-gray-700">
                                         <input id="method-payment-bca" type="radio" value="VA_BCA" name="method_payment"
-                                            class="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                         <label for="method-payment-bca"
                                             class="flex items-center w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                             <img src="{{ asset('imgs/bca.png') }}" class="h-4 w-auto mr-3" />
@@ -97,7 +97,7 @@
                                         class="flex items-center gap-1 ps-4 py-1 border border-gray-200 rounded-sm dark:border-gray-700">
                                         <input id="method-payment-mandiri" type="radio" value="VA_MANDIRI"
                                             name="method_payment"
-                                            class="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                         <label for="method-payment-mandiri"
                                             class="flex items-center w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                             <img src="{{ asset('imgs/mandiri.png') }}" class="h-4 w-auto mr-3" />
@@ -107,7 +107,7 @@
                                     <div
                                         class="flex items-center gap-1 ps-4 py-1 border border-gray-200 rounded-sm dark:border-gray-700">
                                         <input id="method-payment-bri" type="radio" value="VA_BRI" name="method_payment"
-                                            class="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                         <label for="method-payment-bri"
                                             class="flex items-center w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                             <img src="{{ asset('imgs/bri.png') }}" class="h-4 w-auto mr-3" />
@@ -123,7 +123,7 @@
                                         class="flex items-center gap-1 ps-4 py-1 border border-gray-200 rounded-sm dark:border-gray-700">
                                         <input id="method-payment-qris" type="radio" value="E-WALLET_QRIS"
                                             name="method_payment"
-                                            class="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                         <label for="method-payment-qris"
                                             class="flex items-center w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                             <img src="{{ asset('imgs/qris.png') }}" class="h-4 w-auto mr-3" />
@@ -134,7 +134,7 @@
                                         class="flex items-center gap-1 ps-4 py-1 border border-gray-200 rounded-sm dark:border-gray-700">
                                         <input id="method-payment-ovo" type="radio" value="E-WALLET_OVO"
                                             name="method_payment"
-                                            class="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                         <label for="method-payment-ovo"
                                             class="flex items-center w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                             <img src="{{ asset('imgs/ovo.png') }}" class="h-4 w-auto mr-3" />
@@ -145,7 +145,7 @@
                                         class="flex items-center gap-1 ps-4 py-1 border border-gray-200 rounded-sm dark:border-gray-700">
                                         <input id="method-payment-dana" type="radio" value="E-WALLET_DANA"
                                             name="method_payment"
-                                            class="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                         <label for="method-payment-dana"
                                             class="flex items-center w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                             <img src="{{ asset('imgs/dana.png') }}" class="h-4 w-auto mr-3" />
@@ -174,8 +174,8 @@
                                 @endif
                             </div>
                             @if ($voucher)
-                                <div class="flex justify-between bg-pink-50 border border-pink-300 rounded-md p-3">
-                                    <span class="text-pink-600 poppins-semibold">{{ $voucher['code'] }}</span>
+                                <div class="flex justify-between bg-red-50 border border-red-300 rounded-md p-3">
+                                    <span class="text-red-600 poppins-semibold">{{ $voucher['code'] }}</span>
                                     <div class="flex items-center gap-2 text-sm">
                                         <span>
                                             -{{ format_rupiah($voucher['discount'], true) }}
@@ -189,9 +189,9 @@
                                 </div>
                             @else
                                 <div class="flex justify-between">
-                                    <span class="text-pink-600">Punya kode promo?</span>
+                                    <span class="text-red-600">Punya kode promo?</span>
                                     <span data-modal-target="promo-modal" data-modal-toggle="promo-modal"
-                                        class="text-pink-600 poppins-semibold hover:underline cursor-pointer">Gunakan
+                                        class="text-red-600 poppins-semibold hover:underline cursor-pointer">Gunakan
                                         Kode</span>
                                 </div>
                             @endif
@@ -206,7 +206,7 @@
                             @endif
                         </div>
                         <button type="submit"
-                            class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-3 w-full dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">
+                            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-3 w-full dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
                             Buat Pesanan
                         </button>
                     </div>
@@ -243,7 +243,7 @@
                     <div class="border-b border-gray-200 dark:border-gray-700">
                         <ul class="flex w-full -mb-px text-sm font-medium text-center" id="default-styled-tab"
                             data-tabs-toggle="#default-styled-tab-content"
-                            data-tabs-active-classes="text-pink-600 hover:text-pink-600 dark:text-pink-500 dark:hover:text-pink-500 border-pink-600 dark:border-pink-500"
+                            data-tabs-active-classes="text-red-600 hover:text-red-600 dark:text-red-500 dark:hover:text-red-500 border-red-600 dark:border-red-500"
                             data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300"
                             role="tablist">
                             <li class="w-full" role="presentation">
@@ -288,7 +288,7 @@
                                             </span>
                                         @else
                                             <button type="button" data-address-id="{{ $address->id }}"
-                                                class="btn-change-address bg-white border border-pink-700 text-pink-700 hover:bg-pink-50 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-xs px-5 py-2.5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">
+                                                class="btn-change-address bg-white border border-red-700 text-red-700 hover:bg-red-50 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
                                                 Gunakan
                                             </button>
                                         @endif
@@ -306,7 +306,7 @@
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama
                                         Alamat</label>
                                     <input type="text" id="name" name="name"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                                         placeholder="rumah, kantor, dll." required />
                                 </div>
                                 <div class="mb-5 grid grid-cols-2 gap-5">
@@ -315,7 +315,7 @@
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama
                                             Penerima</label>
                                         <input type="text" id="recipient" name="recipient"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                                             required />
                                     </div>
                                     <div class="">
@@ -323,7 +323,7 @@
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No Telepon
                                             Penerima</label>
                                         <input type="number" id="phone" name="phone"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                                             required />
                                     </div>
                                 </div>
@@ -332,7 +332,7 @@
                                         <label for="province"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Provinsi</label>
                                         <select id="province" name="province"
-                                            class="select-2-dropdown bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500">
+                                            class="select-2-dropdown bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500">
                                             <option selected>-- Pilih Provinsi --</option>
                                         </select>
                                     </div>
@@ -342,7 +342,7 @@
                                             Kabupaten/Kota
                                         </label>
                                         <select id="city" name="city"
-                                            class="select-2-dropdown bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block p-2.5">
+                                            class="select-2-dropdown bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block p-2.5">
                                             <option selected id="option-city-first">
                                                 Silahkan pilih provinsi dahulu
                                             </option>
@@ -356,7 +356,7 @@
                                             Kabupaten/Kota
                                         </label>
                                         <select id="subdistrict" name="subdistrict"
-                                            class="select-2-dropdown bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block p-2.5">
+                                            class="select-2-dropdown bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block p-2.5">
                                             <option selected id="option-subdistrict-first">Silahkan pilih kota
                                                 dahulu
                                             </option>
@@ -368,7 +368,7 @@
                                             Kode Pos
                                         </label>
                                         <input type="number" id="postal_code" name="postal_code"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                                             required />
                                     </div>
                                 </div>
@@ -377,12 +377,12 @@
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Detail Alamat
                                         Rumah</label>
                                     <textarea id="address" rows="4" name="address"
-                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-pink-500 focus:border-pink-500 resize-none"
+                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-red-500 focus:border-red-500 resize-none"
                                         placeholder="Jl. Sudirman....."></textarea>
                                 </div>
                                 <div class="flex justify-end">
                                     <button type="submit"
-                                        class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
                                         Tambah
                                     </button>
                                 </div>
@@ -426,13 +426,13 @@
                             Masukkan kode promo
                         </label>
                         <input type="text" id="code" name="code"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                             required />
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                         <button data-modal-hide="promo-modal" type="submit"
-                            class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800">
+                            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                             Cek Promo
                         </button>
                     </div>
@@ -581,7 +581,7 @@
                     $("#container-shipping").html(`
                     <div class="flex justify-center items-center py-5">
                         <div role="status">
-                            <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-pink-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/></svg>
+                            <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/></svg>
                             <span class="sr-only">Loading...</span>
                         </div>
                     </div>
@@ -602,7 +602,7 @@
                         <div
                             class="flex items-center gap-2 ps-4 py-1 border border-gray-200 rounded-sm dark:border-gray-700">
                             <input id="shipping-option-${i}" type="radio" value="${courier.service}_${courier.etd}_${courier.price}" name="shipping" ${i == 0 ? 'checked' : ''}
-                                class="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 focus:ring-pink-500 ">
+                                class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 ">
                             <label for="shipping-option-${i}"
                                 class="flex flex-col poppins-medium w-full py-4 ms-2 text-gray-900 dark:text-gray-300">
                                 <span class="">${courier.service} <span class="mx-1.5">•</span> Estimasi ${courier.etd}</span>

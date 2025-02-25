@@ -63,12 +63,12 @@
 
     <div class="bg-gray-50 w-full h-full min-h-screen flex justify-center items-center p-5">
         <main class="w-full flex items-center flex-col">
-            <div class="text-center text-pink-700">
+            <div class="text-center text-red-700">
                 <h1 class="poppins-black text-4xl">SENTRA FIX</h1>
                 <p class="poppins-semibold text-lg">LACAK PAKET</p>
             </div>
 
-            <div class="bg-white border-2 border-pink-700 mt-10 p-10 rounded-md shadow-md w-1/3">
+            <div class="bg-white border-2 border-red-700 mt-10 p-10 rounded-md shadow-md w-1/3">
                 <form action="{{ route('track_packet_post') }}" class="w-full" method="GET">
                     {{-- @csrf --}}
                     <div class="mb-5">
@@ -77,7 +77,7 @@
                             Masukkan Nomor Resi
                         </label>
                         <input type="text" id="waybill" name="waybill" value="{{ $waybill ?? '' }}"
-                            class="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                            class="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                             required />
                     </div>
                     <div class="mb-5">
@@ -96,7 +96,7 @@
                         </select>
                     </div>
                     <button type="submit"
-                        class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 w-full text-center dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">
+                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 w-full text-center dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
                         Lacak
                     </button>
                 </form>
@@ -107,58 +107,58 @@
                     $detail = $data['details'];
                     $manifest = $data['manifest'];
                 @endphp
-                <div class="bg-white border-2 border-pink-700 mt-10 p-10 rounded-md shadow-md w-1/2">
-                    <h1 class="text-center text-2xl poppins-semibold text-pink-700">Detail Paket</h1>
+                <div class="bg-white border-2 border-red-700 mt-10 p-10 rounded-md shadow-md w-1/2">
+                    <h1 class="text-center text-2xl poppins-semibold text-red-700">Detail Paket</h1>
                     <div class="mt-5 grid grid-cols-2 gap-5">
                         <div class="space-y-5">
                             <div class="">
-                                <h1 class="text-sm text-pink-700 poppins-medium">Nomor Resi</h1>
+                                <h1 class="text-sm text-red-700 poppins-medium">Nomor Resi</h1>
                                 <span>{{ $detail['waybill_number'] }}</span>
                             </div>
                             <div class="">
-                                <h1 class="text-sm text-pink-700 poppins-medium">Tanggal Pemberangkatan</h1>
+                                <h1 class="text-sm text-red-700 poppins-medium">Tanggal Pemberangkatan</h1>
                                 <span>{{ showingDays($detail['waybill_date']) }}</span>
                             </div>
                             <div class="">
-                                <h1 class="text-sm text-pink-700 poppins-medium">Kota Awal</h1>
+                                <h1 class="text-sm text-red-700 poppins-medium">Kota Awal</h1>
                                 <span>{{ $detail['origin'] }}</span>
                             </div>
                             <div class="">
-                                <h1 class="text-sm text-pink-700 poppins-medium">Kota Tujuan</h1>
+                                <h1 class="text-sm text-red-700 poppins-medium">Kota Tujuan</h1>
                                 <span>{{ $detail['destination'] }}</span>
                             </div>
                         </div>
                         <div class="space-y-5 text-end">
                             <div class="">
-                                <h1 class="text-sm text-pink-700 poppins-medium">Nama Pengirim</h1>
+                                <h1 class="text-sm text-red-700 poppins-medium">Nama Pengirim</h1>
                                 <span>{{ $detail['shipper_name'] }}</span>
                             </div>
                             <div class="">
-                                <h1 class="text-sm text-pink-700 poppins-medium">Alamat Pengirim</h1>
+                                <h1 class="text-sm text-red-700 poppins-medium">Alamat Pengirim</h1>
                                 <span>{{ $detail['shipper_address1'] }}</span>
                             </div>
                             <div class="">
-                                <h1 class="text-sm text-pink-700 poppins-medium">Nama Penerima</h1>
+                                <h1 class="text-sm text-red-700 poppins-medium">Nama Penerima</h1>
                                 <span>{{ $detail['receiver_name'] }}</span>
                             </div>
                             <div class="">
-                                <h1 class="text-sm text-pink-700 poppins-medium">Alamat Penerima</h1>
+                                <h1 class="text-sm text-red-700 poppins-medium">Alamat Penerima</h1>
                                 <span>{{ $detail['receiver_address1'] }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white border-2 border-pink-700 mt-10 p-10 rounded-md shadow-md w-1/2">
-                    <h1 class="text-center text-2xl poppins-semibold text-pink-700">Hasil Lacak Paket</h1>
+                <div class="bg-white border-2 border-red-700 mt-10 p-10 rounded-md shadow-md w-1/2">
+                    <h1 class="text-center text-2xl poppins-semibold text-red-700">Hasil Lacak Paket</h1>
                     <div class="mt-5">
-                        <ol class="relative border-s-2 border-pink-200 dark:border-gray-700 ms-2">
+                        <ol class="relative border-s-2 border-red-200 dark:border-gray-700 ms-2">
                             @foreach ($manifest as $m)
                                 <li class="mb-7 ms-4">
                                     <div
-                                        class="absolute w-3 h-3 bg-pink-700 rounded-full mt-1.5 -start-[6.5px] border border-white">
+                                        class="absolute w-3 h-3 bg-red-700 rounded-full mt-1.5 -start-[6.5px] border border-white">
                                     </div>
-                                    <time class="mb-1 text-xs poppins-medium text-pink-700 leading-none">
+                                    <time class="mb-1 text-xs poppins-medium text-red-700 leading-none">
                                         {{ showingDays($m['manifest_date']) }}
                                     </time>
                                     <h3 class="text-sm poppins-medium text-gray-900 dark:text-white">
@@ -174,7 +174,7 @@
     </div>
 
     {{-- <div class="absolute bottom-10 left-0 right-0 flex justify-center">
-        <p class="text-pink-700 poppins-medium">© 2025 SentraFix. Hak Cipta Dilindungi.</p>
+        <p class="text-red-700 poppins-medium">© 2025 SentraFix. Hak Cipta Dilindungi.</p>
     </div> --}}
 </body>
 

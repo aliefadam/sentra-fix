@@ -19,7 +19,7 @@
                     Silakan cek email Anda secara berkala untuk informasi selanjutnya
                 </p>
                 <a href="{{ route('home') }}"
-                    class="!rounded-button bg-pink-700 text-white px-6 py-3 font-medium hover:bg-pink-800 transition-colors rounded-md">
+                    class="!rounded-button bg-red-700 text-white px-6 py-3 font-medium hover:bg-red-800 transition-colors rounded-md">
                     Kembali ke Beranda
                 </a>
             </div>
