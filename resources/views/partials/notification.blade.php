@@ -12,7 +12,7 @@
             text: '{{ $text }}',
             // showConfirmButton: true,
             showConfirmButton: false,
-            timer: 2000
+            // timer: 2000
         })
     </script>
 @endif

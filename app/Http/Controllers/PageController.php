@@ -308,6 +308,47 @@ class PageController extends Controller
         ]);
     }
 
+    public function track_packet(Request $request)
+    {
+        $data = [];
+        if ($request->has("waybill") && $request->has("courier")) {
+            // $data = track_packet("JX3184450044", "jnt");
+            $data = track_packet($request->waybill, $request->courier);
+            if (!$data) {
+                session()->flash("notification", [
+                    "icon" => "error",
+                    "title" => "Gagal",
+                    "text" => "No resi yang anda masukkan tidak ditemukan",
+                ]);
+            }
+        }
+
+        return view("frontend.track", [
+            "title" => "Lacak Paket",
+            "data" => $data,
+            "waybill" => $request->waybill,
+            "courier" => $request->courier
+        ]);
+    }
+
+    public function track_packet_post(Request $request)
+    {
+        $data = track_packet($request->waybill, $request->courier);
+        if (!$data) {
+            return redirect()->back()->with("notification", [
+                "icon" => "error",
+                "title" => "Gagal",
+                "text" => "No resi yang anda masukkan tidak ditemukan",
+            ]);
+        }
+        return view("frontend.track", [
+            "title" => "Lacak Paket",
+            "data" => $data,
+            "waybill" => $request->waybill,
+            "courier" => $request->courier
+        ]);
+    }
+
     public function dashboard()
     {
         $user = User::find(Auth::user()->id);

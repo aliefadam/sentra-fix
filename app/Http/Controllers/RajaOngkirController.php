@@ -73,4 +73,15 @@ class RajaOngkirController extends Controller
 
         return response()->json($data);
     }
+
+    public function track(Request $request)
+    {
+        $response = Http::post("https://pro.rajaongkir.com/api/cost", [
+            "key" => env("RAJA_ONGKIR_API_KEY"),
+            "waybill" => $request->waybill,
+            "courier" => $request->courier,
+        ]);
+
+        return response()->json($response->json()["rajaongkir"]["result"]["manifest"]);
+    }
 }

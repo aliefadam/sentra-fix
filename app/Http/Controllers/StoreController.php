@@ -49,7 +49,7 @@ class StoreController extends Controller
             $extension = $file->extension();
             $image_name = $newUser->name .  "_STORE_" . date("ymdhis") . "." . $extension;
             $file->move(public_path("uploads/stores"), $image_name);
-            $file->move(public_path("uploads/users"), $image_name);
+            // $file->move(public_path("uploads/users"), $image_name);
 
             $newStore = Store::create([
                 "user_id" => $newUser->id,

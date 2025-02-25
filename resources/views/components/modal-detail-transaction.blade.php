@@ -96,7 +96,7 @@
                     </div>
                 </div> --}}
                 <div class="mt-5 space-y-4">
-                    <h1 class="text-sm">Informasi Pengiriman : </h1>
+                    <h1 class="text-sm">Informasi Status : </h1>
                     <ol class="relative border-s-2 border-pink-200 dark:border-gray-700 ms-2">
                         @foreach ($detail->shippingStatuses as $status)
                             <li class="mb-7 ms-4">
@@ -112,6 +112,13 @@
                         @endforeach
                     </ol>
                 </div>
+                @if ($detail->shipping_status == 'delivery' || $detail->shipping_status == 'done')
+                    <a target="_blank"
+                        href="/track-packet?waybill={{ $detail->shipping_code }}&courier={{ 'jnt' }}"
+                        class="btn-track-packet text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-xs px-5 py-2.5 mb-2 block w-fit">
+                        Lacak paket ini
+                    </a>
+                @endif
             </div>
         @endforeach
     </div>
@@ -200,3 +207,24 @@
         </div>
     @endif
 </div>
+
+{{-- <script>
+    $(".btn-track-packet").click(track);
+
+    function track() {
+        const waybill = $(this).data("waybill");
+        const courier = $(this).data("courier");
+        $.ajax({
+            type: "POST",
+            url: "/track-packet",
+            data: {
+                _token: "{{ csrf_token() }}",
+                waybill: waybill,
+                courier: courier
+            },
+            success: function(response) {
+                location.href = response.redirect_url;
+            }
+        });
+    }
+</script> --}}

@@ -130,6 +130,7 @@ class TransactionController extends Controller
     public function show($id)
     {
         $transaction = Transaction::find($id);
+
         return response()->json([
             "html" => view("components.modal-detail-transaction", [
                 "transaction" => $transaction
@@ -310,6 +311,47 @@ class TransactionController extends Controller
             return response()->json([
                 "message" => "error",
                 "text" => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function cancel($id, $transaction_detail_id, Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $transaction = Transaction::find($id);
+            $transactionDetail = TransactionDetail::find($transaction_detail_id);
+            $transaction->update([
+                "payment_status" => "cancel",
+            ]);
+            $transactionDetail->update([
+                "shipping_status" => "cancel",
+            ]);
+
+            ShippingStatus::create([
+                "transaction_id" => $transaction->id,
+                "transaction_detail_id" => $transaction_detail_id,
+                "title" => "Pesanan dibatalkan oleh pembeli - {$request->reason}",
+            ]);
+            DB::commit();
+
+            session()->flash("notification", [
+                "icon" => "success",
+                "title" => "Berhasil",
+                "text" => "Pesanan berhasil dibatalkan",
+            ]);
+            return response()->json([
+                "message" => "success",
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            session()->flash("notification", [
+                "icon" => "error",
+                "title" => "Gagal",
+                "text" => $e->getMessage(),
+            ]);
+            return response()->json([
+                "message" => "error",
             ]);
         }
     }

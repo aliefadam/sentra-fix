@@ -41,10 +41,12 @@ Route::prefix("rajaongkir")->group(function () {
 Route::prefix("store")->group(function () {
     Route::get("/{slug}", [StoreController::class, "show"])->name("store.show");
     Route::post("store", [StoreController::class, "store"])->name("store.store");
-    Route::get("success", [StoreController::class, "success"])->name("store.success");
+    Route::get("/register/success", [StoreController::class, "success"])->name("store.success");
 });
 
 Route::get("/search", [PageController::class, "search"])->name("search");
+Route::get("/track-packet", [PageController::class, "track_packet"])->name("track_packet");
+Route::post("/track-packet", [PageController::class, "track_packet_post"])->name("track_packet_post");
 
 // JQUERY FETCH
 Route::get("/get-stock/{productID}/{variant1ID}/{variant2ID}", [ProductController::class, "get_stock"])->name("product.get-stock");
@@ -89,6 +91,7 @@ Route::middleware("auth")->group(function () {
         Route::get("/{id}", [TransactionController::class, "show"])->name("transaction.show");
         Route::post("/", [TransactionController::class, "store"])->name("transaction.store");
         Route::post("/shipment", [TransactionController::class, "transaction_from_shipment"])->name("transaction.shipment");
+        Route::put("/{id}/{transaction_detail_id}/cancel", [TransactionController::class, "cancel"])->name("admin.transaction.cancel");
         Route::put("/{id}/{transaction_detail_id}/done", [TransactionController::class, "done"])->name("admin.transaction.done");
     });
 

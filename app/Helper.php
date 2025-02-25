@@ -223,7 +223,7 @@ if (!function_exists("getStatus")) {
         } else if ($status == "done") {
             return "Pesanan selesai";
         } else {
-            return "Gagal";
+            return "Pesanan Dibatalkan";
         }
     }
 }
@@ -503,5 +503,26 @@ if (!function_exists("latestTransactions")) {
         return Transaction::whereHas("transactionDetails", function ($detail) {
             $detail->where("store_id", Auth::user()->id);
         })->limit(3)->get();
+    }
+}
+
+if (!function_exists("track_packet")) {
+    function track_packet($waybill, $courier)
+    {
+        $response = Http::post("https://pro.rajaongkir.com/api/waybill", [
+            "key" => env("RAJA_ONGKIR_API_KEY"),
+            "waybill" => $waybill,
+            "courier" => $courier,
+        ]);
+
+        if ($response->successful()) {
+            $data = $response->json();
+
+            if (isset($data["rajaongkir"]["result"])) {
+                return $data["rajaongkir"]["result"];
+            }
+        }
+
+        return [];
     }
 }
