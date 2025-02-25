@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             StoreSeeder::class,
             AddressSeeder::class,
+            CarouselSeeder::class,
+            VoucherSeeder::class,
         ]);
     }
 }

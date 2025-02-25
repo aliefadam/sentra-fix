@@ -176,6 +176,30 @@
                                     <span class="" id="shipping-cost">Menghitung...</span>
                                 @endif
                             </div>
+                            @if ($voucher)
+                                <div class="flex justify-between bg-pink-50 border border-pink-300 rounded-md p-3">
+                                    <span class="text-pink-600 poppins-semibold">
+                                        {{ $voucher['code'] }}
+                                    </span>
+                                    <div class="flex items-center gap-2 text-sm">
+                                        <span>
+                                            -{{ format_rupiah($voucher['discount'], true) }}
+                                            @if ($voucher['discount_label'] != '')
+                                                <span class="">({{ $voucher['discount_label'] }})</span>
+                                            @endif
+                                        </span>
+                                        <i id="btn-delete-promo" class="fa-solid cursor-pointer fa-trash text-red-700">
+                                        </i>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="flex justify-between">
+                                    <span class="text-pink-600">Punya kode promo?</span>
+                                    <span data-modal-target="promo-modal" data-modal-toggle="promo-modal"
+                                        class="text-pink-600 poppins-semibold hover:underline cursor-pointer">Gunakan
+                                        Kode</span>
+                                </div>
+                            @endif
                         </div>
                         <div class="flex justify-between py-4">
                             <span class="font-semibold">Total</span>
@@ -374,12 +398,57 @@
             </div>
         </div>
     </div>
+
+    {{-- Gunakan Promo --}}
+    <div id="promo-modal" tabindex="-1" aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                <!-- Modal header -->
+                <div
+                    class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        Gunakan Promo
+                    </h3>
+                    <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-hide="promo-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <form action="" id="form-cek-promo">
+                    <input type="hidden" name="shipping_cost">
+                    <input type="hidden" name="total_transaction">
+                    <div class="p-4 md:p-5">
+                        <label for="code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            Masukkan kode promo
+                        </label>
+                        <input type="text" id="code" name="code"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
+                            required />
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                        <button data-modal-hide="promo-modal" type="submit"
+                            class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800">
+                            Cek Promo
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
     <script>
-        // console.log(@json($products));
-
         const active_address = @json($active_address);
 
         if (active_address != null) {
@@ -394,6 +463,8 @@
         $("#city").on("change", getSubdistrict);
         $(".btn-change-address").click(changeAddress);
         $("input[name^='shipping']").change(getTotal);
+        $("#form-cek-promo").submit(cekPromo);
+        $("#btn-delete-promo").click(deletePromo);
 
         function getProvince() {
             $.ajax({
@@ -580,10 +651,19 @@
                 `${Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(totalShippingCost)}`
             );
 
-            const total = totalSubTotal + totalShippingCost;
+            let discount = 0;
+            @if ($voucher)
+                discount = {{ $voucher['discount'] }};
+            @else
+                discount = 0;
+            @endif
+            const total = totalSubTotal + totalShippingCost - discount;
             $("#total").html(
                 `${Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(total)}`
             );
+
+            $("input[name=shipping_cost]").val(totalShippingCost);
+            $("input[name=total_transaction]").val(total);
         }
 
         function transactionStore(e) {
@@ -627,6 +707,53 @@
                     }
                 });
             }
+        }
+
+        function cekPromo(e) {
+            e.preventDefault();
+            const data = $(this).serialize();
+            const userID = {{ Auth::user()->id }};
+            $.ajax({
+                type: "GET",
+                url: `/cek-promo/cart_shipment_${userID}`,
+                data: data,
+                beforeSend: function() {
+                    Swal.fire({
+                        title: "Loading...",
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                },
+                success: function(response) {
+                    window.location.reload();
+                }
+            });
+        }
+
+        function deletePromo() {
+            const userID = {{ Auth::user()->id }};
+
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: "Anda akan menghapus promo!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "GET",
+                        url: `/delete-promo/cart_shipment_${userID}`,
+                        success: function(response) {
+                            location.reload();
+                        }
+                    });
+                }
+            });
         }
     </script>
 @endsection

@@ -221,6 +221,38 @@ class AuthController extends Controller
         ]);
     }
 
+    public function change_password_backend()
+    {
+        return view("backend.change-password", [
+            "title" => "Ganti Password",
+        ]);
+    }
+
+    public function change_password_backend_post(Request $request)
+    {
+        $request->validate([
+            "password_old" => "required|current_password",
+            "password" => "required|confirmed",
+        ], [
+            "password_old.required" => "Password Lama wajib diisi",
+            "password_old.current_password" => "Password Lama Tidak Sesuai",
+            "password.required" => "Password Baru wajib diisi",
+            "password.confirmed" => "Konfirmasi Password Tidak Sesuai",
+        ]);
+
+        $user = User::find(Auth::user()->id);
+        $user->update([
+            "password" => bcrypt($request->password)
+        ]);
+
+        Auth::logout();
+        return redirect()->route("login")->with("notification", [
+            "icon" => "success",
+            "title" => "Berhasil",
+            "text" => "Password Berhasil Diubah, silahkan login kembali"
+        ]);
+    }
+
     public function logout()
     {
         Auth::logout();

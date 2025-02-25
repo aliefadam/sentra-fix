@@ -1,7 +1,7 @@
 @extends('layouts.user')
 
 @section('content')
-    <form action="{{ route('product.checkout', ['slug' => $product->slug]) }}" method="POST">
+    <form id="form-checkout" action="{{ route('product.checkout', ['slug' => $product->slug]) }}" method="POST">
         @csrf
         <main class="max-w-8xl mx-auto px-4 sm:px-4 lg:px-8 py-4 sm:py-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-8">
@@ -92,9 +92,12 @@
                         </div>
                     </div>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <button type="submit"
+                        <button type="submit" id="btn-checkout"
                             class="block text-center text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-3 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Beli
                             Sekarang</button>
+                        {{-- <button type="submit"
+                            class="block text-center text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-3 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Beli
+                            Sekarang</button> --}}
                         <button type="button" id="btn-add-to-cart" data-product-id="{{ $product->id }}"
                             class="text-pink-700 bg-white border border-pink-700 hover:bg-pink-100 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-3 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Masukkan
                             Keranjang</button>
@@ -138,6 +141,7 @@
             changeQuantity("minus");
         });
         $("#btn-add-to-cart").click(addCart);
+        $("#form-checkout").submit(checkout);
 
         function changeImage() {
             const image = $(this).data("image");
@@ -266,6 +270,30 @@
                 }
             });
 
+        }
+
+        function checkout(e) {
+            e.preventDefault();
+            const data = $(this).serialize();
+            const slug = "{{ $product->slug }}";
+
+            $.ajax({
+                type: "POST",
+                url: `/product/${slug}/checkout`,
+                data: data,
+                beforeSend: function() {
+                    Swal.fire({
+                        title: "Loading...",
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                },
+                success: function(response) {
+                    window.location = response.redirect_url;
+                }
+            });
         }
     </script>
 @endsection

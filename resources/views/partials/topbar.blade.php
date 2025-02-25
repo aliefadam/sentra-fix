@@ -24,28 +24,37 @@
                             <p class="text-xs text-gray-500 capitalize">{{ auth()->user()->role }}</p>
                         </div>
                         <div class="relative">
-                            <button type="button"
-                                class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300"
+                            <button type="button" data-dropdown-toggle="dropdown-user-popup"
+                                class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-300"
                                 id="user-menu-button">
-                                <img class="w-8 h-8 rounded-full"
-                                    src="https://creatie.ai/ai/api/search-image?query=A professional headshot of a young Indonesian businessman wearing a modern suit, captured against a clean white background. The image should show confidence and approachability, with natural lighting highlighting facial features&width=32&height=32&orientation=squarish&flag=44ec8676-91d1-4cc2-8f26-824c212627ec&flag=9fdb235e-1fe6-4a69-af1e-dbc5fb4d3b70"
-                                    alt="user photo" />
+                                <img class="w-8 h-8 shadow-sm rounded-full"
+                                    src="{{ auth()->user()->image ? '/uploads/users/' . auth()->user()->image : '/imgs/no-image.png' }}" />
                             </button>
-                            <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50"
-                                id="user-menu">
-                                <div class="px-4 py-3">
-                                    <p class="text-sm font-medium">{{ auth()->user()->name }}</p>
-                                    <p class="text-sm text-gray-600 truncate">
-                                        {{ auth()->user()->email }}
-                                    </p>
+                            <div id="dropdown-user-popup"
+                                class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-md w-72 !-translate-x-[250px] !translate-y-[60px] dark:bg-gray-700 dark:divide-gray-600">
+                                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white flex gap-3 items-center">
+                                    <img src="{{ auth()->user()->image ? '/uploads/users/' . auth()->user()->image : '/imgs/no-image.png' }}"
+                                        class="w-10 h-10 rounded-full" alt="">
+                                    <div class="">
+                                        <div>{{ auth()->user()->name }}</div>
+                                        <div class="font-medium truncate">{{ auth()->user()->email }}</div>
+                                    </div>
                                 </div>
-                                <hr class="border-gray-200" />
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                    Ganti Password
-                                </a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                    Keluar
-                                </a>
+                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                    aria-labelledby="dropdown-user">
+                                    <li>
+                                        <a href="{{ route('backend.change-password') }}"
+                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                            Ganti Password
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                            Keluar
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>

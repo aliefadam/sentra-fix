@@ -3,17 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Carousel;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\ShippingStatus;
 use App\Models\SubCategory;
 use App\Models\Transaction;
+use App\Models\TransactionDetail;
 use App\Models\User;
 use App\Models\Variant;
 use App\Models\VariantDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -24,6 +27,7 @@ class PageController extends Controller
             "categories" => Category::limit(6)->get(),
             "products" => Product::latest()->limit(4)->get(),
             "featured_products" => Product::limit(4)->get(),
+            "carousels" => Carousel::all(),
         ]);
     }
 
@@ -84,8 +88,9 @@ class PageController extends Controller
         ]);
     }
 
-    public function product_checkout($slug, Request $request)
+    public function product_checkout_post($slug, Request $request)
     {
+        $user_id = Auth::user()->id;
         $product = Product::where('slug', $slug)->first();
         $store_city_id = json_decode($product->user->addresses()->first()->city)->id;
         if (isset($request->variant2_id)) {
@@ -94,8 +99,7 @@ class PageController extends Controller
             $variant_label = getTitleVariant1($product->id) . " " . VariantDetail::find($request->variant1_id)->name;
         }
 
-        return view('frontend.checkout', [
-            "title" => "Checkout",
+        session()->put("user_checkout_{$user_id}", [
             "products" => [
                 (object)[
                     "id" => $product->id,
@@ -115,13 +119,48 @@ class PageController extends Controller
             "addresses" => Address::where("user_id", Auth::user()->id)->get(),
             "active_address" => Address::where("user_id", Auth::user()->id)->where("is_active", true)->first(),
         ]);
+
+        return response()->json([
+            "redirect_url" => route("product.checkout", $product->slug),
+        ]);
+    }
+
+    public function product_checkout($slug, Request $request)
+    {
+        $user_id = Auth::user()->id;
+        $dataCheckout = session("user_checkout_{$user_id}");
+        $dataCheckout["addresses"] = Address::where("user_id", Auth::user()->id)->get();
+        $dataCheckout["active_address"] = Address::where("user_id", Auth::user()->id)->where("is_active", true)->first();
+        session()->put("user_checkout_{$user_id}", $dataCheckout);
+
+        return view('frontend.checkout', [
+            "title" => "Checkout",
+            "products" => $dataCheckout["products"],
+            "store_city_id" => $dataCheckout["store_city_id"],
+            "addresses" => $dataCheckout["addresses"],
+            "active_address" => $dataCheckout["active_address"],
+            "voucher" => isset($dataCheckout["voucher"]) ? $dataCheckout["voucher"] : [],
+        ]);
     }
 
     public function payment_waiting($invoice)
     {
         $transaction = Transaction::where("invoice", $invoice)->first();
-        return view("frontend.payment-waiting", [
-            "title" => "Menunggu Pembayaran",
+        if ($transaction->payment_status == "waiting") {
+            return view("frontend.payment-waiting", [
+                "title" => "Menunggu Pembayaran",
+                "transaction" => $transaction,
+            ]);
+        } else {
+            return redirect()->route("payment.success", $transaction->invoice);
+        }
+    }
+
+    public function payment_success($invoice)
+    {
+        $transaction = Transaction::where("invoice", $invoice)->first();
+        return view("frontend.payment-success", [
+            "title" => "Pembayaran Sukses",
             "transaction" => $transaction,
         ]);
     }
@@ -200,7 +239,7 @@ class PageController extends Controller
     {
         return view("frontend.transaction", [
             "title" => "Transaksi",
-            "transactions" => Transaction::where("user_id", Auth::user()->id)->get(),
+            "transactions" => Transaction::where("user_id", Auth::user()->id)->latest()->get(),
         ]);
     }
 
@@ -213,12 +252,18 @@ class PageController extends Controller
         $transaction = Transaction::where("invoice", $request->invoice)->first();
         if ($transaction) {
             $transaction->update([
-                "status" => "success",
+                "payment_status" => "success",
             ]);
-            ShippingStatus::create([
-                "transaction_id" => $transaction->id,
-                "title" => "Pembayaran Diterima - Menunggu Konfirmasi",
+            $transaction->transactionDetails()->update([
+                "shipping_status" => "success",
             ]);
+            foreach ($transaction->transactionDetails as $detail) {
+                ShippingStatus::create([
+                    "transaction_id" => $transaction->id,
+                    "transaction_detail_id" => $detail->id,
+                    "title" => "Pembayaran Diterima - Menunggu Konfirmasi",
+                ]);
+            }
             return redirect()->back()->with("notification", [
                 "icon" => "success",
                 "title" => "Berhasil",
@@ -265,8 +310,50 @@ class PageController extends Controller
 
     public function dashboard()
     {
+        $user = User::find(Auth::user()->id);
+
+        $data_admin = [
+            "transaction_count" => TransactionDetail::where("store_id", $user->id)->count(),
+            "income" => TransactionDetail::where("store_id", $user->id)
+                ->where("shipping_status", "done")
+                ->sum("total"),
+            "buyer_count" => User::where([
+                ["role", "!=", "admin"],
+                ["role", "!=", "seller"],
+            ])->count(),
+            "product_count" => $user->products()->count(),
+            "transaction_per_month" => getTransactionOneYear(),
+            "transaction_by_category" => getTransactionByCategory(),
+            "top_3_best_selling_products" => getTopSelling(),
+            "latest_transactions" => latestTransactions(),
+            "waiting_status_count" => TransactionDetail::where("store_id", $user->id)->where("shipping_status", "waiting")->count(),
+            "delivery_status_count" => TransactionDetail::where("store_id", $user->id)->where("shipping_status", "delivery")->count(),
+            "done_status_count" => TransactionDetail::where("store_id", $user->id)->where("shipping_status", "done")->count(),
+        ];
+
+        $data_seller = [
+            "transaction_count" => TransactionDetail::where("store_id", $user->id)->count(),
+            "income" => TransactionDetail::where("store_id", $user->id)
+                ->where("shipping_status", "done")
+                ->sum("total"),
+            "buyer_count" => User::where([
+                ["role", "!=", "admin"],
+                ["role", "!=", "seller"],
+            ])->count(),
+            "product_count" => $user->products()->count(),
+            "transaction_per_month" => getTransactionOneYear(),
+            "transaction_by_category" => getTransactionByCategory(),
+            "top_3_best_selling_products" => getTopSelling(),
+            "latest_transactions" => latestTransactions(),
+            "waiting_status_count" => TransactionDetail::where("store_id", $user->id)->where("shipping_status", "waiting")->count(),
+            "delivery_status_count" => TransactionDetail::where("store_id", $user->id)->where("shipping_status", "delivery")->count(),
+            "done_status_count" => TransactionDetail::where("store_id", $user->id)->where("shipping_status", "done")->count(),
+        ];
+
         return view("backend.dashboard", [
             "title" => "Dashboard",
+            "categories" => Category::all(),
+            "dashboard" => $user->role == "admin" ? $data_admin : $data_seller,
         ]);
     }
 }

@@ -8,7 +8,7 @@
 <div class="space-y-4">
     <div class="flex justify-between">
         <span class="lg:text-sm text-xs ">Status</span>
-        <span class="lg:text-sm text-xs text-gray-600">{{ getStatus($transaction->status) }}</span>
+        <span class="lg:text-sm text-xs text-gray-600">{{ getStatus($transaction->payment_status) }}</span>
     </div>
     <div class="flex justify-between">
         <span class="lg:text-sm text-xs ">No Invoice</span>
@@ -89,12 +89,35 @@
                         {{ $detail->shipping_code ?? '-' }}
                     </div>
                 </div>
+                {{-- <div class="mt-2">
+                    <div class="mt-3 lg:text-sm text-xs">Status Pengiriman : </div>
+                    <div class="mt-1 lg:text-sm text-xs poppins-medium">
+                        {{ $detail->shipping_status }}
+                    </div>
+                </div> --}}
+                <div class="mt-5 space-y-4">
+                    <h1 class="text-sm">Informasi Pengiriman : </h1>
+                    <ol class="relative border-s-2 border-pink-200 dark:border-gray-700 ms-2">
+                        @foreach ($detail->shippingStatuses as $status)
+                            <li class="mb-7 ms-4">
+                                <div
+                                    class="absolute w-3 h-3 bg-pink-700 rounded-full mt-1.5 -start-[6.5px] border border-white">
+                                </div>
+                                <time class="mb-1 text-xs poppins-medium text-pink-700 leading-none">
+                                    {{ showingDays($status->created_at) }}
+                                </time>
+                                <h3 class="text-sm poppins-medium text-gray-900 dark:text-white">{{ $status->title }}
+                                </h3>
+                            </li>
+                        @endforeach
+                    </ol>
+                </div>
             </div>
         @endforeach
     </div>
 </div>
 <hr>
-@if ($transaction->created_at != $transaction->updated_at)
+{{-- @if ($transaction->created_at != $transaction->updated_at)
     <div class="space-y-4">
         <h1 class="poppins-semibold">Detail Status</h1>
         <ol class="relative border-s-2 border-pink-200 dark:border-gray-700 ms-2">
@@ -111,7 +134,7 @@
         </ol>
     </div>
     <hr>
-@endif
+@endif --}}
 <div class="space-y-4">
     <h1 class="poppins-semibold">Informasi Alamat</h1>
     <div class="flex justify-between">
@@ -160,4 +183,20 @@
         <span class="text-[15px] flex-[3]">Total Belanja</span>
         <span class="text-[15px] flex-[2] text-gray-600 text-end">{{ format_rupiah($transaction->total, true) }}</span>
     </div>
+    @if ($transaction->promo_code)
+        <div class="flex justify-between text-pink-700 poppins-medium border-t-2 border-dashed border-pink-700 pt-5">
+            <span class="lg:text-sm text-xs flex-[3]">
+                <i class="fa-regular fa-ticket"></i>
+                {{ $transaction->promo_code }}
+            </span>
+            <span class="lg:text-sm text-xs flex-[2] text-end">
+                -{{ format_rupiah($transaction->discount, true) }}
+            </span>
+        </div>
+        <div class="flex justify-between poppins-semibold">
+            <span class="text-[15px] flex-[3]">Total Akhir</span>
+            <span
+                class="text-[15px] flex-[2] text-gray-600 text-end">{{ format_rupiah($transaction->total_after_discount, true) }}</span>
+        </div>
+    @endif
 </div>

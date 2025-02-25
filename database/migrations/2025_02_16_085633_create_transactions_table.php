@@ -18,8 +18,11 @@ return new class extends Migration
             $table->text("shipping_address");
             $table->string("payment");
             $table->double("total");
-            $table->string("status");
+            $table->string("payment_status");
             $table->string("due_date");
+            $table->string("promo_code")->nullable();
+            $table->double("discount")->nullable();
+            $table->double("total_after_discount")->nullable();
             $table->timestamps();
         });
     }

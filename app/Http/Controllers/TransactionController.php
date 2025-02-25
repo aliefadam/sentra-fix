@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\ShippingStatus;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,16 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Auth::user()->store->transactions;
+        // $user = Auth::user();
+        // if ($user->role == "admin") {
+        //     $transactions = Transaction::all();
+        // } else {
+        //     $transactions = Product::where("user_id", $user->id)->get();
+        // }
+        $transactions = Transaction::whereHas("transactionDetails", function ($detail) {
+            $detail->where("store_id", Auth::user()->id);
+        })->get();
+
         return view("backend.transaction.index", [
             "title" => "Transaksi",
             "transactions" => $transactions,
@@ -32,11 +42,28 @@ class TransactionController extends Controller
         $products = json_decode($request->products);
         $invoice = "INV-SENTRAFIX-" . Str::upper(Str::random(10)) .  Auth::user()->id . "-" . date("ymdhis");
 
+        $user_id = Auth::user()->id;
+        $dataCheckout = session("user_checkout_{$user_id}");
+
+        $promo_code = null;
+        $discount = 0;
+        if (isset($dataCheckout["voucher"]) && $dataCheckout["voucher"]) {
+            $promo_code = $dataCheckout["voucher"]["code"];
+            $discount = $dataCheckout["voucher"]["discount"];
+
+            $voucher = Voucher::firstWhere("code", $promo_code);
+            $voucher->update(["used" => $voucher->used + 1]);
+            if ($voucher->used == $voucher->maximal_used) {
+                $voucher->update(["active" => false]);
+            }
+        }
+
         $total = 0;
         foreach ($products as $index => $product) {
             $shipping_cost = explode("_", $request->input("shipping"))[2];
             $total += ($product->qty * $product->price) + $shipping_cost;
         }
+        $totalAfterDiscount = $total - $discount;
 
         $payment_name = explode("_", $request->method_payment)[1];
         $payment_type = explode("_", $request->method_payment)[0];
@@ -54,8 +81,11 @@ class TransactionController extends Controller
                     "data" => $payment_data,
                 ]),
                 "total" => $total,
-                "status" => "waiting",
-                "due_date" => now()->addDays()
+                "payment_status" => "waiting",
+                "due_date" => now()->addDays(),
+                "promo_code" => $promo_code,
+                "discount" => $discount,
+                "total_after_discount" => $totalAfterDiscount,
             ]);
 
             foreach ($products as $i => $product) {
@@ -75,6 +105,7 @@ class TransactionController extends Controller
                     "sub_total" => $product->total,
                     "total" => ($product->qty * $product->price) + $shipping_cost,
                     "notes" => $request->notes[$index],
+                    "shipping_status" => "waiting",
                 ]);
             }
 
@@ -130,6 +161,23 @@ class TransactionController extends Controller
 
         $products = json_decode($request->products);
         $store_id = 0;
+
+        $user_id = Auth::user()->id;
+        $dataCheckout = session("cart_shipment_{$user_id}");
+
+        $promo_code = null;
+        $discount = 0;
+        if (isset($dataCheckout["voucher"]) && $dataCheckout["voucher"]) {
+            $promo_code = $dataCheckout["voucher"]["code"];
+            $discount = $dataCheckout["voucher"]["discount"];
+
+            $voucher = Voucher::firstWhere("code", $promo_code);
+            $voucher->update(["used" => $voucher->used + 1]);
+            if ($voucher->used == $voucher->maximal_used) {
+                $voucher->update(["active" => false]);
+            }
+        }
+
         $total = 0;
         try {
             DB::beginTransaction();
@@ -138,6 +186,7 @@ class TransactionController extends Controller
                 $shipping_cost = explode("_", $request->input("shipping-{$index}"))[2];
                 $total += ($product->qty * $product->price) + $shipping_cost;
             }
+            $totalAfterDiscount = $total - $discount;
 
             $invoice = "INV-SENTRAFIX-" . Str::upper(Str::random(10)) .  Auth::user()->id . "-" . date("ymdhis");
             $newTransaction = Transaction::create([
@@ -150,8 +199,11 @@ class TransactionController extends Controller
                     "data" => $payment_data,
                 ]),
                 "total" => $total,
-                "status" => "waiting",
-                "due_date" => now()->addDays()
+                "payment_status" => "waiting",
+                "due_date" => now()->addDays(),
+                "promo_code" => $promo_code,
+                "discount" => $discount,
+                "total_after_discount" => $totalAfterDiscount,
             ]);
 
             foreach ($products as $index => $product) {
@@ -171,6 +223,7 @@ class TransactionController extends Controller
                     "sub_total" => $product->total,
                     "total" => ($product->qty * $product->price) + $shipping_cost,
                     "notes" => $request->notes[$index],
+                    "shipping_status" => "waiting",
                 ]);
             }
 
@@ -193,14 +246,19 @@ class TransactionController extends Controller
         }
     }
 
-    public function confirm($id)
+    public function confirm($id, $transaction_detail_id)
     {
         $transaction = Transaction::find($id);
+        $transactionDetail = TransactionDetail::find($transaction_detail_id);
         $transaction->update([
-            "status" => "confirmed",
+            "payment_status" => "confirmed",
+        ]);
+        $transactionDetail->update([
+            "shipping_status" => "confirmed",
         ]);
         ShippingStatus::create([
             "transaction_id" => $transaction->id,
+            "transaction_detail_id" => $transaction_detail_id,
             "title" => "Pesanan telah dikonfirmasi",
         ]);
 
@@ -214,39 +272,67 @@ class TransactionController extends Controller
         ]);
     }
 
-    public function delivery($id, Request $request)
+    public function delivery($id, $transaction_detail_id, Request $request)
     {
-        $transaction = Transaction::find($id);
-        $transaction->update([
-            "status" => "delivery",
-            "shipping_code" => $request->resi,
-        ]);
-        ShippingStatus::create([
-            "transaction_id" => $transaction->id,
-            "title" => "Pesanan telah diserahkan ke pihak jasa kirim",
-        ]);
-
-        session()->flash("notification", [
-            "icon" => "success",
-            "title" => "Berhasil",
-            "text" => "Pesanan berhasil dikirimkan",
-        ]);
-        return response()->json([
-            "message" => "success",
-        ]);
-    }
-
-    public function done($id)
-    {
+        DB::beginTransaction();
         try {
             $transaction = Transaction::find($id);
+            $transactionDetail = TransactionDetail::find($transaction_detail_id);
+
             $transaction->update([
-                "status" => "done",
+                "payment_status" => "delivery",
+            ]);
+            $transactionDetail->update([
+                "shipping_status" => "delivery",
+                "shipping_code" => $request->resi,
             ]);
             ShippingStatus::create([
                 "transaction_id" => $transaction->id,
+                "transaction_detail_id" => $transaction_detail_id,
+                "title" => "Pesanan telah diserahkan ke pihak jasa kirim",
+            ]);
+            DB::commit();
+            session()->flash("notification", [
+                "icon" => "success",
+                "title" => "Berhasil",
+                "text" => "Pesanan berhasil dikirimkan",
+            ]);
+            return response()->json([
+                "message" => "success",
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            session()->flash("notification", [
+                "icon" => "error",
+                "title" => "Gagal",
+                "text" => $e->getMessage(),
+            ]);
+            return response()->json([
+                "message" => "error",
+                "text" => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function done($id, $transaction_detail_id)
+    {
+        DB::beginTransaction();
+        try {
+            $transaction = Transaction::find($id);
+            $transactionDetail = TransactionDetail::find($transaction_detail_id);
+            $transaction->update([
+                "payment_status" => "done",
+            ]);
+            $transactionDetail->update([
+                "shipping_status" => "done",
+            ]);
+
+            ShippingStatus::create([
+                "transaction_id" => $transaction->id,
+                "transaction_detail_id" => $transaction_detail_id,
                 "title" => "Pesanan telah diterima pembeli",
             ]);
+            DB::commit();
 
             session()->flash("notification", [
                 "icon" => "success",
@@ -257,6 +343,7 @@ class TransactionController extends Controller
                 "message" => "success",
             ]);
         } catch (\Exception $e) {
+            DB::rollBack();
             session()->flash("notification", [
                 "icon" => "error",
                 "title" => "Gagal",

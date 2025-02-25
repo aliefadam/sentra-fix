@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string("shipping_service");
             $table->double("sub_total");
             $table->double("total");
+            $table->string("shipping_status");
             $table->text("notes")->nullable();
             $table->timestamps();
         });

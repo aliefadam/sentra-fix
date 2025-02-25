@@ -2,7 +2,56 @@
 
 @section('content')
     <main>
-        <div class="glide relative mb-8">
+        <div id="default-carousel" class="relative z-10 w-full mb-8" data-carousel="slide">
+            <!-- Carousel wrapper -->
+            <div class="relative overflow-hidden h-[250px] sm:h-[300px] md:h-[400px]">
+                @foreach ($carousels as $carousel)
+                    <!-- Item 1 -->
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="/uploads/carousels/{{ $carousel->image }}"
+                            class="absolute block h-full w-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                            alt="...">
+                    </div>
+                @endforeach
+            </div>
+            <!-- Slider indicators -->
+            <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                @foreach ($carousels as $carousel)
+                    <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1"
+                        data-carousel-slide-to="0"></button>
+                @endforeach
+            </div>
+            <!-- Slider controls -->
+            <button type="button"
+                class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                data-carousel-prev>
+                <span
+                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                    <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5 1 1 5l4 4" />
+                    </svg>
+                    <span class="sr-only">Previous</span>
+                </span>
+            </button>
+            <button type="button"
+                class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                data-carousel-next>
+                <span
+                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                    <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 9 4-4-4-4" />
+                    </svg>
+                    <span class="sr-only">Next</span>
+                </span>
+            </button>
+        </div>
+
+
+        {{-- <div class="glide relative mb-8">
             <div class="glide__track" data-glide-el="track">
                 <ul class="glide__slides">
                     <li class="glide__slide">
@@ -18,15 +67,6 @@
                                         class="bg-white text-custom px-8 py-3 rounded-button font-semibold hover:bg-gray-100 focus:ring-4 focus:ring-white/50">Belanja
                                         Sekarang</a>
                                 </div>
-                                {{-- <div class="ml-4 sm:ml-8 md:ml-16 text-white">
-                                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4">Diskon
-                                        Besar-Besaran</h2>
-                                    <p class="text-base sm:text-lg md:text-xl mb-4 sm:mb-6">Hemat hingga 70% untuk semua
-                                        produk</p>
-                                    <button
-                                        class="bg-white text-custom px-8 py-3 rounded-button font-semibold hover:bg-gray-100 focus:ring-4 focus:ring-white/50">Belanja
-                                        Sekarang</button>
-                                </div> --}}
                             </div>
                         </div>
                     </li>
@@ -39,7 +79,7 @@
                     <button class="w-2 h-2 bg-white/50 rounded-full" data-glide-dir="=2"></button>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
             <section class="mb-12">
@@ -88,7 +128,8 @@
                                     <i class="fa-regular fa-store"></i> {{ $product->user->store->name }}
                                 </h3>
                                 <h3 class="font-medium text-lg">{{ $product->name }}</h3>
-                                <p class="text-custom font-semibold text-gray-700">{{ getLowerPriceProduct($product->id) }}
+                                <p class="text-custom font-semibold text-gray-700">
+                                    {{ getLowerPriceProduct($product->id) }}
                                 </p>
                             </div>
                         </a>
@@ -240,7 +281,8 @@
                                     <i class="fa-regular fa-store"></i> {{ $product->user->store->name }}
                                 </h3>
                                 <h3 class="font-medium text-lg">{{ $product->name }}</h3>
-                                <p class="text-custom font-semibold text-gray-700">{{ getLowerPriceProduct($product->id) }}
+                                <p class="text-custom font-semibold text-gray-700">
+                                    {{ getLowerPriceProduct($product->id) }}
                                 </p>
                             </div>
                         </a>

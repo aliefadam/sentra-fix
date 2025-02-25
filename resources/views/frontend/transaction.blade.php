@@ -4,7 +4,7 @@
     <main class="max-w-8xl mx-auto px-4 sm:px-4 lg:px-8 py-4 sm:py-8">
         <div class="flex lg:flex-row flex-col lg:gap-0 gap-3 justify-between items-center mb-8">
             <h1 class="text-2xl font-bold">Daftar Transaksi</h1>
-            <div class="flex lg:flex-row flex-col gap-4 w-full lg:w-auto">
+            {{-- <div class="flex lg:flex-row flex-col gap-4 w-full lg:w-auto">
                 <select id="countries"
                     class="bg-white border border-gray-500 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500">
                     <option selected>Semua Status</option>
@@ -12,7 +12,7 @@
                     <option value="CA">Pembayaran Berhasil</option>
                     <option value="FR">Pesanan dikonfirmasi</option>
                 </select>
-            </div>
+            </div> --}}
         </div>
         <div class="space-y-4">
             @foreach ($transactions as $transaction)
@@ -41,33 +41,47 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="flex flex-col lg:items-end w-full lg:w-auto lg:mt-0 mt-4">
-                            <span class="{{ getStatusBadges($transaction->status) }}">
-                                {{ getStatus($transaction->status) }}
+                        <div class="flex flex-[1] flex-col lg:items-end w-full lg:w-auto lg:mt-0 mt-4">
+                            <span class="{{ getStatusBadges($transaction->payment_status) }}">
+                                {{ getStatus($transaction->payment_status) }}
                             </span>
-                            <div class="mt-6 space-x-3 flex w-full">
+                            <div class="mt-6 flex flex-col items-end gap-3">
                                 <button type="button" data-modal-target="default-modal" data-modal-toggle="default-modal"
                                     data-transaction-id="{{ $transaction->id }}"
-                                    class="btn-detail-transaction text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">
+                                    class="w-fit btn-detail-transaction text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">
                                     Lihat Detail Pesanan
                                 </button>
-                                @if ($transaction->status == 'waiting')
-                                    <button type="button"
-                                        class="bg-white border border-red-700  text-red-700 hover:bg-red-50 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
-                                        Batalkan Pesanan
-                                    </button>
-                                @elseif($transaction->status == 'delivery')
-                                    <button type="button" data-transaction-id="{{ $transaction->id }}"
-                                        class="btn-konfirmasi-pesanan-sampai text-purple-700 bg-white border border-purple-700 hover:bg-purple-50 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.50">
-                                        Konfirmasi Pesanan Sampai
-                                    </button>
-                                @endif
+                                @foreach ($transaction->transactionDetails as $detail)
+                                    @if ($detail->shipping_status == 'waiting')
+                                        <button type="button"
+                                            class="w-fit bg-white border border-red-700  text-red-700 hover:bg-red-50 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
+                                            Batalkan Pesanan
+                                            <span class="poppins-semibold">
+                                                {{ $detail->product_name }}
+                                            </span>
+                                        </button>
+                                    @elseif($detail->shipping_status == 'delivery')
+                                        <button type="button" data-transaction-id="{{ $transaction->id }}"
+                                            data-transaction-detail-id="{{ $detail->id }}"
+                                            class="w-fit btn-konfirmasi-pesanan-sampai text-purple-700 bg-white border border-purple-700 hover:bg-purple-50 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                                            Konfirmasi Pesanan Sampai
+                                            <span class="poppins-semibold">
+                                                {{ $detail->product_name }}
+                                            </span>
+                                        </button>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                     </div>
                     <div class="border-t pt-3 mt-4 flex justify-between items-center">
-                        <p class="font-medium">
-                            Total: {{ format_rupiah($transaction->total, true) }}</p>
+                        @if ($transaction->promo_code)
+                            <p class="font-medium">
+                                Total: {{ format_rupiah($transaction->total_after_discount, true) }}</p>
+                        @else
+                            <p class="font-medium">
+                                Total: {{ format_rupiah($transaction->total, true) }}</p>
+                        @endif
                         <p class="text-gray-700 mt-1 text-end text-sm">Belanja Pada
                             {{ showingDays($transaction->created_at) }}
                         </p>
@@ -149,9 +163,12 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     const transactionId = $(this).data('transaction-id');
+                    const detailTransactionId = $(this).data('transaction-detail-id');
+
+
                     $.ajax({
                         type: "PUT",
-                        url: `/transaction/${transactionId}/done`,
+                        url: `/transaction/${transactionId}/${detailTransactionId}/done`,
                         data: {
                             _token: "{{ csrf_token() }}",
                         },

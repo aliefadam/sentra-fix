@@ -49,6 +49,7 @@ class StoreController extends Controller
             $extension = $file->extension();
             $image_name = $newUser->name .  "_STORE_" . date("ymdhis") . "." . $extension;
             $file->move(public_path("uploads/stores"), $image_name);
+            $file->move(public_path("uploads/users"), $image_name);
 
             $newStore = Store::create([
                 "user_id" => $newUser->id,
@@ -59,6 +60,8 @@ class StoreController extends Controller
                 "image" => $image_name,
                 "status" => "waiting",
             ]);
+            $newUser->update(["image" => $newStore->image]);
+
 
             $rajaongkir = getRajaOngkir($request->subdistrict);
             Address::create([
@@ -108,6 +111,16 @@ class StoreController extends Controller
         return view("frontend.store", [
             "title" => "Toko {$store->name}",
             "store" => $store,
+        ]);
+    }
+
+    public function show_detail($id)
+    {
+        $store = Store::find($id);
+        return response()->json([
+            "html" => view("components.modal-detail-store", [
+                "store" => $store,
+            ])->render(),
         ]);
     }
 

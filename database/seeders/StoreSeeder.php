@@ -25,7 +25,7 @@ class StoreSeeder extends Seeder
         ]);
 
         Store::create([
-            "user_id" => 3,
+            "user_id" => 2,
             "name" => "Adam Store",
             "slug" => Str::slug("Adam Store"),
             "description" => "Testing",

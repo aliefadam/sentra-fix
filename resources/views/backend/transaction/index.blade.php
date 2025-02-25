@@ -33,7 +33,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($transactions as $transaction)
+                    @foreach ($transactions as $index => $transaction)
                         <tr class="bg-white border-b border-gray-200">
                             <td class="px-6 py-4">
                                 {{ $loop->iteration }}
@@ -65,21 +65,20 @@
                                 {{ showingDays($transaction->created_at) }}
                             </td>
                             <td class="px-6 py-4">
-                                <span class="{{ getStatusBadges($transaction->status) }}">
-                                    {{ getStatus($transaction->status) }}
+                                <span class="{{ getStatusBadges($transaction->payment_status) }}">
+                                    {{ getStatus($transaction->payment_status) }}
                                 </span>
-
                             </td>
                             <td class="px-6 py-4">
 
-                                <button type="button" data-dropdown-toggle="dropdown"
+                                <button type="button" data-dropdown-toggle="dropdown-{{ $index }}"
                                     class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5">
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                 </button>
 
                                 <!-- Dropdown menu -->
-                                <div id="dropdown"
-                                    class="z-10 hidden bg-white shadow-md divide-y divide-gray-100 rounded-lg w-44 dark:bg-gray-700">
+                                <div id="dropdown-{{ $index }}"
+                                    class="z-10 hidden bg-white shadow-md divide-y divide-gray-100 rounded-lg w-[250px] dark:bg-gray-700">
                                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                                         aria-labelledby="dropdownDefaultButton">
                                         <li>
@@ -88,19 +87,32 @@
                                                 class="btn-lihat-detail block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                                 Lihat Detail
                                             </a>
-                                            @if ($transaction->status == 'success')
-                                                <a href="javascript:void(0)" data-transaction-id="{{ $transaction->id }}"
-                                                    class="btn-konfirmasi-pesanan block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                                    Konfirmasi Pesanan
-                                                </a>
-                                            @elseif($transaction->status == 'confirmed')
-                                                <a href="javascript:void(0)" data-modal-target="crud-modal"
-                                                    data-modal-toggle="crud-modal"
-                                                    data-transaction-id="{{ $transaction->id }}"
-                                                    class="btn-kirim-pesanan block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                                    Kirimkan Pesanan
-                                                </a>
-                                            @endif
+                                            @foreach ($transaction->transactionDetails as $detail)
+                                                @if ($detail->store_id == Auth::user()->id)
+                                                    @if ($detail->shipping_status == 'success')
+                                                        <a href="javascript:void(0)"
+                                                            data-transaction-id="{{ $transaction->id }}"
+                                                            data-transaction-detail-id="{{ $detail->id }}"
+                                                            class="btn-konfirmasi-pesanan block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                            Konfirmasi Pesanan
+                                                            <span class="poppins-semibold">
+                                                                {{ $detail->product_name }}
+                                                            </span>
+                                                        </a>
+                                                    @elseif($detail->shipping_status == 'confirmed')
+                                                        <a href="javascript:void(0)" data-modal-target="crud-modal"
+                                                            data-modal-toggle="crud-modal"
+                                                            data-transaction-id="{{ $transaction->id }}"
+                                                            data-transaction-detail-id="{{ $detail->id }}"
+                                                            class="btn-kirim-pesanan block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                            Kirimkan Pesanan
+                                                            <span class="poppins-semibold">
+                                                                {{ $detail->product_name }}
+                                                            </span>
+                                                        </a>
+                                                    @endif
+                                                @endif
+                                            @endforeach
                                         </li>
                                     </ul>
                                 </div>
@@ -227,6 +239,7 @@
 
         function confirmTransaction() {
             const transactionId = $(this).data("transaction-id");
+            const detailTransactionID = $(this).data("transaction-detail-id");
             Swal.fire({
                 icon: "warning",
                 title: "Konfirmasi",
@@ -239,7 +252,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "PUT",
-                        url: `/admin/transaction/${transactionId}/confirm`,
+                        url: `/admin/transaction/${transactionId}/${detailTransactionID}/confirm`,
                         data: {
                             _token: "{{ csrf_token() }}"
                         },
@@ -263,16 +276,20 @@
 
         function setRouteDeliveryForm() {
             const transactionId = $(this).data("transaction-id");
+            const detailTransactionID = $(this).data("transaction-detail-id");
+
             $("#form-delivery").attr("data-transaction-id", transactionId);
+            $("#form-delivery").attr("data-transaction-detail-id", detailTransactionID);
         }
 
         function send(e) {
             e.preventDefault();
             const transactionId = $(this).data("transaction-id");
+            const detailTransactionID = $(this).data("transaction-detail-id");
             const data = $(this).serialize();
             $.ajax({
                 type: "PUT",
-                url: `/admin/transaction/${transactionId}/delivery`,
+                url: `/admin/transaction/${transactionId}/${detailTransactionID}/delivery`,
                 data: data,
                 beforeSend: function() {
                     Swal.fire({

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('shipping_statuses', function (Blueprint $table) {
             $table->id();
             $table->foreignId("transaction_id");
+            $table->foreignId("transaction_detail_id");
             $table->string("title");
             $table->string("description")->nullable();
             $table->timestamps();

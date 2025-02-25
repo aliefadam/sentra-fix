@@ -22,19 +22,20 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Alief',
-            "email" => "aliefadam6@gmail.com",
-            "password" => bcrypt("123"),
-            "phone" => "081234567890",
-            "role" => "user",
-        ]);
-
-        User::create([
             'name' => 'Adam',
             "email" => "aliefadam21@gmail.com",
             "password" => bcrypt("123"),
             "phone" => "081234567890",
             "role" => "seller",
+            "image" => "Adam_STORE_250217060117.png",
+        ]);
+
+        User::create([
+            'name' => 'Alief',
+            "email" => "aliefadam6@gmail.com",
+            "password" => bcrypt("123"),
+            "phone" => "081234567890",
+            "role" => "user",
         ]);
     }
 }

@@ -51,7 +51,11 @@
                 <div class="flex justify-between items-center">
                     <div>
                         <p class="text-gray-600">Total Pembayaran</p>
-                        <p class="font-medium">{{ format_rupiah($transaction->total, true) }}</p>
+                        @if ($transaction->promo_code)
+                            <p class="font-medium"> {{ format_rupiah($transaction->total_after_discount, true) }}</p>
+                        @else
+                            <p class="font-medium">{{ format_rupiah($transaction->total, true) }}</p>
+                        @endif
                     </div>
                     <div class="text-right">
                         <button type="button" data-modal-target="default-modal" data-modal-toggle="default-modal"
@@ -102,7 +106,8 @@
                     <div class="space-y-4">
                         <div class="flex justify-between">
                             <span class="lg:text-sm text-xs ">Status</span>
-                            <span class="lg:text-sm text-xs text-gray-600">{{ getStatus($transaction->status) }}</span>
+                            <span
+                                class="lg:text-sm text-xs text-gray-600">{{ getStatus($transaction->payment_status) }}</span>
                         </div>
                         <div class="flex justify-between">
                             <span class="lg:text-sm text-xs ">No Invoice</span>
@@ -238,6 +243,23 @@
                             <span
                                 class="text-[15px] flex-[2] text-gray-600 text-end">{{ format_rupiah($transaction->total, true) }}</span>
                         </div>
+                        @if ($transaction->promo_code)
+                            <div
+                                class="flex justify-between text-pink-700 poppins-medium border-t-2 border-dashed border-pink-700 pt-5">
+                                <span class="lg:text-sm text-xs flex-[3]">
+                                    <i class="fa-regular fa-ticket"></i>
+                                    {{ $transaction->promo_code }}
+                                </span>
+                                <span class="lg:text-sm text-xs flex-[2] text-end">
+                                    -{{ format_rupiah($transaction->discount, true) }}
+                                </span>
+                            </div>
+                            <div class="flex justify-between poppins-semibold">
+                                <span class="text-[15px] flex-[3]">Total Akhir</span>
+                                <span
+                                    class="text-[15px] flex-[2] text-gray-600 text-end">{{ format_rupiah($transaction->total_after_discount, true) }}</span>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

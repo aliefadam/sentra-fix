@@ -2,13 +2,17 @@
 
 use App\Models\Address;
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\Menu;
 use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Models\Transaction;
+use App\Models\TransactionDetail;
 use App\Models\Variant;
 use App\Models\VariantDetail;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
 
@@ -275,6 +279,32 @@ if (!function_exists("getStatusStoreBadges")) {
     }
 }
 
+
+if (!function_exists("getStatusVoucher")) {
+    function getStatusVoucher($active)
+    {
+        if ($active) {
+            return "Aktif";
+        } else {
+            return "Tidak Aktif";
+        }
+    }
+}
+
+if (!function_exists("getStatusVoucherBadges")) {
+    function getStatusVoucherBadges($active)
+    {
+        $color = "";
+        if ($active) {
+            $color = "bg-green-100 text-green-800";
+        } else {
+            $color = "bg-red-100 text-red-800";
+        }
+
+        return "$color text-xs font-medium me-2 px-2.5 py-2 rounded-md shadow-sm";
+    }
+}
+
 if (!function_exists("getRole")) {
     function getRole()
     {
@@ -385,5 +415,93 @@ if (!function_exists("getCartCount")) {
         if (Auth::check()) {
             return Cart::where("user_id", Auth::user()->id)->count();
         }
+    }
+}
+
+if (!function_exists("getTransactionOneYear")) {
+    function getTransactionOneYear()
+    {
+        $months = range(1, 12);
+        $transactions = TransactionDetail::select(
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('COUNT(id) as total_transactions'),
+            DB::raw('SUM(total) as total_revenue')
+        )
+            ->where("store_id", Auth::user()->id)
+            ->whereYear('created_at', now()->year)
+            ->groupBy(DB::raw('MONTH(created_at)'))
+            ->orderBy(DB::raw('MONTH(created_at)'))
+            ->get()
+            ->keyBy('month');
+
+        $monthlyTransactions = collect($months)->map(function ($month) use ($transactions) {
+            return [
+                'month' => $month,
+                'total_transactions' => $transactions[$month]->total_transactions ?? 0,
+                'total_revenue' => $transactions[$month]->total_revenue ?? 0.0,
+            ];
+        });
+
+        return $monthlyTransactions;
+    }
+}
+
+if (!function_exists("getTransactionByCategory")) {
+    function getTransactionByCategory()
+    {
+        $storeId = Auth::user()->id;
+
+        $transactionsPerCategory = Category::select(
+            'categories.id',
+            'categories.name',
+            DB::raw('COUNT(transactions.id) as total_transactions')
+        )
+            ->leftJoin('products', 'categories.id', '=', 'products.category_id')
+            ->leftJoin('transaction_details', function ($join) use ($storeId) {
+                $join->on('products.name', '=', 'transaction_details.product_name')
+                    ->where('transaction_details.store_id', '=', $storeId);
+            })
+            ->leftJoin('transactions', 'transaction_details.transaction_id', '=', 'transactions.id')
+            ->groupBy('categories.id', 'categories.name')
+            ->orderByDesc('total_transactions')
+            ->get();
+
+        return $transactionsPerCategory;
+    }
+}
+
+if (!function_exists("getTopSelling")) {
+    function getTopSelling()
+    {
+        $top3BestSellingProducts = Product::select(
+            'products.id',
+            'products.name',
+            'product_details.image',
+            DB::raw('SUM(transaction_details.qty) as total_sold')
+        )
+            ->where("user_id", Auth::user()->id)
+            ->join('product_details', 'products.id', '=', 'product_details.product_id')
+            ->join('transaction_details', 'products.name', '=', 'transaction_details.product_name')
+            ->groupBy('products.id', 'products.name', 'product_details.image')
+            ->orderByDesc('total_sold')
+            ->limit(3)
+            ->get();
+
+        $uniqueData = [];
+        foreach ($top3BestSellingProducts as $item) {
+            $uniqueData[$item['name']] = $item;
+        }
+
+        $uniqueData = array_values($uniqueData);
+        return $uniqueData;
+    }
+}
+
+if (!function_exists("latestTransactions")) {
+    function latestTransactions()
+    {
+        return Transaction::whereHas("transactionDetails", function ($detail) {
+            $detail->where("store_id", Auth::user()->id);
+        })->limit(3)->get();
     }
 }

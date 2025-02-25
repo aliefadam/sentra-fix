@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PageController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VariantController;
 use App\Http\Controllers\VariantDetailController;
+use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
 
 Route::get("/", [PageController::class, "home"])->name("home");
@@ -64,8 +66,13 @@ Route::middleware("guest")->group(function () {
 Route::middleware("auth")->group(function () {
     Route::get("/logout", [AuthController::class, "logout"])->name("logout");
 
-    Route::post("/product/{slug}/checkout", [PageController::class, "product_checkout"])->name("product.checkout");
+    Route::post("/product/{slug}/checkout", [PageController::class, "product_checkout_post"])->name("product.checkout.post");
+    Route::get("/product/{slug}/checkout", [PageController::class, "product_checkout"])->name("product.checkout");
+    Route::get("/cek-promo/{session_name}", [VoucherController::class, "show"])->name("voucher.show");
+    Route::get("/delete-promo/{session_name}", [VoucherController::class, "cancel_promo"])->name("voucher.cancel");
+    // Route::post("/product/{slug}/checkout", [PageController::class, "product_checkout"])->name("product.checkout");
     Route::get("/payment-waiting/{invoice}", [PageController::class, "payment_waiting"])->name("payment.waiting");
+    Route::get("/payment-success/{invoice}", [PageController::class, "payment_success"])->name("payment.success");
 
     Route::prefix("address")->group(function () {
         Route::get("/", [AddressController::class, "index"])->name("address.index");
@@ -82,7 +89,7 @@ Route::middleware("auth")->group(function () {
         Route::get("/{id}", [TransactionController::class, "show"])->name("transaction.show");
         Route::post("/", [TransactionController::class, "store"])->name("transaction.store");
         Route::post("/shipment", [TransactionController::class, "transaction_from_shipment"])->name("transaction.shipment");
-        Route::put("/{id}/done", [TransactionController::class, "done"])->name("admin.transaction.done");
+        Route::put("/{id}/{transaction_detail_id}/done", [TransactionController::class, "done"])->name("admin.transaction.done");
     });
 
     Route::prefix("cart")->group(function () {
@@ -111,6 +118,7 @@ Route::middleware("auth")->group(function () {
 
         Route::prefix("seller")->group(function () {
             Route::get("/", [StoreController::class, "index"])->name("admin.seller.index");
+            Route::get("/{id}", [StoreController::class, "show_detail"])->name("admin.seller.show-detail");
             Route::put("/{id}/confirm", [StoreController::class, "confirm"])->name("admin.seller.confirm");
             Route::put("/{id}/deactive", [StoreController::class, "deactive"])->name("admin.seller.deactive");
             Route::put("/{id}/activate", [StoreController::class, "activate"])->name("admin.seller.deactive");
@@ -147,11 +155,28 @@ Route::middleware("auth")->group(function () {
             Route::post("/price-form/{id}", [ProductController::class, "price_form"])->name("admin.product.price-form");
         });
 
+        Route::prefix("voucher")->group(function () {
+            Route::get("/", [VoucherController::class, "index"])->name("admin.voucher.index");
+            Route::get("/create", [VoucherController::class, "create"])->name("admin.voucher.create");
+            Route::post("/", [VoucherController::class, "store"])->name("admin.voucher.store");
+            Route::get("/{id}", [VoucherController::class, "edit"])->name("admin.voucher.edit");
+            Route::put("/{id}", [VoucherController::class, "update"])->name("admin.voucher.update");
+            Route::delete("/{id}", [VoucherController::class, "destroy"])->name("admin.voucher.destroy");
+            Route::put("/{id}/deactivate", [VoucherController::class, "deactivate"])->name("admin.voucher.deactivate");
+            Route::put("/{id}/activate", [VoucherController::class, "activate"])->name("admin.voucher.activate");
+        });
+
         Route::prefix("transaction")->group(function () {
             Route::get("/", [TransactionController::class, "index"])->name("admin.transaction.index");
             Route::delete("/{id}", [TransactionController::class, "destroy"])->name("admin.transaction.destroy");
-            Route::put("/{id}/confirm", [TransactionController::class, "confirm"])->name("admin.transaction.confirm");
-            Route::put("/{id}/delivery", [TransactionController::class, "delivery"])->name("admin.transaction.delivery");
+            Route::put("/{id}/{transaction_detail_id}/confirm", [TransactionController::class, "confirm"])->name("admin.transaction.confirm");
+            Route::put("/{id}/{transaction_detail_id}/delivery", [TransactionController::class, "delivery"])->name("admin.transaction.delivery");
+        });
+
+        Route::prefix("carousel")->group(function () {
+            Route::get("/", [CarouselController::class, "index"])->name("admin.carousel.index");
+            Route::put("/", [CarouselController::class, "update"])->name("admin.carousel.update");
+            Route::delete("/{id}", [CarouselController::class, "destroy"])->name("admin.carousel.destroy");
         });
     });
 
@@ -177,11 +202,38 @@ Route::middleware("auth")->group(function () {
             Route::post("/price-form/{id}", [ProductController::class, "price_form"])->name("seller.product.price-form");
         });
 
+        Route::prefix("variant")->group(function () {
+            Route::get("/", [VariantController::class, "index"])->name("seller.variant.index");
+            Route::get("/create", [VariantController::class, "create"])->name("seller.variant.create");
+            Route::post("/", [VariantController::class, "store"])->name("seller.variant.store");
+            Route::get("/show/{id}", [VariantController::class, "show"])->name("seller.variant.show");
+            Route::get("/{id}", [VariantController::class, "edit"])->name("seller.variant.edit");
+            Route::put("/{id}", [VariantController::class, "update"])->name("seller.variant.update");
+            Route::delete("/{id}", [VariantController::class, "destroy"])->name("seller.variant.destroy");
+        });
+        Route::delete("/variant_detail/{id}", [VariantDetailController::class, "destroy"])->name("admin.variant-detail.destroy");
+
         Route::prefix("transaction")->group(function () {
             Route::get("/", [TransactionController::class, "index"])->name("seller.transaction.index");
             Route::get("/{id}", [TransactionController::class, "show"])->name("seller.transaction.show");
             Route::post("/", [TransactionController::class, "store"])->name("seller.transaction.store");
             Route::put("/{id}/done", [TransactionController::class, "done"])->name("seller.transaction.done");
         });
+
+        Route::prefix("voucher")->group(function () {
+            Route::get("/", [VoucherController::class, "index"])->name("seller.voucher.index");
+            Route::get("/create", [VoucherController::class, "create"])->name("seller.voucher.create");
+            Route::post("/", [VoucherController::class, "store"])->name("seller.voucher.store");
+            Route::get("/{id}", [VoucherController::class, "edit"])->name("seller.voucher.edit");
+            Route::put("/{id}", [VoucherController::class, "update"])->name("seller.voucher.update");
+            Route::delete("/{id}", [VoucherController::class, "destroy"])->name("seller.voucher.destroy");
+            Route::put("/{id}/deactivate", [VoucherController::class, "deactivate"])->name("seller.voucher.deactivate");
+            Route::put("/{id}/activate", [VoucherController::class, "activate"])->name("seller.voucher.activate");
+        });
+    });
+
+    Route::prefix("change-password")->group(function () {
+        Route::get("/", [AuthController::class, "change_password_backend"])->name("backend.change-password");
+        Route::put("/", [AuthController::class, "change_password_backend_post"])->name("backend.change-password-post");
     });
 });

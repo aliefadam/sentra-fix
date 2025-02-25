@@ -5,13 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Variant;
 use App\Models\VariantDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class VariantController extends Controller
 {
+    private $file;
+    private $role;
+
+    public function __construct()
+    {
+        $this->file = Auth::user() && Auth::user()->role == "admin" ? "variant" : "seller-variant";
+        $this->role = Auth::user()->role;
+    }
+
     public function index()
     {
-        return view("backend.variant.index", [
+        return view("backend.{$this->file}.index", [
             "title" => "Varian",
             "variants" => Variant::all(),
         ]);
@@ -19,7 +29,7 @@ class VariantController extends Controller
 
     public function create()
     {
-        return view("backend.variant.create", [
+        return view("backend.{$this->file}.create", [
             "title" => "Tambah Variant",
         ]);
     }
@@ -40,7 +50,7 @@ class VariantController extends Controller
             }
             DB::commit();
 
-            return redirect()->route("admin.variant.index")->with("notification", [
+            return redirect()->route("{$this->role}.variant.index")->with("notification", [
                 "icon" => "success",
                 "title" => "Berhasil",
                 "text" => "Varian berhasil ditambahkan",
@@ -67,7 +77,7 @@ class VariantController extends Controller
     {
         $variant = Variant::find($id);
 
-        return view("backend.variant.edit", [
+        return view("backend.{$this->file}.edit", [
             "title" => "Edit Varian {$variant->name}",
             "variant" => $variant,
         ]);
@@ -99,7 +109,7 @@ class VariantController extends Controller
             }
 
             DB::commit();
-            return redirect()->route("admin.variant.index")->with("notification", [
+            return redirect()->route("{$this->role}.variant.index")->with("notification", [
                 "icon" => "success",
                 "title" => "Berhasil",
                 "text" => "Variant berhasil disimpan",

@@ -36,7 +36,7 @@ class AddressSeeder extends Seeder
         ]);
 
         Address::create([
-            "user_id" => 3,
+            "user_id" => 2,
             "name" => "Adam Store Address",
             "recipient" => "Adam Store Recipient",
             "phone" => "081234567890",
@@ -54,6 +54,28 @@ class AddressSeeder extends Seeder
             ]),
             "postal_code" => "909090",
             "address" => "Testing",
+            "is_active" => true,
+        ]);
+
+        Address::create([
+            "user_id" => 3,
+            "name" => "Rumah",
+            "recipient" => "Alief",
+            "phone" => "0895364711840",
+            "province" => json_encode([
+                "id" => "11",
+                "name" => "Jawa Timur",
+            ]),
+            "city" => json_encode([
+                "id" => "444",
+                "name" => "Surabaya"
+            ]),
+            "sub_district" => json_encode([
+                "id" => "6132",
+                "name" => "Benowo"
+            ]),
+            "postal_code" => "909090",
+            "address" => "Jl. Bandarejo Tama No. 45",
             "is_active" => true,
         ]);
     }

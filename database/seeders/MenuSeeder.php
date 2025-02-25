@@ -65,6 +65,12 @@ class MenuSeeder extends Seeder
             "route" => "admin.category.index",
             "icon" => "fas fa-list",
         ]);
+        MenuDetail::create([
+            "menu_id" => $newMenu->id,
+            "name" => "voucher",
+            "route" => "admin.voucher.index",
+            "icon" => "fas fa-ticket",
+        ]);
 
         $newMenu = Menu::create([
             "role" => "admin",
@@ -75,6 +81,17 @@ class MenuSeeder extends Seeder
             "name" => "pesanan",
             "route" => "admin.transaction.index",
             "icon" => "fas fa-shopping-cart",
+        ]);
+
+        $newMenu = Menu::create([
+            "role" => "admin",
+            "name" => "pengaturan",
+        ]);
+        MenuDetail::create([
+            "menu_id" => $newMenu->id,
+            "name" => "carousel",
+            "route" => "admin.carousel.index",
+            "icon" => "fa-regular fa-images",
         ]);
 
 
@@ -105,6 +122,18 @@ class MenuSeeder extends Seeder
             "name" => "produk",
             "route" => "seller.product.index",
             "icon" => "fas fa-box",
+        ]);
+        MenuDetail::create([
+            "menu_id" => $newMenu->id,
+            "name" => "varian",
+            "route" => "seller.variant.index",
+            "icon" => "fas fa-list",
+        ]);
+        MenuDetail::create([
+            "menu_id" => $newMenu->id,
+            "name" => "voucher",
+            "route" => "seller.voucher.index",
+            "icon" => "fas fa-ticket",
         ]);
 
         $newMenu = Menu::create([

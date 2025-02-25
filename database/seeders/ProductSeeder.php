@@ -15,7 +15,7 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         Product::create([
-            "user_id" => 3,
+            "user_id" => 2,
             "name" => "Wireless Headphone",
             "slug" => "wireless-headphone",
             "category_id" => 2,
