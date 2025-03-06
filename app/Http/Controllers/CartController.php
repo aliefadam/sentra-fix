@@ -83,7 +83,8 @@ class CartController extends Controller
 
     public function destroy($id)
     {
-        Cart::find($id)->delete();
+        $cart = Cart::find($id)->delete();
+        $cart->delete();
         session()->flash("notification", [
             "icon" => "success",
             "title" => "Berhasil",

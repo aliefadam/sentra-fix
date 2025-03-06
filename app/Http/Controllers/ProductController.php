@@ -214,6 +214,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $product->productDetails()->delete();
+        $product->carts()->delete();
         $product->delete();
 
         session()->flash("notification", [

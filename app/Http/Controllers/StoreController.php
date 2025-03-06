@@ -37,19 +37,24 @@ class StoreController extends Controller
 
         DB::beginTransaction();
         try {
-            $newUser = User::create([
-                "name" => $request->name,
-                "email" => $request->email,
-                "password" => bcrypt($request->password),
-                "phone" => $request->phone,
-                "role" => "seller",
-            ]);
+            if (User::where("email", $request->email)->first()) {
+                $newUser = User::where("email", $request->email)->first();
+                $image_name = $newUser->image;
+            } else {
+                $newUser = User::create([
+                    "name" => $request->name,
+                    "email" => $request->email,
+                    "password" => bcrypt($request->password),
+                    "phone" => $request->phone,
+                    "role" => "seller",
+                ]);
 
-            $file = $request->file('store_image');
-            $extension = $file->extension();
-            $image_name = $newUser->name .  "_STORE_" . date("ymdhis") . "." . $extension;
-            $file->move(public_path("uploads/stores"), $image_name);
-            // $file->move(public_path("uploads/users"), $image_name);
+                $file = $request->file('store_image');
+                $extension = $file->extension();
+                $image_name = $newUser->name .  "_STORE_" . date("ymdhis") . "." . $extension;
+                $file->move(public_path("uploads/stores"), $image_name);
+                // $file->move(public_path("uploads/users"), $image_name);
+            }
 
             $newStore = Store::create([
                 "user_id" => $newUser->id,

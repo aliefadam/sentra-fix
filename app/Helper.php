@@ -403,7 +403,11 @@ if (!function_exists("getCarts")) {
     function getCarts()
     {
         if (Auth::check()) {
-            return Cart::where("user_id", Auth::user()->id)->limit(3)->get();
+            $carts = Cart::where("user_id", Auth::user()->id)->limit(3)->get();
+            if ($carts->count() > 0) {
+                return $carts;
+            }
+            return [];
         }
     }
 }
