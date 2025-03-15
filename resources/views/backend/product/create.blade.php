@@ -21,18 +21,20 @@
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama
                             Produk</label>
                         <input type="text" id="name" name="name"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                             required />
                     </div>
                     <div class="mb-5">
                         <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Kategori
+                            Kategoriii
                         </label>
                         <select id="category" name="category"
                             class="select-2-dropdown bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5">
                             <option selected>-- Pilih Kategori --</option>
                             @foreach ($sub_categories as $sub_category)
-                                <option value="{{ $sub_category->id }}">{{ $sub_category->name }}</option>
+                                <option @selected($sub_category->id == $product->sub_category_id) value="{{ $sub_category->id }}">
+                                    {{ $sub_category->name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -42,7 +44,7 @@
                         Deskripsi Produk
                     </label>
                     <textarea id="ckeditor" rows="4" name="description"
-                        class="resize-none block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
+                        class="resize-none block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-red-500 focus:border-red-500 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                         placeholder="Tulis deskripsi produk..."></textarea>
 
                 </div>
@@ -55,7 +57,7 @@
                             Jenis Varian 1
                         </label>
                         <select id="variant-1" name="variant[]"
-                            class="select-2-dropdown bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500">
+                            class="select-2-dropdown bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500">
                             <option selected value="">-- Pilih Jenis Varian --</option>
                             @foreach ($variants as $variant)
                                 <option value="{{ $variant->id }}">{{ $variant->name }}</option>
@@ -78,7 +80,7 @@
                             Jenis Varian 2
                         </label>
                         <select id="variant-2" name="variant[]"
-                            class="select-2-dropdown bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500">
+                            class="select-2-dropdown bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500">
                             <option selected value="">-- Pilih Jenis Varian --</option>
                             @foreach ($variants as $variant)
                                 <option value="{{ $variant->id }}">{{ $variant->name }}</option>
@@ -105,6 +107,24 @@
                 <h1 class="text-xl poppins-medium mb-5">Pengisian Harga</h1>
                 <div class="" id="container-detail-price-form"></div>
             </div>
+            <div class=" bg-white shadow-md rounded-md p-5 mb-5 w-1/2">
+                <div class="flex justify-between mb-5">
+                    <h1 class="text-xl poppins-medium">Gambar Tambahan</h1>
+                    <button type="button" id="btn-add-image-input"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+                <div class="space-y-5" id="container-image-input">
+                    <div class="">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload
+                            file</label>
+                        <input
+                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none"
+                            id="file_input" name="more-image[]" type="file">
+                    </div>
+                </div>
+            </div>
             <div class="mt-5 flex justify-center">
                 <button type="submit"
                     class="w-1/2 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">Tambah</button>
@@ -124,6 +144,34 @@
             getDetailVariant("2", $(this));
         });
         $("#btn-isi-harga").click(generatePriceForm);
+
+        $("#btn-add-image-input").click(addImageInput);
+        $(".btn-delete-image-input").click(deleteImageInput);
+
+        function addImageInput() {
+            const imageInput = `
+            <div class="">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload
+                    file</label>
+                <div class="flex justify-between gap-3">
+                    <input
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none"
+                        id="file_input" name="more-image[]" type="file" required>
+                    <button type="button" id=""
+                        class="btn-delete-image-input text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            `;
+
+            $("#container-image-input").append(imageInput);
+            $(".btn-delete-image-input").click(deleteImageInput);
+        }
+
+        function deleteImageInput() {
+            $(this).parent().parent().remove();
+        }
 
         function addSubvariant() {
             const subvariant = `
@@ -229,7 +277,7 @@
                         Varian 1
                     </label>
                     <input type="text" id="text" name="price_variant_1[]" value="${variant1.label}" readonly
-                        class="bg-gray-200 curson-not-allowed border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
+                        class="bg-gray-200 curson-not-allowed border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                         required />
                 </div>
                 <div class="mb-5">
@@ -237,21 +285,21 @@
                         Variant 2
                     </label>
                     <input type="text" id="text" name="price_variant_2[]" value="${variant2 ? variant2.label : '-'}" readonly
-                        class="bg-gray-200 curson-not-allowed border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
+                        class="bg-gray-200 curson-not-allowed border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                         required />
                 </div>
                 <div class="mb-5">
                     <label for="number"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga</label>
                     <input type="number" id="number" name="price[]"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                         required />
                 </div>
                 <div class="mb-5">
                     <label for="number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stok
                         Awal</label>
                     <input type="number" id="number" name="price_stock[]"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                         required />
                 </div>
                 <div class="mb-5">
@@ -259,14 +307,14 @@
                         Berat (Gram)
                     </label>
                     <input type="number" id="number" name="price_weight[]"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                         required />
                 </div>
                 <div class="mb-5">
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         for="file_input">Gambar</label>
                     <input
-                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none"
                         id="file_input" type="file" name="price_img[]" required>
                 </div>
             </div>

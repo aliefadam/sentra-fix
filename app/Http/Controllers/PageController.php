@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Models\Carousel;
 use App\Models\Category;
+use App\Models\ImageProduct;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\ShippingStatus;
@@ -85,6 +86,7 @@ class PageController extends Controller
             "title" => "Produk",
             "product" => $product,
             "variants" => $variants,
+            "image_products" => ImageProduct::where("product_id", $product->id)->get(),
         ]);
     }
 

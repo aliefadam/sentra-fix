@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ImageProductController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RajaOngkirController;
@@ -181,6 +182,8 @@ Route::middleware("auth")->group(function () {
             Route::put("/", [CarouselController::class, "update"])->name("admin.carousel.update");
             Route::delete("/{id}", [CarouselController::class, "destroy"])->name("admin.carousel.destroy");
         });
+
+        Route::delete("/image-product/{id}", [ImageProductController::class, "destroy"])->name("admin.image-product.destroy");
     });
 
     Route::prefix("seller")->group(function () {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ImageProduct;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\SubCategory;
@@ -10,6 +11,7 @@ use App\Models\VariantDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use phpseclib3\Math\BinaryField;
 
 class ProductController extends Controller
 {
@@ -18,8 +20,13 @@ class ProductController extends Controller
 
     public function __construct()
     {
-        $this->file = Auth::user() && Auth::user()->role == "admin" ? "product" : "seller-product";
-        $this->role = Auth::user()->role;
+        if (Auth::check()) {
+            $role = Auth::user()->role;
+            if ($role == "admin" || $role == "seller") {
+                $this->file = Auth::user() && Auth::user()->role == "admin" ? "product" : "seller-product";
+                $this->role = Auth::user()->role;
+            }
+        }
     }
 
     public function index()
@@ -58,6 +65,18 @@ class ProductController extends Controller
                 "sub_category_id" => $request->category,
                 "description" => $request->description,
             ]);
+
+            if ($request->hasFile("more-image")) {
+                foreach ($request->file('more-image') as $index => $file) {
+                    $extension = $file->extension();
+                    $image_name = $newProduct->name . "_more_" . $index . "_" . date("ymdhis") . "." . $extension;
+                    $file->move(public_path("uploads/products"), $image_name);
+                    ImageProduct::create([
+                        "product_id" => $newProduct->id,
+                        "image" => $image_name,
+                    ]);
+                }
+            }
 
             foreach ($request->file('price_img') as $index => $file) {
                 $extension = $file->extension();
@@ -109,7 +128,6 @@ class ProductController extends Controller
         } else {
             $variant2Selected = [];
         }
-
         return view("backend.{$this->file}.edit", [
             "title" => "Edit Produk {$product->name}",
             "product" => $product,
@@ -117,12 +135,13 @@ class ProductController extends Controller
             "variants" => Variant::all(),
             "variant1_selected" => $variant1Selected->variantDetails,
             "variant2_selected" => $variant2Selected == [] ? [] : $variant2Selected->variantDetails,
+            "imageProducts" => ImageProduct::where("product_id", $product->id)->get(),
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $index)
     {
-        $product = Product::find($id);
+        $product = Product::find($index);
         DB::beginTransaction();
         try {
             $product->update([
@@ -194,6 +213,31 @@ class ProductController extends Controller
                 }
             }
 
+            if ($request->hasFile("more-image")) {
+                foreach ($request->file('more-image') as $id => $file) {
+                    $extension = $file->extension();
+                    $image_name = $product->name . "_more_" . $id . "_" . date("ymdhis") . "." . $extension;
+                    $file->move(public_path("uploads/products"), $image_name);
+
+                    $imageProduct = ImageProduct::find($id);
+                    $imageProduct->update([
+                        "image" => $image_name
+                    ]);
+                }
+            }
+
+            if ($request->hasFile("more-image-new")) {
+                foreach ($request->file('more-image-new') as $index => $file) {
+                    $extension = $file->extension();
+                    $image_name = $product->name . "_more_" . $index . "_" . date("ymdhis") . "." . $extension;
+                    $file->move(public_path("uploads/products"), $image_name);
+                    ImageProduct::create([
+                        "product_id" => $product->id,
+                        "image" => $image_name,
+                    ]);
+                }
+            }
+
             DB::commit();
             return redirect()->route("{$this->role}.product.index")->with("notification", [
                 "icon" => "success",
@@ -215,6 +259,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->productDetails()->delete();
         $product->carts()->delete();
+        $product->imageProducts()->delete();
         $product->delete();
 
         session()->flash("notification", [

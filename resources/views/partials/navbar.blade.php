@@ -37,7 +37,7 @@
                             <div class="flex items-center gap-3">
                                 <input type="text" placeholder="Cari produk..." name="q"
                                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom focus:border-transparent" />
-                                <button type="button"
+                                <button type="submit"
                                     class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">Cari</button>
                             </div>
                         </form>

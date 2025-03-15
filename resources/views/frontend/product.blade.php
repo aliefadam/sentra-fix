@@ -18,6 +18,13 @@
                                     class="w-full h-full object-center object-cover" />
                             </button>
                         @endforeach
+                        @foreach ($image_products as $index => $image)
+                            <button type="button" data-image="/uploads/products/{{ $image->image }}"
+                                class="btn-change-image aspect-w-1 aspect-h-1 bg-gray-100  rounded-lg overflow-hidden shadow-md">
+                                <img src="/uploads/products/{{ $image->image }}"
+                                    class="w-full h-full object-center object-cover" />
+                            </button>
+                        @endforeach
                     </div>
                 </div>
                 <div class="space-y-6 lg:col-span-7">

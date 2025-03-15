@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string("slug");
             $table->text("description");
             $table->text("category");
-            $table->string("image");
+            $table->string("image")->nullable();
             $table->string("status");
             $table->timestamps();
         });

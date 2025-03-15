@@ -33,7 +33,7 @@
                             class="select-2-dropdown bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5">
                             <option selected>-- Pilih Kategori --</option>
                             @foreach ($sub_categories as $sub_category)
-                                <option value="{{ $sub_category->id }}" @selected($sub_category->id == $product->category_id)>
+                                <option value="{{ $sub_category->id }}" @selected($sub_category->id == $product->sub_category_id)>
                                     {{ $sub_category->name }}</option>
                             @endforeach
                         </select>
@@ -214,6 +214,35 @@
                     @endforeach
                 </div>
             </div>
+            <div class=" bg-white shadow-md rounded-md p-5 mb-5 w-1/2">
+                <div class="flex justify-between mb-5">
+                    <h1 class="text-xl poppins-medium">Gambar Tambahan</h1>
+                    <button type="button" id="btn-add-image-input"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+                <div class="space-y-5" id="container-image-input">
+                    @foreach ($imageProducts as $image)
+                        <div class="">
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                for="file_input">Upload
+                                file</label>
+                            <img src="/uploads/products/{{ $image->image }}"
+                                class="size-20 object-cover rounded-md shadow-md mb-5" alt="">
+                            <div class="flex justify-between gap-3">
+                                <input
+                                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none"
+                                    id="file_input" name="more-image[{{ $image->id }}]" type="file">
+                                <button type="button" id="" data-id="{{ $image->id }}"
+                                    class="btn-delete-image-input-database text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
             <div class="mt-5 flex justify-center">
                 <button type="submit"
                     class="w-1/2 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">Simpan</button>
@@ -233,6 +262,70 @@
             getDetailVariant("2", $(this));
         });
         $("#btn-isi-harga").click(generatePriceForm);
+
+        $("#btn-add-image-input").click(addImageInput);
+        $(".btn-delete-image-input").click(deleteImageInput);
+        $(".btn-delete-image-input-database").click(deleteImageInputDatabase);
+
+        function addImageInput() {
+            const imageInput = `
+            <div class="">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload
+                    file</label>
+                <div class="flex justify-between gap-3">
+                    <input
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none"
+                        id="file_input" name="more-image-new[]" type="file" required>
+                    <button type="button" id=""
+                        class="btn-delete-image-input text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            `;
+
+            $("#container-image-input").append(imageInput);
+            $(".btn-delete-image-input").click(deleteImageInput);
+        }
+
+        function deleteImageInput() {
+            $(this).parent().parent().remove();
+        }
+
+        function deleteImageInputDatabase() {
+            const id = $(this).data('id');
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: "Data akan dihapus permanen!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `/admin/image-product/${id}`,
+                        type: 'DELETE',
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        beforeSend: function() {
+                            Swal.fire({
+                                title: "Loading...",
+                                allowOutsideClick: false,
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                }
+                            });
+                        },
+                        success: function(data) {
+                            window.location.reload();
+                        },
+                    });
+                }
+            });
+        }
 
         function addSubvariant() {
             const subvariant = `
