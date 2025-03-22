@@ -36,16 +36,14 @@
                             </div>
                             <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
                                 <div class="">
-                                    <label for="name"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama
+                                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nama
                                         Lengkap</label>
                                     <input type="text" id="name" name="name" value="{{ $user->name }}"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
                                         required />
                                 </div>
                                 <div class="">
-                                    <label for="email"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900">
                                         Email
                                     </label>
                                     <input type="text" id="email" name="email" value="{{ $user->email }}"
@@ -53,8 +51,7 @@
                                         disabled required />
                                 </div>
                                 <div class="">
-                                    <label for="phone"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">
                                         No. Telephone
                                     </label>
                                     <input type="number" id="phone" name="phone" value="{{ $user->phone }}"
@@ -62,8 +59,7 @@
                                         required />
                                 </div>
                                 <div class="">
-                                    <label for="date_of_birth"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    <label for="date_of_birth" class="block mb-2 text-sm font-medium text-gray-900">
                                         Tanggal Lahir
                                     </label>
                                     <input type="date" id="date_of_birth" name="date_of_birth"
@@ -71,8 +67,7 @@
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" />
                                 </div>
                                 <div>
-                                    <label for="gender"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis
+                                    <label for="gender" class="block mb-2 text-sm font-medium text-gray-900">Jenis
                                         Kelamin</label>
                                     <select id="gender" name="gender"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5">

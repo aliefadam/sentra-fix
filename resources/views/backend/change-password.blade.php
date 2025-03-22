@@ -6,7 +6,7 @@
             @csrf
             @method('PUT')
             <div class="mb-5">
-                <label for="password_old" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label for="password_old" class="block mb-2 text-sm font-medium text-gray-900">
                     Password Lama
                 </label>
                 <input type="password" id="password_old" name="password_old"
@@ -14,7 +14,7 @@
                     required />
             </div>
             <div class="mb-5">
-                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label for="password" class="block mb-2 text-sm font-medium text-gray-900">
                     Password Baru
                 </label>
                 <input type="password" id="password" name="password"
@@ -22,7 +22,7 @@
                     required />
             </div>
             <div class="mb-5">
-                <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900">
                     Konfirmasi Password Baru
                 </label>
                 <input type="password" id="password_confirmation" name="password_confirmation"

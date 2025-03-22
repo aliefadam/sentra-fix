@@ -28,7 +28,16 @@
         </div>
 
         <div class="mt-8 min-h-[80vh]">
-            <h1 class="text-2xl poppins-semibold text-gray-900">Produk Dijual</h1>
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl poppins-semibold text-gray-900">Produk Dijual</h1>
+                {{-- @dump($store->user->email) --}}
+                @if (auth()->user()->email == $store->user->email)
+                    <a href="{{ route('seller.dashboard') }}"
+                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                        Open Store Panel
+                    </a>
+                @endif
+            </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-5">
                 @foreach ($store->user->products as $product)
                     <a href="{{ route('product', ['slug' => $product->slug]) }}"

@@ -6,7 +6,16 @@
         <main class="max-w-8xl mx-auto px-4 sm:px-4 lg:px-8 py-4 sm:py-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-8">
                 <div class="space-y-4 lg:col-span-5">
-                    <div class="w-full h-[300px] lg:h-[500px] bg-gray-100 rounded-lg overflow-hidden shadow-md">
+                    <div class="w-full h-[300px] lg:h-[500px] bg-gray-100 rounded-lg overflow-hidden shadow-md relative">
+                        <div class="absolute top-5 left-5">
+                            <button type="button" data-modal-target="show-image-modal" data-modal-toggle="show-image-modal"
+                                id="btn-show-image-modal"
+                                data-image="/uploads/products/{{ $product->productDetails[0]->image }}"
+                                class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                                <i class="fa-regular fa-arrows-maximize mr-1"></i>
+                                View full
+                            </button>
+                        </div>
                         <img src="/uploads/products/{{ $product->productDetails[0]->image }}"
                             class="w-full h-full object-center object-cover" id="product-image-thumbnail" />
                     </div>
@@ -100,13 +109,10 @@
                     </div>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <button type="submit" id="btn-checkout"
-                            class="block text-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-3 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">Beli
+                            class="block text-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-3 focus:outline-none">Beli
                             Sekarang</button>
-                        {{-- <button type="submit"
-                            class="block text-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-3 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">Beli
-                            Sekarang</button> --}}
                         <button type="button" id="btn-add-to-cart" data-product-id="{{ $product->id }}"
-                            class="text-red-700 bg-white border border-red-700 hover:bg-red-100 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-3 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">Masukkan
+                            class="text-red-700 bg-white border border-red-700 hover:bg-red-100 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-3 focus:outline-none">Masukkan
                             Keranjang</button>
                     </div>
                     <div class="border-t pt-4 flex justify-between">
@@ -123,7 +129,7 @@
                             </div>
                         </div>
                         <a href="{{ route('store.show', $product->user->store->slug) }}"
-                            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-xs px-5 py-2.5 h-fit text-center dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-xs px-5 py-2.5 h-fit text-center ">
                             Kunjungi Toko
                         </a>
                     </div>
@@ -135,6 +141,18 @@
             </div>
         </main>
     </form>
+
+    {{-- Show Image Modal --}}
+    <div id="show-image-modal" tabindex="-1" aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="fixed right-10 top-10">
+            <i class="fa-regular fa-xmark text-4xl cursor-pointer text-white" data-modal-hide="show-image-modal"></i>
+        </div>
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <img id="full-image" src="/uploads/products/{{ $product->productDetails[0]->image }}" class="w-full"
+                alt="">
+        </div>
+    </div>
 @endsection
 
 @section('script')
@@ -150,13 +168,19 @@
         $("#btn-add-to-cart").click(addCart);
         $("#form-checkout").submit(checkout);
 
+        $("#btn-show-image-modal").click(showFullImage);
+
+        function showFullImage() {
+            $("#full-image").attr("src", $(this).data("image"));
+        }
+
         function changeImage() {
             const image = $(this).data("image");
             $("#product-image-thumbnail").attr("src", image);
             $(this).addClass("border-2 border-red-700")
                 .siblings()
                 .removeClass("border-2 border-red-700");
-            // $(".change-variant[data-image='" + image + "']").prop("checked", true);
+            $("#btn-show-image-modal").data("image", image);
         }
 
         function changeVariant() {

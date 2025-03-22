@@ -26,26 +26,24 @@
                 <form class="space-y-6" method="POST" action="{{ route('login.post') }}">
                     @csrf
                     <div>
-                        <label for="email"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
                         <div class="relative mb-6">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                 <i class="fas fa-envelope text-gray-500"></i>
                             </div>
                             <input type="email" id="email" name="email" value="{{ old('email') }}"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full ps-10 p-3  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
+                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full ps-10 p-3"
                                 placeholder="Masukkan email anda">
                         </div>
                     </div>
                     <div>
-                        <label for="password"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
                         <div class="relative mb-6">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                 <i class="fas fa-lock text-gray-500"></i>
                             </div>
                             <input type="password" id="password" name="password"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full ps-10 p-3  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
+                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full ps-10 p-3"
                                 placeholder="Masukkan password anda">
                             <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
                                 <i class="fas fa-eye"></i>
@@ -63,7 +61,7 @@
                             sandi?</a>
                     </div>
                     <button type="submit"
-                        class="cursor-pointer text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 w-full dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">Masuk</button>
+                        class="cursor-pointer text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 w-full">Masuk</button>
                     <div class="relative">
                         <div class="absolute inset-0 flex items-center">
                             <div class="w-full border-t border-gray-300"></div>

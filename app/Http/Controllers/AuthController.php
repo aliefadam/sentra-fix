@@ -37,14 +37,19 @@ class AuthController extends Controller
                 return redirect()->route("admin.dashboard");
             } else if ($role == "seller") {
                 $seller = Auth::user();
+                // if ($seller->status == "waiting") {
+                //     return back()->with("notification", [
+                //         "icon" => "error",
+                //         "title" => "Gagal",
+                //         "text" => "Akun seller anda belum dikonfirmasi oleh admin",
+                //     ]);
+                // } else {
+                //     return redirect()->route("seller.dashboard");
+                // }
                 if ($seller->status == "waiting") {
-                    return back()->with("notification", [
-                        "icon" => "error",
-                        "title" => "Gagal",
-                        "text" => "Akun seller anda belum dikonfirmasi oleh admin",
-                    ]);
+                    return redirect()->route("home");
                 } else {
-                    return redirect()->route("seller.dashboard");
+                    return to_route("store.show", $seller->store->slug);
                 }
             } else {
                 return redirect()->route("home");
